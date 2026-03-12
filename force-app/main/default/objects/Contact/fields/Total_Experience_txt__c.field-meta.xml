@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Experience_txt__c</fullName>
+    <description>Will show the total experience based on the Experience Month and Experience Year</description>
+    <externalId>false</externalId>
+    <formula>TEXT(FLOOR(Experience_Year__c + (Experience_Month__c / 12))) &amp; &quot; year&quot; &amp;
+IF(FLOOR(Experience_Year__c + (Experience_Month__c / 12)) &lt;&gt; 1, &quot;s&quot;, &quot;&quot;) &amp;
+IF(
+    MOD(Experience_Month__c, 12) &gt; 0,
+    &quot; &quot; &amp; TEXT(MOD(Experience_Month__c, 12)) &amp; &quot; month&quot; &amp;
+    IF(MOD(Experience_Month__c, 12) &lt;&gt; 1, &quot;s&quot;, &quot;&quot;),
+    &quot;&quot;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Total Experience</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

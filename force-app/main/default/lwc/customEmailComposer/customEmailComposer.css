@@ -1,0 +1,280 @@
+/* =======================
+   MODAL CONTAINER
+======================= */
+.modal__container {
+    width: var(--c-modal-width, 900px) !important;
+    max-width: var(--c-modal-max-width, 95%) !important;
+
+    height: 85vh;              /* 🔥 IMPORTANT */
+    display: flex;             /* 🔥 IMPORTANT */
+    flex-direction: column;    /* 🔥 IMPORTANT */
+
+    border-radius: var(--slds-g-radius-border-3, 10px);
+    overflow: hidden;
+}
+
+/* =======================
+   STICKY HEADER & FOOTER
+======================= */
+.header-fixed {
+    position: sticky;
+    top: 0;
+    background: var(--slds-g-color-neutral-base-100, #ffffff);
+    z-index: var(--c-modal-header-z, 10);
+    padding: var(--c-modal-header-padding, 12px 16px);
+    border-bottom: var(
+        --c-modal-header-border,
+        1px solid var(--slds-g-color-neutral-base-90, #e5e5e5)
+    );
+}
+
+.footer-fixed {
+    position: sticky;
+    bottom: 0;
+    background: var(--slds-g-color-neutral-base-100, #ffffff);
+    z-index: var(--c-modal-footer-z, 10);
+    padding: var(--c-modal-footer-padding, 12px 16px);
+    border-top: var(
+        --c-modal-footer-border,
+        1px solid var(--slds-g-color-neutral-base-90, #e5e5e5)
+    );
+    margin-left: auto;
+}
+
+/* =======================
+   FOOTER BUTTONS
+======================= */
+.footer-buttons {
+    margin-left: auto;
+}
+
+.footer-buttons lightning-button + lightning-button {
+    margin-left: var(--c-footer-button-gap, 0.5rem);
+}
+
+/* =======================
+   SCROLLABLE CONTENT
+======================= */
+.content-scroll {
+    flex: 1;              /* 🔥 makes it take remaining space */
+    overflow-y: auto;     /* 🔥 only this scrolls */
+    padding: var(--c-content-padding, 16px);
+}
+
+/* =======================
+   FIELD ROW
+======================= */
+.field-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: var(--c-field-row-gap, 1rem);
+}
+
+.field-label {
+    width: var(--c-field-label-width, 110px);
+    font-weight: var(--slds-g-font-weight-6, 600);
+    color: var(--slds-g-color-neutral-base-40, #444);
+    padding-top: var(--c-field-label-padding-top, 8px);
+}
+
+.field-control {
+    flex: 1;
+}
+
+/* =======================
+   STANDARD INPUTS
+======================= */
+lightning-input::part(input) {
+    height: var(--c-input-height, 38px) !important;
+    border-radius: var(--slds-g-radius-border-2, 6px);
+}
+
+/* =======================
+   FROM PILL
+======================= */
+.from-box {
+    position: relative;
+}
+
+.from-pill-container {
+    display: inline-flex;
+    cursor: pointer;
+}
+
+.from-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--c-from-pill-gap, 8px);
+    padding: var(--c-from-pill-padding, 8px 14px);
+    border-radius: var(--slds-g-radius-border-pill, 20px);
+    border: var(
+        --c-from-pill-border,
+        1px solid var(--slds-g-color-neutral-base-80, #d8dde6)
+    );
+    background: var(--slds-g-color-neutral-base-95, #f9fafb);
+}
+
+/* =======================
+   FROM POPUP
+======================= */
+.from-popup {
+    position: absolute;
+    margin-top: var(--c-from-popup-margin, 6px);
+    width: var(--c-from-popup-width, 360px);
+    background: var(--slds-g-color-neutral-base-100, #ffffff);
+    border: var(
+        --c-from-popup-border,
+        1px solid var(--slds-g-color-neutral-base-80, #d8dde6)
+    );
+    border-radius: var(--slds-g-radius-border-2, 6px);
+    box-shadow: var(
+        --c-from-popup-shadow,
+        0 6px 12px rgba(0,0,0,0.15)
+    );
+    z-index: var(--c-from-popup-z, 2000);
+}
+
+.from-option {
+    padding: var(--c-from-option-padding, 8px 10px);
+    cursor: pointer;
+    border-bottom: var(
+        --c-from-option-border,
+        1px solid var(--slds-g-color-neutral-base-95, #eeeeee)
+    );
+}
+
+.from-option:hover {
+    background: var(--slds-g-color-palette-blue-95, #f3f6fb);
+}
+
+/* =======================
+   TO / CC / BCC PILLS
+======================= */
+.pills-wrapper {
+    min-height: var(--c-pills-min-height, 42px);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: var(--c-pills-padding, 6px);
+    border: var(
+        --c-pills-border,
+        1px solid var(--slds-g-color-neutral-base-80, #d8dde6)
+    );
+    border-radius: var(--slds-g-radius-border-2, 6px);
+    background: var(--slds-g-color-neutral-base-100, #ffffff);
+}
+
+/* =======================
+   PILL INPUT
+======================= */
+.pill-input {
+    flex: 1;
+    min-width: var(--c-pill-input-min-width, 120px);
+    border: none;
+    outline: none;
+    font-size: var(--slds-g-font-scale-2, 14px);
+}
+
+/* =======================
+   CC / BCC
+======================= */
+.cc-bcc-links {
+    margin-top: var(--c-cc-bcc-margin-top, 4px);
+    font-size: var(--slds-g-font-scale-1, 13px);
+    color: var(--slds-g-color-palette-blue-40, #0270d1);
+}
+
+.sep {
+    padding: var(--c-separator-padding, 0 6px);
+}
+
+/* =======================
+   RICH TEXT EDITOR FIXES
+======================= */
+
+/* RTE container (single source of truth) */
+.rte-wrapper {
+    width: var(--c-rte-width, 100%);
+    min-width: max-content; 
+
+    height: var(--c-rte-height, 260px);
+    min-height: var(--c-rte-min-height, 260px);
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+/* Rich text component */
+.email-body {
+    width: var(--c-email-body-width, 100%);
+    height: var(--c-email-body-height, 100%);
+    display: block;
+    border-radius: var(--slds-g-radius-border-2, 6px);
+}
+
+/* Toolbar + editor container */
+.email-body::part(editor) {
+    display: flex;
+    flex-direction: column;
+    height: var(--c-email-editor-height, 100%);
+    overflow: visible;
+}
+
+/* Main editable region (supported) */
+.email-body::part(output) {
+    flex: 1;
+    min-height: var(--c-rte-output-min-height, 180px);
+
+    overflow-x: auto;     /* 🔥 allow horizontal scroll */
+    overflow-y: visible;
+
+    white-space: pre;     /* 🔥 disables wrapping → enables horizontal overflow */
+}
+.email-body table {
+    min-width: 900px;
+}
+
+/* =======================
+   ATTACHMENTS
+======================= */
+.attach-preview {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-attach-gap, 8px);
+}
+
+.attach-item {
+    display: flex;
+    align-items: center;
+    gap: var(--c-attach-item-gap, 10px);
+}
+
+.attach-item img {
+    width: var(--c-attach-icon-size, 28px);
+    height: var(--c-attach-icon-size, 28px);
+}
+/* Force editor content to expand beyond container */
+.email-body::part(output) {
+    white-space: pre !important;     /* disable wrapping */
+    overflow-x: auto !important;
+}
+
+/* Target internal Quill container */
+.email-body .ql-editor {
+    min-width: 900px !important;     /* 🔥 forces horizontal overflow */
+    width: max-content !important;
+}
+
+/* Ensure wrapper can scroll */
+.rte-wrapper {
+    overflow-x: auto !important;
+    overflow-y: auto;
+}
+
+/* If tables exist inside email */
+.email-body table {
+    min-width: 900px;
+}

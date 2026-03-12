@@ -1,0 +1,10 @@
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--c-spinner-padding, 20px);
+}
+
+.slds-dual-listbox {
+    min-height: var(--c-dual-listbox-min-height, 250px);
+}

@@ -1,0 +1,133 @@
+/* ---------------- WRAPPER ---------------- */
+
+.dashboard-wrapper {
+    background: var(--slds-g-color-surface-2, #f3f3f3);
+    padding: var(--slds-g-spacing-5, 1.5rem);
+    border-radius: var(--slds-g-radius-border-3, 0.5rem);
+}
+
+/* ---------------- HEADER ---------------- */
+
+.custom-header {
+    font-size: var(--myapp-font-heading-small, 1.25rem); /* fallback instead of SLDS hook (avoids namespace warning) */
+    font-weight: var(--slds-g-font-weight-7, 700);
+    border-bottom: var(--slds-g-sizing-border-2, 2px) solid var(--slds-g-color-brand-base-60, #0176d3);
+    padding-bottom: var(--slds-g-spacing-2, 0.5rem);
+    color: var(--slds-g-color-palette-blue-20, #16325c);
+}
+
+/* ---------------- GRID ---------------- */
+
+.col-padding {
+    padding: var(--slds-g-spacing-2, 0.5rem);
+}
+
+/* ---------------- ROW CARD ---------------- */
+
+.custom-row-box {
+    background: var(--slds-g-color-surface-1, #ffffff);
+    border-radius: var(--slds-g-radius-border-3, 0.5rem);
+    padding: var(--slds-g-spacing-3, 0.75rem);
+    border: var(--slds-g-sizing-border-1, 1px) solid var(--slds-g-color-surface-container-2, #e5e5e5);
+    transition: box-shadow 0.2s ease;
+}
+
+.custom-row-box:hover {
+    box-shadow: var(--slds-g-shadow-3, 0px 2px 4px rgba(0,0,0,0.1));
+}
+
+/* ---------------- SUBJECT FIELD ---------------- */
+
+.subject-container {
+    width: var(--myapp-g-sizing-full, 100%);
+}
+
+.custom-subject-input {
+    height: var(--slds-g-sizing-9, 2rem);
+}
+
+/* ---------------- DROPDOWN ---------------- */
+
+.custom-dropdown {
+    position: absolute;
+    background: var(--slds-g-color-surface-1, #ffffff);
+    border: var(--slds-g-sizing-border-1, 1px) solid var(--slds-g-color-surface-container-3, #d8dde6);
+    width: var(--myapp-g-sizing-full, 100%);
+    max-height: var(--slds-g-sizing-13, 10rem);
+    overflow-y: auto;
+    z-index: 10;
+    border-radius: var(--slds-g-radius-border-2, 0.25rem);
+    box-shadow: var(--slds-g-shadow-3, 0px 2px 4px rgba(0,0,0,0.1));
+}
+
+.dropdown-item {
+    padding: var(--slds-g-spacing-2, 0.5rem) var(--slds-g-spacing-3, 0.75rem);
+    cursor: pointer;
+    font-size: var(--slds-g-font-scale-base, 0.875rem);
+}
+
+.dropdown-item:hover {
+    background-color: var(--slds-g-color-surface-2, #f3f3f3);
+}
+
+.no-result {
+    color: var(--slds-g-color-neutral-base-60, #999999);
+    font-style: italic;
+}
+
+/* ---------------- PRIORITY COLORS ---------------- */
+
+/* Use SLDS theme tokens instead of hardcoded RGBA */
+
+.task-critical lightning-combobox {
+    --slds-c-input-color-background: var(--slds-g-color-palette-red-50 , #c23934);
+}
+
+.task-high lightning-combobox {
+    --slds-c-input-color-background: var(--slds-g-color-palette-hot-orange-60, #e67e22);
+}
+
+.task-medium lightning-combobox {
+    --slds-c-input-color-background: var(--slds-g-color-palette-yellow-70, #f4b400);
+}
+
+.task-low lightning-combobox {
+    --slds-c-input-color-background: var(--slds-g-color-palette-green-60, #2e844a);
+}
+
+.task-deferred lightning-combobox {
+    --slds-c-input-color-background: var(--slds-g-color-brand-base-60, #0176d3);
+}
+
+/* ---------------- ACTION ICONS ---------------- */
+
+.action-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--slds-g-spacing-4, 1rem);
+}
+
+.icon-circle {
+    width: var(--slds-g-sizing-8, 1.75rem);
+    height: var(--slds-g-sizing-8, 1.75rem);
+    border-radius: var(--slds-g-radius-border-circle, 50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.success-circle {
+    background-color: var(--slds-g-color-palette-green-50, #2e844a);
+}
+
+.error-circle {
+    background-color: var(--slds-g-color-palette-red-50, #ea001e);
+}
+
+/* Use correct hook */
+
+.icon-circle lightning-icon {
+    --slds-c-icon-color-foreground-default: var(--slds-g-color-neutral-base-100, #ffffff);
+}

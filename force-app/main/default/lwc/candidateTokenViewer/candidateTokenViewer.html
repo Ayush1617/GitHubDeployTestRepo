@@ -1,0 +1,169 @@
+<!-- candidateTokenViewer.html -->
+<template>
+    <div class="container slds-p-around_x-large">
+        <!-- Loading State -->
+        <template if:true={isLoading}>
+            <div class="slds-align_absolute-center slds-m-vertical_xx-large">
+                <lightning-spinner alternative-text="Loading candidates" size="large"></lightning-spinner>
+                <p class="slds-text-heading_small slds-m-top_medium">Loading candidate details...</p>
+            </div>
+        </template>
+
+        <!-- Error State -->
+        <template if:true={errorMessage}>
+            <div class="slds-notify slds-notify_alert slds-theme_error slds-m-bottom_large">
+                <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small">
+                    <lightning-icon icon-name="utility:error" size="small"></lightning-icon>
+                </span>
+                <h2 class="slds-text-heading_small">{errorMessage}</h2>
+            </div>
+        </template>
+
+        <!-- Success State -->
+        <template if:true={showCandidates}>
+            <lightning-card title="Candidate Details" icon-name="standard:people">
+                <div class="slds-p-around_medium">
+                    <!-- Header Info -->
+                    <div class="slds-grid slds-wrap slds-m-bottom_large">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
+                            <h1 class="slds-text-heading_large slds-m-bottom_x-small">Candidate Profiles</h1>
+                            <p class="slds-text-body_regular slds-text-color_weak">
+                                Secure access for job position review
+                            </p>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-text-align_right">
+                            <div class="slds-text-color_weak slds-text-body_small">
+                                Link expires: <strong>{expiryDate}</strong>
+                            </div>
+                            <lightning-button 
+                                label="Download CSV" 
+                                variant="brand" 
+                                onclick={downloadCSV}
+                                class="slds-m-top_small">
+                            </lightning-button>
+                        </div>
+                    </div>
+
+                    <!-- Candidates Count -->
+                    <div class="slds-m-bottom_medium">
+                        <!--lightning-badge label={`${candidates.length} Candidates`}></lightning-badge-->
+                    </div>
+
+                    <!-- Data Table -->
+                    <div class="slds-table_container">
+                        <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_striped">
+                            <thead>
+                                <tr class="slds-text-title_caps">
+                                    <th scope="col" style="width: 20%;">
+                                        <div class="slds-truncate" title="Name">Name</div>
+                                    </th>
+                                    <th scope="col" style="width: 15%;">
+                                        <div class="slds-truncate" title="Contact">Contact</div>
+                                    </th>
+                                    <th scope="col" style="width: 15%;">
+                                        <div class="slds-truncate" title="Location">Location</div>
+                                    </th>
+                                    <th scope="col" style="width: 15%;">
+                                        <div class="slds-truncate" title="Experience">Experience</div>
+                                    </th>
+                                    <th scope="col" style="width: 15%;">
+                                        <div class="slds-truncate" title="Current CTC">Current CTC</div>
+                                    </th>
+                                    <th scope="col" style="width: 15%;">
+                                        <div class="slds-truncate" title="Notice Period">Notice Period</div>
+                                    </th>
+                                    <th scope="col" style="width: 5%;">
+                                        <div class="slds-truncate" title="Resume">Resume</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={candidates} for:item="candidate">
+                                    <tr key={candidate.Id} class="slds-hint-parent">
+                                        <td>
+                                            <div class="slds-truncate" title={candidate.Name}>
+                                                <strong>{candidate.Name}</strong>
+                                            </div>
+                                            <div class="slds-text-body_small slds-text-color_weak">
+                                                {candidate.Email}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate" title={candidate.Phone}>
+                                                {candidate.Phone}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate" title={candidate.CurrentLocation}>
+                                                {candidate.CurrentLocation}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate" title={candidate.Experience}>
+                                                {candidate.Experience}
+                                            </div>
+                                            <div class="slds-text-body_small slds-text-color_weak">
+                                                Skills: {candidate.Skills}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">
+                                                {candidate.CurrentCTC} → {candidate.ExpectedCTC}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <lightning-badge 
+                                                label={candidate.NoticePeriod}
+                                                class={candidate.noticePeriodClass}>
+                                            </lightning-badge>
+                                        </td>
+                                        <td class="slds-align_absolute-center">
+                                            <template if:true={candidate.ResumeLink}>
+                                                <a href={candidate.ResumeLink} target="_blank" title="View Resume">
+                                                    <lightning-icon 
+                                                        icon-name="utility:download" 
+                                                        size="small"
+                                                        class="slds-icon-text-brand">
+                                                    </lightning-icon>
+                                                </a>
+                                            </template>
+                                            <template if:false={candidate.ResumeLink}>
+                                                <span class="slds-text-color_weak">-</span>
+                                            </template>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- No Candidates Message -->
+                    <template if:false={candidates.length}>
+                        <div class="slds-align_absolute-center slds-m-vertical_xx-large">
+                            <lightning-icon 
+                                icon-name="utility:search" 
+                                size="large"
+                                class="slds-icon-text-weak slds-m-bottom_small">
+                            </lightning-icon>
+                            <p class="slds-text-heading_small slds-text-color_weak">No candidates found</p>
+                        </div>
+                    </template>
+                </div>
+            </lightning-card>
+
+            <!-- Instructions Card -->
+            <div class="slds-m-top_large">
+                <lightning-card title="Instructions">
+                    <div class="slds-p-around_medium">
+                        <ul class="slds-list_dotted">
+                            <li>This link is valid for 7 days from generation</li>
+                            <li>All candidate information is confidential</li>
+                            <li>Use the download button to export data as CSV</li>
+                            <li>Contact the recruitment team for any queries</li>
+                        </ul>
+                    </div>
+                </lightning-card>
+            </div>
+        </template>
+    </div>
+</template>

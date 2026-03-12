@@ -1,0 +1,62 @@
+<template>
+    <template if:true={isOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container custom-modal">
+
+
+              <header class="slds-modal__header">
+                    <div class="slds-flex slds-justify-center" style="width: 100%; align-items: center;">
+                   
+                        <h2 class="slds-text-heading_medium">
+                            Assign to Job Position
+                        </h2>
+                    </div>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-input
+                        type="search"
+                        class="search-box"
+                        label="Search Job Positions"
+                        placeholder="Type job title or ID..."
+                        value={searchKey}
+                        onchange={handleSearch}>
+                    </lightning-input>
+
+
+                    <div class="slds-table_header-fixed_container" role="region">
+                        <div class="slds-scrollable_y" style="max-height:400px;">
+                            <template if:true={hasJobPositions}>
+                                <lightning-datatable
+                                    key-field="Id"
+                                    data={jobPositions}
+                                    columns={columns}
+                                    selected-rows={selectedJobIds}
+                                    onrowselection={handleRowSelection}
+                                    hide-checkbox-column={hideCheckboxColumn}>
+                                </lightning-datatable>
+                            </template>
+                             <template if:false={hasJobPositions}>
+                                <div class="empty-state">
+                                    <lightning-icon 
+                                        icon-name="utility:search" 
+                                        size="small" 
+                                        class="empty-state-icon">
+                                    </lightning-icon>
+                                    <p>No job positions found for "{searchKey}".</p>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="slds-modal__footer slds-grid slds-grid_align-center">
+                    <lightning-button variant="neutral" label="Cancel" onclick={closeModal}></lightning-button>
+                    <lightning-button class="slds-m-left_medium" variant="brand" label="Assign" onclick={assignCandidates}></lightning-button>
+                </footer>
+
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

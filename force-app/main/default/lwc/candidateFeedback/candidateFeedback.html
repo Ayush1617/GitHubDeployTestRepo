@@ -1,0 +1,83 @@
+<template>
+    <section class="backdrop">
+        <div class="modal">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+                <h2 class="title">Add Feedback</h2>
+                <lightning-button-icon
+                    icon-name="utility:close"
+                    alternative-text="Close"
+                    onclick={handleClose}>
+                </lightning-button-icon>
+            </div>
+
+            <!-- SCROLLABLE FEEDBACK AREA -->
+            <div class="feedback-scroll">
+                <template if:true={feedbackList.length}>
+                    <template for:each={feedbackList} for:item="item">
+                        <div key={item.id} class="feedback-card">
+
+                            <div class="card-header">
+                                <strong>{item.createdBy}</strong>
+                                <lightning-button-icon
+                                    icon-name="utility:delete"
+                                    variant="bare"
+                                    size="small"
+                                    data-id={item.id}
+                                    onclick={handleDelete}
+                                    disabled={isFinalDecision}>
+                                </lightning-button-icon>
+                            </div>
+
+                            <div class="card-body">
+                                {item.comment}
+                            </div>
+
+                            <div class="card-date">
+                                {item.createdDate}
+                            </div>
+
+                        </div>
+                    </template>
+                </template>
+            </div>
+
+            <!-- FIXED FOOTER -->
+            <div class="modal-footer">
+                <div class="textarea-wrapper">
+                    <lightning-textarea
+                        label="Notes"
+                        value={newFeedback}
+                        minlength="10"
+                        maxlength="500"
+                        onchange={handleChange}
+                        disabled={isFinalDecision}
+                        class="big-textarea">
+                    </lightning-textarea>
+                </div>
+
+                <div class="char-count">
+                    {characterCount}/500 characters
+                </div>
+
+                <div class="submit-container">
+                    <lightning-button
+                        label="Submit"
+                        variant="brand"
+                        onclick={handleAddFeedback}
+                        disabled={isSaveDisabled}>
+                    </lightning-button>
+
+                    <lightning-button
+                       label="Submit & Close"
+                       variant="brand"
+                       onclick={handleSubmitAndClose}
+                       disabled={isSaveDisabled}>
+                    </lightning-button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</template>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Supplier_List</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>Status__c</columns>
+    <columns>Last_supplied_Date__c</columns>
+    <columns>Success_Rate__c</columns>
+    <columns>Number_of_Resources__c</columns>
+    <columns>Contact_Name__c</columns>
+    <columns>Contact_Phone__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ACCOUNT.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Account.Partner_Community_Supplier</value>
+    </filters>
+    <label>Supplier List</label>
+    <sharedTo>
+        <group>Supplier_Group</group>
+    </sharedTo>
+</ListView>

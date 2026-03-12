@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rate_Type__c</fullName>
+    <label>Rate Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Non Billable Rate</fullName>
+                <default>false</default>
+                <label>Non Billable Rate</label>
+            </value>
+            <value>
+                <fullName>Person Billable Rate</fullName>
+                <default>false</default>
+                <label>Person Billable Rate</label>
+            </value>
+            <value>
+                <fullName>Project Billable Rate</fullName>
+                <default>false</default>
+                <label>Project Billable Rate</label>
+            </value>
+            <value>
+                <fullName>Task Billable Rate</fullName>
+                <default>false</default>
+                <label>Task Billable Rate</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

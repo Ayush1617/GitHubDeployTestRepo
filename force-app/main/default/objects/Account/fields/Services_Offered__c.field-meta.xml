@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Services_Offered__c</fullName>
+    <label>Services Offered</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Permanent Staffing</fullName>
+                <default>false</default>
+                <label>Permanent Staffing</label>
+            </value>
+            <value>
+                <fullName>Contract Staffing</fullName>
+                <default>false</default>
+                <label>Contract Staffing</label>
+            </value>
+            <value>
+                <fullName>Executive Search</fullName>
+                <default>false</default>
+                <label>Executive Search</label>
+            </value>
+            <value>
+                <fullName>IT Staffing</fullName>
+                <default>false</default>
+                <label>IT Staffing</label>
+            </value>
+            <value>
+                <fullName>Non-IT Staffing</fullName>
+                <default>false</default>
+                <label>Non-IT Staffing</label>
+            </value>
+            <value>
+                <fullName>Bulk Hiring / RPO</fullName>
+                <default>false</default>
+                <label>Bulk Hiring / RPO</label>
+            </value>
+            <value>
+                <fullName>International Hiring</fullName>
+                <default>false</default>
+                <label>International Hiring</label>
+            </value>
+            <value>
+                <fullName>Freelancer / Gig Talent</fullName>
+                <default>false</default>
+                <label>Freelancer / Gig Talent</label>
+            </value>
+            <value>
+                <fullName>Campus Hiring</fullName>
+                <default>false</default>
+                <label>Campus Hiring</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

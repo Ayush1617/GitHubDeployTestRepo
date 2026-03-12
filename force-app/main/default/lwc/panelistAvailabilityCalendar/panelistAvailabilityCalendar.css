@@ -1,0 +1,508 @@
+/* ================= SALESFORCE BLUE THEME VARIABLES ================= */
+:host {
+    /* Outer background */
+    --outer-bg-start: #f4f6f9;
+    --outer-bg-end:   #eef1f6;
+
+    /* Panels */
+
+    --panel-bg: #ffffff;
+
+    /* Top right header gradient */
+    --top-start: #0176d3;
+    --top-end:   #014486;
+
+    /* Calendar */
+    --calendar-bg: #f4f6f9;
+
+    /* Date cells */
+    --date-normal: #eef1f6;
+    --date-hover:  #dbeafe;
+    --date-selected-start: #0176d3;
+    --date-selected-end:   #014486;
+
+    /* Text */
+    --text-dark: #181818;
+    --text-muted: #6b6d70;
+
+    /* Buttons */
+    --button-bg: #0176d3;
+    --button-bg-hover: #014486;
+
+    /* Slots */
+    --slot-bg-start: #eef4ff;
+    --slot-bg-end:   #dbeafe;
+
+    /* ===== SPACING ===== */
+    --space-xs: var(--slds-g-spacing-2);   /* 8px  */
+    --space-sm: var(--slds-g-spacing-3);   /* 12px */
+    --space-md: var(--slds-g-spacing-4);   /* 16px */
+    --space-lg: var(--slds-g-spacing-5);   /* 24px */
+
+    /* ===== FONT ===== */
+    --font-title: var(--slds-g-font-scale-2);
+    --font-weight-medium: var(--slds-g-font-weight-5);
+    --font-weight-bold: var(--slds-g-font-weight-7);
+
+    /* ===== RADIUS ===== */
+    --radius-lg: var(--slds-g-radius-border-4);
+
+    /* ===== CUSTOM WIDTH ===== */
+    --container-max-width: 1100px;
+
+    /* Extra spacing */
+    --space-xxs: var(--slds-g-spacing-1); /* 4px */
+    --space-xl: var(--slds-g-spacing-6);  /* 32px */
+
+    /* Extra font sizes */
+    --font-xs: var(--slds-g-font-scale-neg-1);
+    --font-sm: var(--slds-g-font-scale-1);
+
+    /* Extra font weight */
+    --font-weight-regular: var(--slds-g-font-weight-4);
+
+    /* Extra radius */
+    --radius-sm: var(--slds-g-radius-border-2);
+    --radius-md: var(--slds-g-radius-border-3);
+
+    /* Custom border width */
+    --border-thin: 1px;
+
+    /* Custom shadow */
+    --shadow-soft: 0 6px 12px rgba(0, 0, 0, 0.2);
+
+    /* Button radius (cannot use slds namespace directly) */
+    --my-button-radius: var(--radius-lg);
+
+    /* Neutral text color replacement for #444 */
+    --text-neutral-30: var(--slds-g-color-neutral-base-30);
+
+    /* Disabled text */
+    --text-disabled: var(--slds-g-color-neutral-base-65);
+
+    /* Hover border */
+    --border-brand-light: var(--slds-g-color-brand-base-80);
+
+    /* Selected border */
+    --border-brand-dark: var(--slds-g-color-brand-base-40);
+
+}
+
+/* ================= OUTER FRAME ================= */
+.outer-frame {
+    background: linear-gradient(135deg, var(--outer-bg-start), var(--outer-bg-end));
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+
+    max-width: var(--container-max-width);
+    width: 100%;
+    margin: 0 auto;
+
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* ================= MAIN CONTAINER ================= */
+.container {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+}
+
+/* ================= WHITE PANELS ================= */
+.white-panel {
+    background: var(--panel-bg);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-sizing: border-box;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+}
+
+/* LEFT & RIGHT – ALWAYS EQUAL WIDTH */
+.left,
+.right {
+    flex: 1 0 50%;
+    max-width: 50%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* RIGHT PANEL OVERRIDE */
+.right.white-panel {
+    padding: 0;
+    overflow: hidden;
+}
+
+/* ================= MAIN TITLE ================= */
+.main-title {
+    font-size: var(--font-title);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--space-xs);
+    color: var(--text-dark);
+    text-align: center;
+}
+
+/* ================= SECTION TITLES ================= */
+.section-title {
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-sm);
+    letter-spacing: 0.5px; /* safe to keep */
+    color: var(--text-dark);
+    align-self: center;
+}
+
+/* ================= RANGE BUTTON BAR ================= */
+.range-buttons {
+    display: flex;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+    justify-content: center;
+    align-items: center;
+    background: var(--calendar-bg);
+    padding: var(--space-xs);
+    border-radius: var(--radius-md);
+}
+
+.range-buttons lightning-button {
+    border-radius: var(--my-button-radius);
+}
+
+/* ================= MONTH HEADER ================= */
+.month-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-sm);
+}
+
+.month-text {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-sm);
+    color: var(--text-dark);
+}
+
+/* ================= CALENDAR PANEL ================= */
+.calendar-wrapper {
+    background: var(--calendar-bg);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-xs);
+}
+
+/* WEEK HEADER */
+.calendar-grid.week span {
+    font-size: var(--font-xs);
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    color: var(--text-neutral-30);
+}
+
+/* ================= CALENDAR GRID ================= */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(32px, 1fr));
+    gap: var(--space-xs);
+    margin-top: var(--space-sm);
+}
+
+/* ================= DATE BOXES ================= */
+.day-box {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-sm);
+    background: var(--date-normal);
+    color: var(--text-dark);
+    transition: all 0.2s ease;
+    border: var(--border-thin) solid transparent;
+}
+
+.day-box:hover {
+    background: var(--date-hover);
+    border-color: var(--border-brand-light);
+}
+
+.day-box.selected {
+    background: linear-gradient(
+        135deg,
+        var(--date-selected-start),
+        var(--date-selected-end)
+    );
+    color: var(--panel-bg);
+    border-color: var(--border-brand-dark);
+    box-shadow: var(--shadow-soft);
+}
+
+.day-box.disabled {
+    background: var(--calendar-bg);
+    color: var(--text-disabled);
+    font-weight: var(--font-weight-medium);
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.day-box.empty {
+    background: transparent;
+    pointer-events: none;
+}
+
+/* ================= RIGHT PANEL ================= */
+
+/* TOP SECTION */
+.right-top {
+    background: linear-gradient(135deg, var(--top-start), var(--top-end));
+    padding: var(--space-md) var(--space-lg) var(--space-lg) var(--space-lg);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+/* HEADER */
+.right-header {
+    color: var(--panel-bg);
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--space-md);
+}
+
+/* ================= TIME ROW ================= */
+.time-row {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.time-col {
+    flex: 1 1 auto;
+    min-width: var(--slds-g-sizing-13); /* replaces 160px */
+}
+
+.add-btn-col {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: flex-end;
+}
+
+.add-btn-col lightning-button {
+    width: 100%;
+    min-width: var(--slds-g-sizing-9); /* replaces 90px */
+}
+
+/* ================= BOTTOM SECTION ================= */
+.right-bottom {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-lg);
+}
+
+/* PLACEHOLDER */
+.placeholder {
+    color: var(--text-muted);
+    margin-top: var(--space-sm);
+}
+
+.center-text {
+    text-align: center;
+}
+
+/* ================= SLOT LIST ================= */
+.slots {
+    margin-top: var(--space-xs);
+}
+
+.slot {
+    background: linear-gradient(
+        135deg,
+        var(--slot-bg-start),
+        var(--slot-bg-end)
+    );
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-xs);
+    font-weight: var(--font-weight-medium);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xs);
+}
+
+/* SAFE icon coloring (no slds namespace override) */
+.remove-btn {
+    color: var(--button-bg);
+    cursor: pointer;
+}
+
+/* ================= BOTTOM BUTTON ================= */
+.bottom-btn {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    padding-bottom: var(--space-xs);
+}
+
+/* ================= SALESFORCE BRAND BUTTONS ================= */
+
+.bottom-btn lightning-button,
+.add-btn-col lightning-button,
+.range-buttons lightning-button {
+
+    background-color: var(--button-bg);
+    border-color: var(--button-bg);
+    color: var(--panel-bg);
+
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-weight-bold);
+}
+
+.bottom-btn lightning-button:hover,
+.add-btn-col lightning-button:hover,
+.range-buttons lightning-button:hover {
+
+    background-color: var(--button-bg-hover);
+    border-color: var(--button-bg-hover);
+}
+
+/* Neutral buttons */
+lightning-button {
+    border-radius: var(--radius-md);
+}
+
+/* Remove blue focus outline */
+lightning-button:focus,
+lightning-button-icon:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Month navigation arrows */
+lightning-button-icon {
+    color: var(--button-bg);
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 800px) {
+
+    .container {
+        flex-direction: column;
+    }
+
+    .left,
+    .right {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .time-row {
+        flex-direction: column;
+    }
+
+    .add-btn-col {
+        margin-top: var(--space-xs);
+        width: 100%;
+    }
+
+    .add-btn-col lightning-button {
+        width: auto;
+    }
+}
+
+/* ================= NEW STYLES FOR LINK FUNCTIONALITY ================= */
+
+/* Action Buttons Container */
+.action-buttons {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+    justify-content: center;
+}
+
+.action-btn {
+    min-width: var(--slds-g-sizing-12); /* replaces 180px */
+}
+
+/* Link Container */
+.link-container {
+    background: var(--calendar-bg);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-md);
+    border: var(--border-thin) solid var(--slds-g-color-neutral-base-90);
+}
+
+.link-box {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: center;
+}
+
+.link-box lightning-input {
+    flex: 1;
+}
+
+.copy-btn {
+    color: var(--button-bg);
+}
+
+/* ================= MESSAGE STYLES ================= */
+
+.message-success {
+    background: var(--slds-g-color-success-base-95);
+    color: var(--slds-g-color-palette-green-40);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-sm);
+    display: flex;
+    align-items: center;
+    border: var(--border-thin) solid var(--slds-g-color-success-base-90);
+}
+
+.message-error {
+    background: var(--slds-g-color-error-base-90);
+    color: var(--slds-g-color-error-base-30);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-sm);
+    display: flex;
+    align-items: center;
+    border: var(--border-thin) solid var(--slds-g-color-error-base-80);
+}
+
+/* Time Label */
+.time-label {
+    display: block;
+    font-size: var(--font-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--panel-bg);
+    margin-bottom: var(--space-xxs);
+}
+
+/* Responsive adjustments */
+@media (max-width: 800px) {
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-btn {
+        width: 100%;
+    }
+
+    .link-box {
+        flex-direction: column;
+    }
+
+    .copy-btn {
+        align-self: flex-end;
+    }
+}

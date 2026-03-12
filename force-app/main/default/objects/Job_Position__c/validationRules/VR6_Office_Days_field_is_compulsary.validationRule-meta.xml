@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR6_Office_Days_field_is_compulsary</fullName>
+    <active>true</active>
+    <description>If &quot;work mode&quot; field is hybrid then &quot;no of days in office&quot; is compulsory to fill</description>
+    <errorConditionFormula>AND(
+    ISPICKVAL(Work_Mode__c, &apos;Hybrid&apos;),
+    ISBLANK(No_Of_Days__c)
+)</errorConditionFormula>
+    <errorDisplayField>No_Of_Days__c</errorDisplayField>
+    <errorMessage>If &quot;work mode&quot; field is hybrid then &quot;no of days in office&quot; is compulsory to fill</errorMessage>
+</ValidationRule>

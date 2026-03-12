@@ -1,0 +1,221 @@
+/* ===============================
+   Design Tokens / Variables
+   =============================== */
+:host {
+    /* Card */
+    --card-bg: #ffffff;
+    --card-radius: 16px;
+    --card-padding-y: 1.5rem;
+    --card-padding-x: 2rem;
+    --card-gap: 2rem;
+    --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    --card-min-height: 220px;
+    --card-max-height: 220px;
+
+    /* Layout */
+    --left-col-width: 180px;
+    --left-col-padding: 10px 0;
+
+    /* Photo */
+    --photo-width: 180px;
+    --photo-height: 200px;
+    --photo-radius: 12px;
+    --photo-border: 4px solid #e6e6e6;
+    --photo-placeholder-bg: #f4f6f9;
+    --photo-placeholder-border: 3px dashed #d0d0d0;
+    --photo-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+
+    /* Text */
+    --name-size: 1.6rem;
+    --subtitle-size: 0.85rem;
+    --info-font-size: 0.9rem;
+    --extra-skill-font-size: 0.8rem;
+    --tooltip-font-size: 0.75rem;
+
+    --text-primary: #1a1a1a;
+    --text-secondary: #444;
+    --text-muted: #888;
+    --text-light: #666;
+
+    /* Links */
+    --link-color: #0070d2;
+
+    /* Grid gaps */
+    --grid-row-gap: 1rem;
+    --grid-col-gap: 2rem;
+    --info-col-gap: 0.8rem;
+    --info-item-gap: 0.5rem;
+
+    /* Tooltip */
+    --tooltip-bg: #333;
+    --tooltip-color: #fff;
+    --tooltip-padding: 0.4rem 0.6rem;
+    --tooltip-radius: 4px;
+
+    /* Icons */
+    --linkedin-blue: #0077b5;
+    --resume-red: #d32f2f;
+
+    /* Spacing */
+    --space-vertical-md: 1rem;
+
+    /* Font */
+    --font-weight-bold: 700;
+
+    /* Tooltip positioning */
+    --tooltip-left: 50%;
+    --tooltip-bottom: 125%;
+}
+
+/* ===============================
+   Card Layout
+   =============================== */
+.card {
+    display: flex;
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    padding: var(--card-padding-y) var(--card-padding-x);
+    box-shadow: var(--card-shadow);
+    gap: var(--card-gap);
+    margin-bottom: var(--space-vertical-md);
+    transition: all 0.25s ease;
+    min-height: var(--card-min-height);
+    max-height: var(--card-max-height);
+}
+
+.left-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 var(--left-col-width);
+    padding: var(--left-col-padding);
+}
+
+/* ===============================
+   Photo
+   =============================== */
+.photo,
+.photo-placeholder {
+    width: var(--photo-width);
+    height: var(--photo-height);
+    border-radius: var(--photo-radius);
+    border: var(--photo-border);
+    box-shadow: var(--photo-shadow);
+}
+
+.photo {
+    object-fit: fill;
+}
+
+.photo-placeholder {
+    background: var(--photo-placeholder-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: var(--photo-placeholder-border);
+}
+
+/* ===============================
+   Right Column
+   =============================== */
+.right-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.name {
+    font-size: var(--name-size);
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.sub-title {
+    font-size: var(--subtitle-size);
+    color: var(--text-muted);
+    margin: 0 0 var(--space-vertical-md) 0;
+}
+
+/* ===============================
+   Info Grid
+   =============================== */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--grid-row-gap) var(--grid-col-gap);
+}
+
+.info-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--info-col-gap);
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: var(--info-item-gap);
+    font-size: var(--info-font-size);
+    color: var(--text-secondary);
+}
+
+.value {
+    color: var(--text-secondary);
+}
+
+.link {
+    color: var(--link-color);
+    cursor: pointer;
+}
+
+/* ===============================
+   Skills
+   =============================== */
+.skills-container {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+/* Tooltip for extra skills */
+.extra-skills {
+    position: relative;
+    font-size: var(--extra-skill-font-size);
+    color: var(--text-light);
+    cursor: pointer;
+}
+
+.extra-skills::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: var(--tooltip-left);
+    bottom: var(--tooltip-bottom);
+    transform: translateX(-50%);
+    background: var(--tooltip-bg);
+    color: var(--tooltip-color);
+    padding: var(--tooltip-padding);
+    border-radius: var(--tooltip-radius);
+    white-space: nowrap;
+    font-size: var(--tooltip-font-size);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 10;
+}
+
+.extra-skills:hover::after {
+    opacity: 1;
+}
+
+/* ===============================
+   Icon Colors (SLDS 2)
+   =============================== */
+.linkedin-icon {
+    --slds-c-icon-color-foreground-default: var(--linkedin-blue);
+}
+
+.resume-icon {
+    --slds-c-icon-color-foreground-default: var(--resume-red);
+}

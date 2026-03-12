@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_List</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>isActive__c</columns>
+    <columns>Email__c</columns>
+    <columns>Recruiter__c</columns>
+    <columns>Contact_Person__c</columns>
+    <columns>Contact_Phone__c</columns>
+    <columns>ACCOUNT.LAST_ACTIVITY</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ACCOUNT.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Account.Client</value>
+    </filters>
+    <label>Client List</label>
+    <sharedTo>
+        <group>Client_public_group</group>
+    </sharedTo>
+</ListView>

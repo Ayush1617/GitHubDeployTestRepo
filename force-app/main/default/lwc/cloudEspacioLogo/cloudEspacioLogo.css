@@ -1,0 +1,29 @@
+.layout-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #e8f5e9;  /* Light green background */
+}
+
+/* HEADER */
+.header {
+    padding: 5px 25px 0px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: transparent;   /* header white nahi chahiye to */
+}
+
+/* LOGO */
+.logo {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* CONTENT */
+.content {
+    flex: 1;
+    padding: 15px 25px;
+    background-color: transparent;  /* grey remove */
+}

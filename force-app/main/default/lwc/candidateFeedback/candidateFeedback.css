@@ -1,0 +1,164 @@
+:host {
+    /* Backdrop */
+     --cf-backdrop-color: rgba(0, 0, 0, 0.45);
+
+    /* Modal */
+    --cf-modal-bg: var(--slds-g-color-surface-1, #ffffff);
+    --cf-modal-width: 44rem;   /* ~700px */
+    --cf-modal-height: 80vh;
+    --cf-modal-radius: var(--slds-g-radius-border-4, 16px);
+
+    /* Z index */
+    --cf-modal-zindex: 1000;
+
+    /* Header padding */
+    --cf-header-padding-top: var(--slds-g-spacing-6, 25px);
+    --cf-header-padding-horizontal: var(--slds-g-spacing-7, 30px);
+    --cf-header-padding-bottom: var(--slds-g-spacing-3, 10px);
+
+    /* Title */
+    --cf-title-font-size: var(--slds-g-font-scale-3, 22px);
+    --cf-title-font-weight: var(--slds-g-font-weight-7, 700);
+
+    /* Scroll section */
+    --cf-scroll-padding-horizontal: var(--slds-g-spacing-7, 30px);
+
+    /* Feedback card */
+    --cf-card-bg: var(--slds-g-color-surface-2, #f2f4f8);
+    --cf-card-padding: var(--slds-g-spacing-4, 15px);
+    --cf-card-radius: var(--slds-g-radius-border-2, 10px);
+    --cf-card-margin-bottom: var(--slds-g-spacing-4, 15px);
+
+    /* Card body */
+    --cf-card-body-margin-top: var(--slds-g-spacing-2, 8px);
+    --cf-card-body-font-size: var(--slds-g-font-scale-1, 14px);
+
+    /* Card date */
+    --cf-card-date-margin-top: var(--slds-g-spacing-1, 6px);
+    --cf-card-date-font-size: var(--slds-g-font-scale-neg-1, 12px);
+    --cf-card-date-color: var(--slds-g-color-neutral-base-50, #6b7280);
+
+    /* Footer padding */
+    --cf-footer-padding-top: var(--slds-g-spacing-4, 15px);
+    --cf-footer-padding-horizontal: var(--slds-g-spacing-7, 30px);
+    --cf-footer-padding-bottom: var(--slds-g-spacing-6, 25px);
+
+    /* Textarea heights */
+    --cf-textarea-min-height: var(--slds-g-sizing-10, 100px);
+    --cf-wrapper-min-height: var(--slds-g-sizing-8, 70px);
+    --cf-big-textarea-min-height: var(--slds-g-sizing-6, 50px);
+
+    /* Character count */
+    --cf-char-font-size: var(--slds-g-font-scale-neg-1, 12px);
+    --cf-char-margin-top: var(--slds-g-spacing-1, 5px);
+    --cf-char-color: var(--slds-g-color-neutral-base-50, #6b7280);
+
+    /* Submit container */
+    --cf-submit-margin-top: var(--slds-g-spacing-4, 15px);
+}
+
+
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: var(--cf-backdrop-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--cf-modal-zindex);
+}
+
+.modal {
+    background: var(--cf-modal-bg);
+    width: var(--cf-modal-width);
+    height: var(--cf-modal-height);
+    border-radius: var(--cf-modal-radius);
+    display: flex;
+    flex-direction: column;
+}
+
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 
+        var(--cf-header-padding-top)
+        var(--cf-header-padding-horizontal)
+        var(--cf-header-padding-bottom)
+        var(--cf-header-padding-horizontal);
+}
+
+.title {
+    font-size: var(--cf-title-font-size);
+    font-weight: var(--cf-title-font-weight);
+}
+
+.feedback-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 var(--cf-scroll-padding-horizontal);
+}
+
+.feedback-card {
+    background: var(--cf-card-bg);
+    padding: var(--cf-card-padding);
+    border-radius: var(--cf-card-radius);
+    margin-bottom: var(--cf-card-margin-bottom);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-body {
+    margin-top: var(--cf-card-body-margin-top);
+    font-size: var(--cf-card-body-font-size);
+}
+
+.card-date {
+    margin-top: var(--cf-card-date-margin-top);
+    font-size: var(--cf-card-date-font-size);
+    color: var(--cf-card-date-color);
+}
+
+.modal-footer {
+    padding:
+        var(--cf-footer-padding-top)
+        var(--cf-footer-padding-horizontal)
+        var(--cf-footer-padding-bottom)
+        var(--cf-footer-padding-horizontal);
+}
+
+.modal-footer lightning-textarea textarea {
+    min-height: var(--cf-textarea-min-height);
+}
+
+.textarea-wrapper {
+    min-height: var(--cf-wrapper-min-height);
+}
+
+.big-textarea {
+    --slds-c-textarea-sizing-min-height: var(--cf-big-textarea-min-height);
+}
+
+.char-count {
+    text-align: right;
+    font-size: var(--cf-char-font-size);
+    margin-top: var(--cf-char-margin-top);
+    color: var(--cf-char-color);
+}
+
+.submit-container {
+    text-align: center;
+    margin-top: var(--cf-submit-margin-top);
+}
+.submit-container {
+    display: flex;
+    justify-content: center;  /* center alignment */
+    gap: 12px;                /* space between buttons */
+    margin-top: 20px;
+}
+justify-content: flex-end;

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Week_End_Date__c</fullName>
+    <description>Defines the ending date of the reporting week. Used for validation and reporting.</description>
+    <inlineHelpText>It defines the deadline of the of the end week</inlineHelpText>
+    <label>Week End Date</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

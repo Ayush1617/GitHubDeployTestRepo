@@ -1,0 +1,30 @@
+/* Custom modal wrapper */
+.custom-modal {
+    max-width: var(--job-modal-width);
+}
+
+/* Scrollable wrapper */
+.custom-scroll {
+    overflow-y: auto;
+}
+
+/* Search box spacing */
+.search-box {
+    margin-bottom: var(--job-spacing-medium);
+}
+
+/* Empty state */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--job-spacing-large);
+    color: var(--job-text-color);
+    text-align: center;
+}
+
+/* Icon spacing */
+.empty-state-icon {
+    margin-bottom: var(--job-spacing-small);
+}

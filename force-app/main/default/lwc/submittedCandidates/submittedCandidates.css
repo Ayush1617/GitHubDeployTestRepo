@@ -1,0 +1,185 @@
+:host {
+    display: block;
+}
+
+.page-bg {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #fafdfa, #fafdfa);
+    padding: 20px;
+}
+
+.title {
+    color: #032d60;
+    margin-bottom: 25px;
+    font-size: 28px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* CARD */
+.card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 24px;
+}
+
+/* TOP BAR */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.left-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.left-info h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.count-badge {
+    background: #032d60;
+    color: white;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+/* TABLE */
+.custom-table thead {
+    background-color: #f8f9fb;
+}
+
+.custom-table th {
+    font-weight: 600;
+    color: #032d60;
+    font-size: 13px;
+}
+
+.custom-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #f3f6fb;
+}
+
+.center-col {
+    text-align: center;
+}
+
+.skills-container {
+    max-width: 200px;
+    word-wrap: break-word;
+}
+
+/* Action group layout */
+.action-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* Icon wrapper */
+.icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Make icons darker like screenshot */
+.icon-wrapper lightning-button-icon {
+    --slds-c-button-color-foreground: #1e2d3d;
+    --slds-c-button-color-foreground-hover: #032d60;
+}
+
+/* Smooth hover effect */
+.icon-wrapper:hover {
+    transform: translateY(-2px);
+    transition: 0.2s ease;
+}
+
+
+/* CHECKBOX */
+.shortlist-col {
+    text-align: center;
+}
+
+.shortlist-col lightning-input {
+    display: flex;
+    justify-content: center;
+}
+
+/* FOOTER */
+.footer-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    padding-top: 16px;
+    //border-top: 1px solid #e5e5e5;
+}
+
+.footer-left {
+    font-weight: 500;
+}
+
+.footer-right {
+    font-size: 12px;
+    color: #777;
+}
+
+.submit-btn {
+    transform: scale(1.05);
+}
+
+/* PRINT */
+@media print {
+    .page-bg {
+        background: white;
+        padding: 0;
+    }
+
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    button {
+        display: none !important;
+    }
+
+    
+}
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 100px;
+    
+       
+}
+.generated-date {
+    font-size: 12px;
+    color: #c7c7c7;
+    opacity: 0.8;   
+}
+.wrap-text {
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.skills-container {
+    max-width: 250px;   /* optional - column width control */
+}

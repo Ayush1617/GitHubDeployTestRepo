@@ -1,0 +1,120 @@
+<template>
+    <div class="card-wrapper">
+        <!-- Google Drive Auth -->
+<div style="padding:10px 15px;">
+    <lightning-button
+        label={authButtonLabel}
+        variant="brand"
+        onclick={handleAuthenticate}
+        disabled={isAuthLoading}>
+    </lightning-button>
+
+    <template if:true={isAuthLoading}>
+        <lightning-spinner size="small"></lightning-spinner>
+    </template>
+
+    <template if:true={isAuthenticated}>
+        <span style="margin-left:10px;color:green;font-weight:600;">
+            Connected to Google Drive
+        </span>
+    </template>
+</div>
+
+
+        <!-- Compact Horizontal Progress Tracker -->
+        <lightning-card title="Document Tracking" class="custom-card">
+            <div class="tracker-container">
+                <template for:each={trackedDocs} for:item="doc">
+                    <div key={doc.value} class={doc.cssClass}>
+                        {doc.label}
+                    </div>
+                </template>
+            </div>
+        </lightning-card>
+
+        <!-- File Name Section -->
+        <lightning-card title="Candidate Document Upload" class="custom-card">
+            <div class="form-section file-name-section">
+                <div class="file-name-row">
+                    <label class="form-label">Document Type :</label>
+                    <lightning-combobox 
+                        class="combobox-control"
+                        name="docType"
+                        value={selectedDocType}
+                        options={docTypeOptions}
+                        onchange={handleDocTypeChange}  
+                        placeholder="Select document type">
+                    </lightning-combobox>
+
+                    <template if:true={isOtherSelected}>
+                        <label class="form-label" style="margin-left: 1.8rem">Title :</label>
+                        <lightning-input
+                            class="text-control"
+                            type="text"
+                            value={otherDocName}
+                            onchange={handleOtherDocNameChange}
+                            placeholder="Enter document name">
+                        </lightning-input>
+                    </template>
+                </div>
+            </div>
+        </lightning-card>
+
+        <!-- Upload Section with Loader -->
+        <lightning-card title="Upload Document" class="custom-card">
+            <div class="form-section upload-section {uploadDisabledClass}" style="position: relative;">
+                
+                <!-- Loader overlay -->
+                <template if:true={isUploading}>
+                    <div class="upload-overlay">
+                        <lightning-spinner alternative-text="Uploading..." size="medium" variant="brand"></lightning-spinner>
+                    </div>
+                </template>
+
+                <!-- Drag-and-Drop Upload Box -->
+                <div class={uploadBoxClass}
+                    onclick={openFilePicker}
+                    ondragover={handleDragOver} 
+                    ondragleave={handleDragLeave}
+                    ondrop={handleDrop}>
+                    <p class="upload-text">
+                        Drag and Drop file here or <span class="browse-link">browse</span>
+                    </p>
+                </div>
+
+                <!-- Hidden file input -->
+                <input 
+                    type="file" 
+                    class="hidden-file-input"
+                    onchange={handleFileUpload}
+                    disabled={isUploadDisabled} />
+            </div>
+        </lightning-card>
+
+        <!-- Uploaded Files Section -->
+        <lightning-card title="Uploaded Files" class="custom-card">
+            <div class="form-section" style="position: relative;">
+                <template if:true={isDeleting}>
+                    <div class="upload-overlay">
+                        <lightning-spinner alternative-text="Deleting..." size="medium" variant="brand"></lightning-spinner>
+                    </div>
+                </template>
+                <template if:true={hasFiles}>
+                    <div class="uploaded-files" style="height:200px;">
+                        <lightning-datatable
+                            key-field="id"
+                            data={fileList}
+                            columns={columns}
+                            onrowaction={handleRowAction}
+                            hide-checkbox-column="true"
+                            resize-column-disabled="true">
+                        </lightning-datatable>
+                    </div>
+                </template>
+                <template if:false={hasFiles}>
+                    <p class="no-files-text">No files uploaded yet.</p>
+                </template>
+            </div>
+        </lightning-card>
+    </div>
+</template>

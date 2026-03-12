@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_No_Of_Employees_And_TurnOver</fullName>
+    <active>true</active>
+    <description>Will Validate Number Of Employees And Turn Over Is Less Than 0 Or Not</description>
+    <errorConditionFormula>AND(
+    RecordType.DeveloperName = &quot;Client&quot;,
+    OR(
+        NumberEmployee__c &lt; 0,
+        Turn_Over__c &lt; 0
+    )
+)</errorConditionFormula>
+    <errorMessage>Values Can&apos;t be Less Than 0</errorMessage>
+</ValidationRule>

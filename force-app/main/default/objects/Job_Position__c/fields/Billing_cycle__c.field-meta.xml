@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Billing_cycle__c</fullName>
+    <inlineHelpText>Client payment term</inlineHelpText>
+    <label>Billing cycle</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Yearly</fullName>
+                <default>false</default>
+                <label>Yearly</label>
+            </value>
+            <value>
+                <fullName>Quaterly</fullName>
+                <default>false</default>
+                <label>Quaterly</label>
+            </value>
+            <value>
+                <fullName>2 Months</fullName>
+                <default>false</default>
+                <label>2 Months</label>
+            </value>
+            <value>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+                <label>Monthly</label>
+            </value>
+            <value>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+                <label>Weekly</label>
+            </value>
+            <value>
+                <fullName>BI-Weekly</fullName>
+                <default>false</default>
+                <label>BI-Weekly</label>
+            </value>
+            <value>
+                <fullName>BI-Monthly</fullName>
+                <default>false</default>
+                <label>BI-Monthly</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,14 @@
+<template>
+    <!-- SEND EMAIL BUTTON -->
+    <lightning-button-icon 
+        icon-name="utility:email"
+        alternative-text="Send Job Description"
+        onclick={handleSendEmail}
+        variant="border-filled"
+        size="large"
+        disabled={isDisabled}>
+    </lightning-button-icon>
+
+    <!-- POPUP (CUSTOM COMPOSER) -->
+    <c-custom-email-composer></c-custom-email-composer>
+</template>

@@ -1,0 +1,127 @@
+<template>
+    <lightning-card title="Submit Candidate to Client" icon-name="standard:contact">
+        <template if:true={isStep1}>
+
+        <div class="slds-p-around_medium">
+
+            <!-- ===================== -->
+            <!-- Standalone Mode -->
+            <!-- ===================== -->
+            <template if:false={isContextMode}>
+
+                <!-- Client Selection -->
+                <lightning-combobox
+                    label="Select Client"
+                    placeholder="Choose a client"
+                    options={clientOptions}
+                    value={selectedClientId}
+                    onchange={handleClientChange}>
+                </lightning-combobox>
+
+                <!-- Job Position Selection -->
+                <lightning-combobox
+                    class="slds-m-top_small"
+                    label="Select Job Position"
+                    options={jobPositionOptions}
+                    value={selectedJobId}
+                    onchange={handleJobChange}>
+                </lightning-combobox>
+
+            </template>
+
+            <!-- ===================== -->
+            <!-- Context Mode -->
+            <!-- ===================== -->
+            <template if:true={isContextMode}>
+
+                <!-- Optional: Show Readonly Info -->
+                <lightning-input
+                    label="Client"
+                    value={selectedClientName}
+                    disabled>
+                </lightning-input>
+
+                <lightning-input
+                    class="slds-m-top_small"
+                    label="Job Position"
+                    value={selectedJobName}
+                    disabled>
+                </lightning-input>
+
+            </template>
+
+            <!-- ===================== -->
+            <!-- Always Visible -->
+            <!-- ===================== -->
+
+            <!-- Send Type Selection -->
+            <lightning-radio-group
+                class="slds-m-top_medium"
+                label="Send As"
+                options={sendTypeOptions}
+                value={sendType}
+                onchange={handleSendTypeChange}>
+            </lightning-radio-group>
+
+            <div class="slds-m-top_medium slds-align_absolute-center">
+
+
+    
+                
+    <!-- NEXT button (Email Body) -->
+    <template if:true={isEmailBody}>
+        <lightning-button 
+            variant="brand" 
+            label="Next" 
+            onclick={handleNext}>
+        </lightning-button>
+    </template>
+
+    <!-- SEND EMAIL button (Other options) -->
+    <template if:true={isOtherOption}>
+        <lightning-button 
+            variant="brand" 
+            label="Send Email" 
+            onclick={sendEmail}>
+        </lightning-button>
+    </template>
+
+</div>
+<template if:true={validationError}>
+    <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_medium">
+        <div class="slds-notify__content">
+
+            <p>
+                Following candidates already have interview in progress:
+            </p>
+
+            <ul class="slds-list_dotted slds-m-top_x-small slds-m-bottom_x-small">
+                <template for:each={invalidCandidateNames} for:item="name">
+                    <li key={name}>
+                        <b>{name}</b>
+                    </li>
+                </template>
+            </ul>
+
+            <p>
+                <b>Please remove these candidates from the selection to proceed further.</b>
+            </p>
+
+        </div>
+    </div>
+</template>
+        </div>
+        </template>
+    </lightning-card>
+    <template if:true={isStep2}>
+
+    <!-- <template if:true={showComposer}> -->
+        <c-custom-email-composer 
+            childstep={childstep}
+            show-internal-footer="true"
+            oncloseall={handleCloseAll}>
+        </c-custom-email-composer>
+    <!-- </template> -->
+   
+    </template>
+</template>

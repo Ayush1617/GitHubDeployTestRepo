@@ -1,0 +1,97 @@
+.action-container {
+    padding: var(--c-action-container-padding, 1.5rem);
+    background: var(--slds-g-color-neutral-base-95, #f9fafb);
+    border-radius: var(--slds-g-radius-border-3, 1rem);
+}
+
+/* Responsive row */
+.skills-row {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--c-skills-row-gap, 1.5rem);
+    margin-bottom: var(--c-skills-row-margin, 1.5rem);
+}
+
+/* Modern section styling */
+.skills-section {
+    flex: 1;
+    background: var(--slds-g-color-neutral-base-100, #ffffff);
+    border: var(
+        --c-skills-section-border,
+        1px solid var(--slds-g-color-neutral-base-90, #e5e7eb)
+    );
+    border-radius: var(--slds-g-radius-border-3, 1rem);
+    padding: var(--c-skills-section-padding, 0.75rem);
+    box-shadow: var(
+        --c-skills-section-shadow,
+        0 2px 8px rgba(0, 0, 0, 0.05)
+    );
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.skills-section:hover {
+    transform: translateY(-2px);
+    box-shadow: var(
+        --c-skills-section-shadow-hover,
+        0 4px 12px rgba(0, 0, 0, 0.08)
+    );
+}
+
+/* Inputs look cleaner */
+.skills-section lightning-input {
+    font-weight: var(--slds-g-font-weight-6, 600);
+    margin-bottom: var(--slds-g-spacing-3, 0.75rem);
+}
+
+/* Suggestion dropdown */
+.suggestions-list {
+    border: var(
+        --c-suggestion-border,
+        1px solid var(--slds-g-color-neutral-base-80, #d1d5db)
+    );
+    border-radius: var(--slds-g-radius-border-2, 0.5rem);
+    background: var(--slds-g-color-neutral-base-100, #ffffff);
+    margin-top: var(--slds-g-spacing-1, 0.25rem);
+    max-height: var(--c-suggestion-max-height, 180px);
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    box-shadow: var(
+        --c-suggestion-shadow,
+        0 4px 10px rgba(0,0,0,0.06)
+    );
+}
+
+.suggestion-item {
+    padding: var(--c-suggestion-item-padding, 0.6rem 0.8rem);
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.suggestion-item:hover {
+    background: var(--slds-g-color-neutral-base-95, #f3f4f6);
+}
+
+/* Modern pill tags */
+.skill-tag {
+    display: inline-flex;
+    align-items: center;
+    background: var(--slds-g-color-palette-blue-95, #e0f2fe);
+    color: var(--slds-g-color-palette-blue-30, #0369a1);
+    padding: var(--c-skill-tag-padding, 0.35rem 0.9rem);
+    border-radius: var(--slds-g-radius-border-pill, 9999px);
+    font-size: var(--slds-g-font-scale-2, 0.85rem);
+    line-height: var(--c-line-height-tight, 1);
+    font-weight: var(--slds-g-font-weight-5, 500);
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.skill-tag:hover {
+    background: var(--slds-g-color-palette-blue-90, #bae6fd);
+    color: var(--slds-g-color-palette-blue-40, #075985);
+}
+
+.skill-tag lightning-button-icon {
+    margin-left: var(--slds-g-spacing-2, 0.4rem);
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Address__c</fullName>
+    <description>This field stores the candidate&apos;s current city or location. It is used to determine location-based fit for roles, assess relocation requirements, and support regional filtering and reporting.</description>
+    <label>Address</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Address</type>
+</CustomField>

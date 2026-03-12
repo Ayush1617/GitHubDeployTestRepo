@@ -1,0 +1,68 @@
+<template>
+    <lightning-card title="Timesheet">
+
+        <template if:true={timeEntries}>
+            <template for:each={timeEntries} for:item="entry">
+                <div key={entry.Id}
+                     class="slds-grid slds-p-around_small slds-border_bottom">
+
+                    <div class="slds-col slds-size_2-of-3">
+                        {entry.Work_Date__c}
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-3 slds-text-align_right">
+                        <lightning-button-icon
+                            icon-name="utility:note"
+                            alternative-text="Notes"
+                            title="Add Notes"
+                            data-id={entry.Id}
+                            data-notes={entry.Notes__c}
+                            onclick={openModal}>
+                        </lightning-button-icon>
+                    </div>
+
+                </div>
+            </template>
+        </template>
+
+    </lightning-card>
+
+    <!-- ================= MODAL ================= -->
+    <template if:true={isModalOpen}>
+        <section role="dialog"
+                 tabindex="-1"
+                 class="slds-modal slds-fade-in-open">
+
+            <div class="slds-modal__container">
+
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">Notes</h2>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-textarea
+                        label="Enter Notes"
+                        value={notes}
+                        onchange={handleChange}>
+                    </lightning-textarea>
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <lightning-button
+                        label="Cancel"
+                        onclick={closeModal}>
+                    </lightning-button>
+
+                    <lightning-button
+                        label="Save"
+                        variant="brand"
+                        onclick={handleSave}>
+                    </lightning-button>
+                </footer>
+
+            </div>
+        </section>
+
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

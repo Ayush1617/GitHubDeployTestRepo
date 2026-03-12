@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR3_Feedback_Character_Limit</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(LEN( Feedback__c ) &lt; 100 &amp;&amp;  NOT(ISPICKVAL( Interview_Status__c , &apos;New&apos;)),
+$Profile.Name != &quot;CandidateFormSite Profile&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Feedback__c</errorDisplayField>
+    <errorMessage>Description must contain at least 100 characters.</errorMessage>
+</ValidationRule>

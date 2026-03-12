@@ -1,0 +1,179 @@
+<template>
+
+    <!-- MAIN CONTAINER -->
+    <div class="slds-card slds-p-around_medium slds-size_1-of-1">
+
+        <!-- ================= SEARCH SECTION ================= -->
+        <div class="slds-m-bottom_large">
+
+            <h2 class="slds-text-heading_medium slds-m-bottom_xx-small">
+                Search candidates
+            </h2>
+
+            <lightning-input
+                name="search"
+                variant="label-hidden"
+                placeholder="Enter Name, Email, Phone, Skills, Experience..."
+                value={searchKey}
+                onchange={handleSearchInput}>
+            </lightning-input>
+
+        </div>
+
+        <!-- ================= PAGE SIZE + TOTAL ================= -->
+        <div class="slds-grid slds-grid_align-spread slds-m-bottom_x-small slds-grid_vertical-align-center">
+
+            <div class="slds-text-body_small slds-grid slds-grid_vertical-align-center">
+                <span>Show records per page</span>
+
+                <div class="slds-form-element slds-m-left_x-small slds-size_xx-small">
+                    <lightning-combobox
+                        variant="label-hidden"
+                        value={pageSize}
+                        options={pageSizeOptions}
+                        onchange={handlePageSizeChange}>
+                    </lightning-combobox>
+                </div>
+            </div>
+
+            <div class="slds-text-body_small">
+                Total records: {totalRecords}
+            </div>
+
+        </div>
+
+        <!-- ================= DATATABLE ================= -->
+        <template if:true={candidates}>
+            <div class="slds-m-top_large slds-scrollable_x">
+
+                <lightning-datatable
+                    key-field="Id"
+                    data={candidates}
+                    columns={columns}
+                    onrowaction={handleRowAction}
+                    onrowselection={handleRowSelection}
+                    selected-rows={selectedRowIds}
+                    max-row-selection="500">
+                </lightning-datatable>
+
+                <!-- ========== PAGINATION & ACTIONS ROW ========== -->
+                <div class="slds-grid slds-grid_align-spread slds-m-top_small slds-grid_vertical-align-center">
+
+                    <!-- Center Pagination -->
+                    <div class="slds-grid slds-grid_align-center slds-grow">
+                        <lightning-button
+                            label="Previous"
+                            onclick={handlePrevious}
+                            disabled={isPreviousDisabled}>
+                        </lightning-button>
+
+                        <span class="slds-m-horizontal_small slds-text-body_regular">
+                            Page {pageNumber} of {totalPages}
+                        </span>
+
+                        <lightning-button
+                            label="Next"
+                            onclick={handleNext}
+                            disabled={isNextDisabled}>
+                        </lightning-button>
+                    </div>
+
+                    <!-- Right Action -->
+                    <div>
+                        <lightning-button
+                            label="Create Interviews"
+                            onclick={handleCreateInterviews}
+                            disabled={isCreateDisabled}
+                            variant="brand">
+                        </lightning-button>
+                    </div>
+
+                </div>
+
+            </div>
+        </template>
+
+        <!-- ================= ERROR ================= -->
+        <template if:true={error}>
+            <p class="slds-text-color_error slds-m-top_small">
+                {error}
+            </p>
+        </template>
+
+    </div>
+
+    <!-- ================= EDIT CANDIDATE MODAL ================= -->
+    <template if:true={showEditModal}>
+        <section
+            role="dialog"
+            tabindex="-1"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">Edit Candidate</h2>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium">
+
+                    <lightning-combobox
+                        label="Notice Period"
+                        value={editingNoticeValue}
+                        options={noticePeriodOptions}
+                        onchange={handleNoticeChange}>
+                    </lightning-combobox>
+
+                    <div class="slds-m-top_small">
+                        <lightning-input
+                            type="number"
+                            label="Supplier Expected Rate"
+                            value={editingExpectedRate}
+                            onchange={handleExpectedRateChange}
+                            formatter="currency"
+                            step="0.01">
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-m-top_small">
+                        <lightning-input
+                            type="file"
+                            label="Upload Resume"
+                            accept=".pdf,.doc,.docx"
+                            onchange={handleResumeChange}>
+                        </lightning-input>
+
+                        <template if:true={resumeFileName}>
+                            <p class="slds-text-body_small slds-m-top_xx-small">
+                                Selected: {resumeFileName}
+                            </p>
+                        </template>
+                    </div>
+
+                    <p class="slds-text-body_small slds-m-top_small">
+                        Candidate: {editingCandidateName}
+                    </p>
+
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <lightning-button
+                        variant="neutral"
+                        label="Cancel"
+                        onclick={closeEditModal}>
+                    </lightning-button>
+
+                    <lightning-button
+                        variant="brand"
+                        label="Save"
+                        onclick={saveEditChanges}
+                        class="slds-m-left_small">
+                    </lightning-button>
+                </footer>
+
+            </div>
+        </section>
+
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+</template>

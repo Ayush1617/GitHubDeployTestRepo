@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Negative_value</fullName>
+    <active>true</active>
+    <description>Prevent entering a negative value in the Tax % field so that tax calculations remain valid and accurate</description>
+    <errorConditionFormula>Tax_Percentage__c &lt; 0</errorConditionFormula>
+    <errorMessage>Tax % should not be Negative</errorMessage>
+</ValidationRule>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR_JP_Responded_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+    /* Case 1: Date selected but Date field is empty */
+    AND(
+        ISPICKVAL(Responded_By__c, &quot;Date Option&quot;),
+        ISBLANK(Responded_Date__c)
+    ),
+
+    /* Case 2: Date NOT selected but Date field has value */
+    AND(
+        NOT(ISPICKVAL(Responded_By__c, &quot;Date Option&quot;)),
+        NOT(ISBLANK(Responded_Date__c))
+    )
+)</errorConditionFormula>
+    <errorMessage>Responded By Date should be filled only when Responded By is set to Date, and must be empty otherwise.</errorMessage>
+</ValidationRule>

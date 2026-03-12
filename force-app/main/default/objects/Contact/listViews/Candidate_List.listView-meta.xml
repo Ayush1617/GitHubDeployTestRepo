@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Candidate_List</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>CONTACT.PHONE1</columns>
+    <columns>CONTACT.EMAIL</columns>
+    <columns>Total_Experience_txt__c</columns>
+    <columns>LinkedIn_Profile__c</columns>
+    <columns>CONTACT.CREATED_DATE</columns>
+    <columns>Current_CTC__c</columns>
+    <columns>Notice_Period__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CONTACT.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Contact.Candidate</value>
+    </filters>
+    <label>Candidate List</label>
+    <sharedTo>
+        <group>Recruiter_Community_Group</group>
+    </sharedTo>
+</ListView>

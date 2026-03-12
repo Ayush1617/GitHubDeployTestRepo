@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Discount_must_be_btw_0_to_100</fullName>
+    <active>true</active>
+    <description>Discount percentage should always be between 0 to 100</description>
+    <errorConditionFormula>OR( Tax_Percentage__c &lt; 0,
+   Tax_Percentage__c &gt; 100 )</errorConditionFormula>
+    <errorMessage>You can&apos;t insert Negative Value in Discount</errorMessage>
+</ValidationRule>

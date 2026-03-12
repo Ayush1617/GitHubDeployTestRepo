@@ -1,0 +1,31 @@
+/* 
+ * Purpose:
+ * - Keep only what SLDS cannot do
+ * - Avoid typography, shadows, spacing overrides
+ * - Pass PMD + deployment
+ */
+
+/* Wrapper background enhancement 
+.form-wrapper {
+    background-color: var(--lwc-colorBackgroundAlt);
+}
+
+ Card fine-tuning (SLDS already provides shadow & padding) 
+.form-card {
+    background-color: var(--lwc-colorBackground);
+}*/
+
+/* Hint text under file upload */
+.hint {
+    color: var(--lwc-colorTextWeak);
+}
+
+/* Selected file name */
+.selected-file {
+    color: var(--lwc-colorTextWeak);
+}
+
+/* Message spacing refinement 
+.message {
+    margin-bottom: var(--lwc-spacingMedium);
+}*/

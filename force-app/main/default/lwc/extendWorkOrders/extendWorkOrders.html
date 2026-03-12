@@ -1,0 +1,139 @@
+<template>
+    <div class="slds-p-around_medium">
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <div class="slds-spinner_container">
+                <div class="slds-spinner slds-spinner_medium" role="status">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </template>
+
+        <template if:false={isLoading}>
+            <!-- Large Bold Header exactly like your example -->
+            <div class="slds-page-header slds-m-bottom_medium">
+                <div class="slds-page-header__row slds-align_absolute-center">
+                <div class="slds-page-header__col-title">
+                <h1 class="slds-text-heading_x-large slds-text-title_bold slds-text-align_center">
+                New Work Order
+                </h1>
+                </div>
+                </div>
+                </div>
+
+            <!-- Information Section Header -->
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-p-horizontal_small">Information</span>
+                </h3>
+                <div class="slds-section__content slds-p-around_medium">
+                    
+                    <!-- 2 Column Grid -->
+                    <div class="slds-grid slds-gutters">
+                        
+                        <!-- Left Column -->
+                        <div class="slds-col slds-size_1-of-2">
+                            
+                            <div class="slds-form-element slds-m-bottom_small">
+                                <label class="slds-form-element__label">Parent Work Order</label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" class="slds-input" value={parentWorkOrderName} disabled />
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element slds-m-bottom_small">
+                                <label class="slds-form-element__label">Project</label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" class="slds-input" value={projectName} disabled />
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element slds-m-bottom_small">
+                                <label class="slds-form-element__label">Role on Project</label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" class="slds-input" value={roleOnProject} 
+                                           onchange={handleRoleChange} placeholder="Enter role" />
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element slds-m-bottom_small">
+                                <label class="slds-form-element__label">Candidate Name</label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" class="slds-input" value={candidateName} disabled />
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element slds-m-bottom_small">
+                                <label class="slds-form-element__label">Recruiter Name</label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" class="slds-input" value={recruiterName} disabled />
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element slds-m-bottom_small">
+                                <label class="slds-form-element__label">Renewed</label>
+                                <div class="slds-form-element__control">
+                                    <span class="slds-checkbox">
+                                        <input type="checkbox" class="slds-checkbox__input" checked disabled id="renewed" />
+                                        <label class="slds-checkbox__label" for="renewed">
+                                            <span class="slds-checkbox_faux"></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="slds-col slds-size_1-of-2">
+                            
+                            <div class="slds-form-element slds-m-bottom_small">
+                                <label class="slds-form-element__label">Start Date</label>
+                                <div class="slds-form-element__control">
+                                    <input type="date" class="slds-input" value={startDate} onchange={handleStartDateChange} />
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element slds-m-bottom_small">
+                                <label class="slds-form-element__label">End Date</label>
+                                <div class="slds-form-element__control">
+                                    <input type="date" class="slds-input" value={endDate} onchange={handleEndDateChange} />
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element slds-m-bottom_small">
+                                <label class="slds-form-element__label">Status</label>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-select_container">
+                                        <select class="slds-select" onchange={handleStatusChange} value={selectedStatus}>
+                                            <template for:each={statusOptions} for:item="option">
+                                                <option key={option.value} value={option.value}>{option.label}</option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element slds-m-bottom_small">
+                                <label class="slds-form-element__label">Salary Offered</label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" class="slds-input" placeholder="Enter salary" 
+                                           value={salaryOffered} onchange={handleSalaryChange} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer with Buttons -->
+            <div class="slds-m-top_medium slds-p-top_medium slds-border_top">
+                <div class="slds-float_right">
+                    <button class="slds-button slds-button_neutral slds-m-right_small" onclick={handleCancel}>Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={saveWorkOrder}>Save</button>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

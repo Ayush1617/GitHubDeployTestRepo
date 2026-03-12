@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Job_Location__c</fullName>
+    <description>Location for which candidate is hired</description>
+    <inlineHelpText>Location for which candidate is hired.</inlineHelpText>
+    <label>Job Location</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Address</type>
+</CustomField>

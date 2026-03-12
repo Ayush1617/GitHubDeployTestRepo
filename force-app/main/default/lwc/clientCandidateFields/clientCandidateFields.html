@@ -1,0 +1,162 @@
+<template>
+    <lightning-card>
+
+        <!-- HEADER -->
+        <div class="slds-theme_info slds-p-around_medium slds-border_bottom">
+            <div class="slds-media slds-media_center">
+                <div class="slds-media__figure">
+                    <lightning-icon
+                        icon-name="utility:filter"
+                        size="medium"
+                        alternative-text="Candidate">
+                    </lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h1 class="slds-text-heading_medium slds-text-title_bold">
+                        Candidate Field Preference
+                    </h1>
+                    <p class="slds-text-body_small slds-m-top_x-small">
+                        Control which <strong>Candidate</strong> details are shared with clients.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOADING -->
+        <template if:true={isLoading}>
+            <div class="slds-is-relative slds-p-around_large">
+                <lightning-spinner size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- MAIN CONTENT -->
+        <template if:false={isLoading}>
+            <div class="slds-p-around_large">
+
+                <!-- SELECTED FIELDS CARD -->
+                <section class="slds-box slds-theme_shade slds-m-bottom_large">
+
+                    <div class="slds-grid slds-grid_align-spread slds-m-bottom_small">
+                        <h2 class="slds-text-heading_small slds-text-title_bold">
+                            Selected Candidate Fields
+                        </h2>
+
+                    </div>
+
+                    <template if:true={selectedLabels.length}>
+                        <div class="slds-grid slds-wrap slds-gutters_small">
+                            <template for:each={selectedLabels} for:item="label" for:index="index">
+                                <div key={label} class="slds-col slds-m-bottom_small">
+                                    <span
+                                        class="slds-badge slds-badge_inverse candidate-field-badge"
+                                        draggable="true"
+                                        data-index={index}
+                                        ondragstart={handleDragStart}
+                                        ondragover={handleDragOver}
+                                        ondrop={handleDrop}>
+                                        {label}
+                                    </span>
+                                </div>
+                            </template>
+                        </div>
+
+                        <div class="slds-text-body_small slds-text-color_weak">
+                            Drag and drop fields to reorder how they appear in client emails.
+                        </div>
+                    </template>
+
+                    <template if:false={selectedLabels.length}>
+                        <div class="slds-text-body_regular slds-text-color_weak">
+                            No fields selected yet. Start by adding candidate fields.
+                        </div>
+                    </template>
+
+                    <!-- ADD FIELDS CTA -->
+                    <div class="slds-m-top_medium">
+                        <lightning-button
+                            variant="brand-outline"
+                            icon-name="utility:add"
+                            label="Add Candidate Fields"
+                            onclick={openModal}>
+                        </lightning-button>
+                    </div>
+
+                </section>
+
+                <!-- SAVE ACTION -->
+                <div class="slds-grid slds-grid_align-end">
+                    <lightning-button
+                        variant="brand"
+                        icon-name="utility:save"
+                        label="Save Configuration"
+                        onclick={handleSave}
+                        disabled={isSaving}>
+                    </lightning-button>
+                </div>
+
+            </div>
+        </template>
+
+        <!-- MODAL -->
+        <template if:true={showModal}>
+            <section role="dialog" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container" style="width:800px;">
+
+                    <header class="slds-modal__header slds-theme_shade">
+                        <div class="slds-media slds-media_center">
+                            <div class="slds-media__figure">
+                                <lightning-icon
+                                    icon-name="utility:list"
+                                    size="small">
+                                </lightning-icon>
+                            </div>
+                            <div class="slds-media__body">
+                                <h2 class="slds-text-heading_medium">
+                                    Select Candidate Fields
+                                </h2>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-input
+                            type="search"
+                            label="Search Fields"
+                            placeholder="Type to filter candidate fields"
+                            value={searchTerm}
+                            onchange={handleSearchChange}>
+                        </lightning-input>
+
+                        <lightning-dual-listbox
+                            class="slds-m-top_medium"
+                            name="fields"
+                            label="Candidate Fields"
+                            source-label="Available"
+                            selected-label="Selected"
+                            options={filteredOptions}
+                            value={selectedValues}
+                            onchange={handleChange}
+                            required>
+                        </lightning-dual-listbox>
+                    </div>
+
+                    <footer class="slds-modal__footer">
+                        <lightning-button
+                            label="Cancel"
+                            onclick={closeModal}>
+                        </lightning-button>
+                        <lightning-button
+                            variant="brand"
+                            icon-name="utility:check"
+                            label="Apply Selection"
+                            onclick={saveModalSelection}>
+                        </lightning-button>
+                    </footer>
+
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+    </lightning-card>
+</template>

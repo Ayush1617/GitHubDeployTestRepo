@@ -1,0 +1,99 @@
+<template>
+    <template if:true={candidate.data}>
+        <div class="card">
+
+            <!-- Left Column (Photo) -->
+            <div class="left-col">
+                <template if:true={photoUrl}>
+                    <img src={photoUrl} alt="Candidate Photo" class="photo" />
+                </template>
+                <template if:false={photoUrl}>
+                    <div class="photo-placeholder">
+                        <lightning-icon icon-name="standard:avatar" size="large"></lightning-icon>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Right Column -->
+            <div class="right-col">
+                <!-- Header -->
+                <h2 class="name">{name}</h2>
+                <p class="sub-title">{designation}</p>
+
+                <!-- Info Grid -->
+                <div class="info-grid" style="gap:7rem;">
+                    <!-- Left column -->
+                    <div class="info-col">
+                        <div class="info-item">
+                            <lightning-icon icon-name="utility:case" size="x-small"></lightning-icon>
+                            <span class="value">{experience}</span>
+                        </div>
+                        <div class="info-item">
+                            <lightning-icon icon-name="utility:email" size="x-small"></lightning-icon>
+                            <span class="link">{email}</span>
+                        </div>
+                        <div class="info-item">
+                            <lightning-icon icon-name="utility:call" size="x-small"></lightning-icon>
+                            <span class="link">{phone}</span>
+                        </div>
+
+                        <!-- Skills -->
+                        <div class="info-item">
+                            <lightning-icon icon-name="utility:skill" size="x-small"></lightning-icon>
+                            <div class="skills-container">
+                                <template if:true={hasSkills}>
+                                    <template for:each={skillsToDisplay} for:item="skill">
+                                        <lightning-badge key={skill} label={skill}></lightning-badge>
+                                    </template>
+                                    <template if:true={extraSkillsCount}>
+                                        <span class="extra-skills" data-tooltip={allSkills}>
+                                            +{extraSkillsCount} more
+                                        </span>
+                                    </template>
+                                </template>
+                                <template if:false={hasSkills}>
+                                    <span class="value">N/A</span>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right column -->
+                    <div class="info-col">
+                        <div class="info-item">
+                            <lightning-icon icon-name="utility:like" size="x-small"></lightning-icon>
+                            <span class="value">{rating}</span>
+                        </div>
+
+                        <!-- Resume -->
+                        <div class="info-item">
+                            <lightning-icon icon-name="doctype:attachment" size="x-small" class="resume-icon"></lightning-icon>
+                            <template if:true={isResumeAvailable}>
+                                <a href={resume} target="_blank" class="link">Resume</a>
+                            </template>
+                            <template if:false={isResumeAvailable}>
+                                <span class="value">N/A</span>
+                            </template>
+                        </div>
+
+                        <!-- LinkedIn -->
+                        <div class="info-item">
+                            <lightning-icon icon-name="utility:socialshare" size="x-small" class="linkedin-icon"></lightning-icon>
+                            <template if:true={isLinkedinAvailable}>
+                                <a href={linkedin} target="_blank" class="link">LinkedIn</a>
+                            </template>
+                            <template if:false={isLinkedinAvailable}>
+                                <span class="value">N/A</span>
+                            </template>
+                        </div>
+
+                        <div class="info-item">
+                            <lightning-icon icon-name="utility:check" size="x-small"></lightning-icon>
+                            <span class="value">{billable}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

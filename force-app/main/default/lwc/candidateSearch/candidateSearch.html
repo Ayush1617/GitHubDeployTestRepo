@@ -1,0 +1,224 @@
+<template>
+
+    <div class="search-page">
+        <!-- Outer container for the entire Candidate Search page -->
+
+        <div class={containerClass} >
+            <!-- Dynamic container with conditional CSS class -->
+
+            <!-- Loading Spinner (Visible while data is being fetched) -->
+            <template if:true={isLoading}>
+                <lightning-spinner
+                    alternative-text="Loading"
+                    size="medium"
+                    variant="brand">
+                </lightning-spinner>
+            </template>
+
+            <div class={searchPanelClass}>
+                <!-- Panel that contains search filters and search header -->
+                <template if:true ={searchFlag}> 
+                    <div class="post-search-header"> 
+                        <h1 class="post-search-title slds-text-title_bold">Filters</h1>
+                    </div>
+                </template>
+                <template if:false ={searchFlag}> 
+                    <div class="search-header">
+                        <lightning-icon
+                            icon-name="standard:prospect"
+                            alternative-text="Search"
+                            size="small"
+                            class="search-header-icon">
+                        </lightning-icon>
+                        <h1 class="search-title">Candidate Search</h1>
+                    </div>
+                </template>
+                <!-- Header Section (Title + Icon) -->
+                
+
+                <!-- Search Filters Panel -->
+                <div class="search-panel">
+
+                    <!-- Skills Input Section -->
+                    <div class="skills-section">
+                        <div class="label-with-help">
+                            <label class="custom-skill-label">Skills</label>
+                            <lightning-helptext content="Type the desired skill individually and then press Enter Key to add each skill as a Tag." class="custom-helptext"></lightning-helptext>
+                        </div>
+                        <div class="skills-input-wrapper">
+                            <lightning-input 
+                                name="skillInput"
+                                value={currentSkillInput}
+                                onchange={handleSkillInputChange}
+                                onkeydown={handleSkillKeyDown}
+                                placeholder="Type to search skills...">
+                            </lightning-input>
+
+                            <!-- Spinner positioned inside input -->
+                            <template if:true={isSkillLoading}>
+                                <div class="input-spinner">
+                                    <lightning-spinner size="small" alternative-text="Loading..."></lightning-spinner>
+                                </div>
+                            </template>
+                        </div>
+
+                        
+                        <!-- Suggestions -->
+                        <template if:true={suggestions.length}>
+                            <ul class="suggestions-list">
+                                <template for:each={suggestions} for:item="suggestion">
+                                    <li key={suggestion}
+                                        data-skill={suggestion}
+                                        onclick={handleSuggestionClick}
+                                        class="suggestion-item">
+                                        {suggestion}
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                        <div class='tag-secion'>
+                            <!-- Display list of added skills as tags -->
+                        <template if:true={skills.length}>
+                            <div class="slds-m-top_x-small slds-wrap">
+                                <template for:each={skills} for:item="skill">
+                                    <span key={skill} class="skill-tag slds-m-right_x-small slds-m-bottom_x-small">
+                                        {skill}
+                                        <lightning-button-icon
+                                            icon-name="utility:close"
+                                            alternative-text="Remove"
+                                            data-skill={skill}
+                                            onclick={removeSkill}
+                                            class="remove-skill-icon"
+                                            variant="bare">
+                                        </lightning-button-icon>
+                                    </span>
+                                </template>
+                            </div>
+                        </template>
+                        </div>
+                        
+                    </div>
+
+                    <!-- Experience Filters -->
+                    <div class="custom-input-container">
+                        <div class="slds-grid slds-gutters slds-m-top_medium">
+                            <div class="slds-col">
+                                <lightning-input label="Experience (Min)" type="number" min="0"  name="minExperience" onchange={handleInputChange} ></lightning-input>
+                            </div>
+                            <div class="slds-col">
+                                <lightning-input label="Experience (Max)" type="number" min="0" name="maxExperience" onchange={handleInputChange} ></lightning-input>
+                            </div>
+                        </div>
+
+                        <!-- Phone Filter -->
+                        <lightning-input label="Phone" min="0" name="phone" onchange={handleInputChange} ></lightning-input>
+                    </div>
+                    
+
+                    <template if:true={extendedFlag}>
+                        <!-- Salary Filters -->
+                        <div class="slds-grid slds-gutters slds-m-top_medium">
+                            <div class="slds-col ann-style">
+                                <lightning-input label="Annual Salary (Min)" type="number" min="0" name="minSalary" onchange={handleInputChange}></lightning-input>
+                            </div>
+                            <div class="slds-col ann-style">
+                                <lightning-input label="Annual Salary (Max)" type="number" min="0" name="maxSalary" onchange={handleInputChange}></lightning-input>
+                            </div>
+                        </div>
+
+                        <!-- Expected CTC -->
+                        <lightning-input class="slds-m-top_medium"
+                            label="Expected CTC"
+                            type="number"
+                            name="expectedCTC"
+                            min="0"
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                        
+                        <!-- Highest Qualification -->
+                        <lightning-input class="slds-m-top_medium"
+                            label="Highest Qualification"
+                            name="highestQualification"
+                            onchange={handleInputChange}>
+                        </lightning-input>
+
+                        <!-- Institute Name -->
+                        <lightning-input class="slds-m-top_medium"
+                            label="Institute Name"
+                            name="instituteName"
+                            onchange={handleInputChange}>
+                        </lightning-input>
+
+                        <!-- Language Known -->
+                        <lightning-input class="slds-m-top_medium"
+                            label="Language Known"
+                            name="languageKnown"
+                            onchange={handleInputChange}>
+                        </lightning-input>
+
+                        <!-- Current Location Filter -->
+                        <lightning-input class="slds-m-top_medium" label="Current Location" name="currentLocation" onchange={handleInputChange}></lightning-input>
+
+                        <!-- Preferred Location -->
+                        <lightning-input class="slds-m-top_medium" label="Preferred Location" name="preferredLocation" onchange={handleInputChange}> </lightning-input>
+
+                        <!-- Gender Dropdown -->
+                        <lightning-combobox
+                            class="slds-m-top_medium"
+                            label="Gender"
+                            name="gender"
+                            value={gender}
+                            options={genderOptions}
+                            onchange={handleInputChange}>
+                        </lightning-combobox>
+
+                        <!-- Can Join In -->
+                        <lightning-input class="slds-m-top_medium" type="number" label="Can Join In?(Days)" name="canJoinIn" onchange={handleInputChange}> </lightning-input>
+                        
+                        <!-- Notice Period Dropdown -->
+                        <lightning-combobox
+                            class="slds-m-top_medium slds-p-bottom_large"
+                            label="Notice Period / Availability to Join"
+                            name="noticePeriod"
+                            value={noticePeriod}
+                            options={noticeOptions}
+                            onchange={handleInputChange}>
+                        </lightning-combobox>
+                    </template>
+
+                        
+                        <!-- Search Button -->
+                        <div class="button-group">
+                            <!-- Reset Filter Button -->
+                            <lightning-button 
+                                label="Reset" 
+                                variant="neutral"
+                                onclick={handleReset}
+                                disabled={isSearchDisabled}>
+                            </lightning-button>
+
+                            <!-- Search Button -->
+                            <lightning-button 
+                                label="Search" 
+                                variant="brand"
+                                onclick={handleSearch}
+                                disabled={isSearchDisabled}>
+                            </lightning-button>
+                        </div>
+                    
+                </div>
+            </div>
+
+            <!-- Candidate Cards Section (Visible only after search) -->
+            <template if:true={searchFlag}>
+                <div class="cards-panel slds-scrollable">
+                    <!-- Scrollable container for results -->
+                    <div class="cards-panel-inner">
+                        <c-candidate-cards candidates={candidates} search-flag={searchFlag} search-skills={skills}></c-candidate-cards>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+</template>

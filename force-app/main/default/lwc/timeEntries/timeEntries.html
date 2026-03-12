@@ -1,0 +1,103 @@
+<template>
+
+    <div class="outer-box">
+
+        <table class="custom-table">
+
+            <!-- ================= HEADER ================= -->
+
+            <thead>
+
+                <!-- Main Header Row -->
+                <tr class="main-header">
+
+                    <th class="task-header divider">
+                        Billable Task Type
+                    </th>
+
+                    <th colspan="8" class="weekly-header">
+                        Weekly Entry
+                    </th>
+
+                </tr>
+
+                <!-- Sub Header Row -->
+                <tr class="sub-header">
+
+                    <th class="divider"></th>
+
+                    <template for:each={days} for:item="day">
+                        <th key={day.key}>
+                            <div>{day.label}</div>
+                            <div class="date-text">
+                                {day.date}
+                            </div>
+                        </th>
+                    </template>
+
+                    <th>Billable</th>
+
+                </tr>
+
+            </thead>
+
+            <!-- ================= BODY ================= -->
+
+            <tbody>
+
+                <template for:each={rows} for:item="row">
+                    <tr key={row.id}>
+
+                        <!-- Task Type -->
+                        <td class="divider">
+
+                            <lightning-combobox
+                                data-id={row.id}
+                                value={row.taskTypeId}
+                                options={taskTypeOptions}
+                                placeholder="Select Task Type"
+                                variant="label-hidden"
+                                onchange={handleTaskTypeChange}>
+                            </lightning-combobox>
+
+                        </td>
+
+                        <!-- Hours Columns -->
+                        <template for:each={row.hours} for:item="hour">
+                            <td key={hour.day}>
+
+                                <lightning-input
+                                    type="number"
+                                    min="0"
+                                    variant="label-hidden"
+                                    value={hour.value}
+                                    data-id={row.id}
+                                    data-day={hour.day}
+                                    onchange={handleHourChange}>
+                                </lightning-input>
+
+                            </td>
+                        </template>
+
+                        <!-- + Icon -->
+                        <td class="center-cell">
+
+                            <lightning-button-icon
+                                icon-name="utility:add"
+                                alternative-text="Add Row"
+                                variant="bare"
+                                onclick={handleAddRow}>
+                            </lightning-button-icon>
+
+                        </td>
+
+                    </tr>
+                </template>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</template>

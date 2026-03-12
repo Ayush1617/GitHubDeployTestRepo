@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Requisition_department__c</fullName>
+    <inlineHelpText>Helps to select department of reqiisition</inlineHelpText>
+    <label>Requisition department</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Human Resources (HR)</fullName>
+                <default>false</default>
+                <label>Human Resources (HR)</label>
+            </value>
+            <value>
+                <fullName>Finance &amp; Accounts</fullName>
+                <default>false</default>
+                <label>Finance &amp; Accounts</label>
+            </value>
+            <value>
+                <fullName>Information Technology (IT)</fullName>
+                <default>false</default>
+                <label>Information Technology (IT)</label>
+            </value>
+            <value>
+                <fullName>Procurement / Purchase</fullName>
+                <default>false</default>
+                <label>Procurement / Purchase</label>
+            </value>
+            <value>
+                <fullName>Operations</fullName>
+                <default>false</default>
+                <label>Operations</label>
+            </value>
+            <value>
+                <fullName>Sales</fullName>
+                <default>false</default>
+                <label>Sales</label>
+            </value>
+            <value>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+                <label>Marketing</label>
+            </value>
+            <value>
+                <fullName>Administration</fullName>
+                <default>false</default>
+                <label>Administration</label>
+            </value>
+            <value>
+                <fullName>Customer Support / Service</fullName>
+                <default>false</default>
+                <label>Customer Support / Service</label>
+            </value>
+            <value>
+                <fullName>Legal &amp; Compliance</fullName>
+                <default>false</default>
+                <label>Legal &amp; Compliance</label>
+            </value>
+            <value>
+                <fullName>Research &amp; Development (R&amp;D)</fullName>
+                <default>false</default>
+                <label>Research &amp; Development (R&amp;D)</label>
+            </value>
+            <value>
+                <fullName>Production / Manufacturing</fullName>
+                <default>false</default>
+                <label>Production / Manufacturing</label>
+            </value>
+            <value>
+                <fullName>Quality Assurance (QA)</fullName>
+                <default>false</default>
+                <label>Quality Assurance (QA)</label>
+            </value>
+            <value>
+                <fullName>Logistics &amp; Supply Chain</fullName>
+                <default>false</default>
+                <label>Logistics &amp; Supply Chain</label>
+            </value>
+            <value>
+                <fullName>Facilities Management</fullName>
+                <default>false</default>
+                <label>Facilities Management</label>
+            </value>
+            <value>
+                <fullName>Training &amp; Development</fullName>
+                <default>false</default>
+                <label>Training &amp; Development</label>
+            </value>
+            <value>
+                <fullName>Business Development</fullName>
+                <default>false</default>
+                <label>Business Development</label>
+            </value>
+            <value>
+                <fullName>Project Management Office (PMO)</fullName>
+                <default>false</default>
+                <label>Project Management Office (PMO)</label>
+            </value>
+            <value>
+                <fullName>Security (Physical &amp; IT Security)</fullName>
+                <default>false</default>
+                <label>Security (Physical &amp; IT Security)</label>
+            </value>
+            <value>
+                <fullName>Corporate Communications</fullName>
+                <default>false</default>
+                <label>Corporate Communications</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

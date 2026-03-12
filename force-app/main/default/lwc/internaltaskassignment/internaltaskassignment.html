@@ -1,0 +1,120 @@
+<template>
+    <div class="dashboard-wrapper">
+
+        <!-- Header -->
+        <div class="custom-header">
+            Task Assignment Console
+        </div>
+
+        <p class="slds-text-body_small slds-text-color_weak slds-p-horizontal_small">
+            Assign and manage tasks for team members.
+        </p>
+
+        <div class="slds-p-around_medium">
+
+            <!-- Table Header -->
+            <table class="slds-table slds-table_bordered slds-table_fixed-layout">
+                <thead>
+                    <tr class="slds-text-title_caps slds-text-align_center">
+                        <th>Task Subject</th>
+                        <th>Priority</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Assigned To</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+            </table>
+
+            <!-- Rows -->
+            <template for:each={rows} for:item="row">
+                <div key={row.id} class="custom-row-box slds-m-bottom_small">
+                    <div class="slds-grid slds-wrap">
+
+                        <!-- Subject -->
+                        <div class="slds-col slds-size_1-of-6 col-padding subject-col">
+
+                            <div class="subject-wrapper">
+                                <lightning-input type="search" value={row.subject} data-id={row.id}
+                                    onchange={handleSubjectSearch} onfocus={showSubjectDropdown}
+                                    onblur={hideSubjectDropdown} placeholder="Search subject..." variant="label-hidden"
+                                    class="subject-input">
+                                </lightning-input>
+                            </div>
+
+                            <!-- Dropdown -->
+                            <template if:true={row.showSubjectList}>
+                                <div class="custom-dropdown">
+                                    <template for:each={row.filteredSubjects} for:item="opt">
+                                        <div key={opt.value} class="dropdown-item" data-value={opt.value}
+                                            data-id={row.id} onmousedown={selectSubject}>
+                                            {opt.label}
+                                        </div>
+                                    </template>
+
+                                    <template if:false={row.filteredSubjects.length}>
+                                        <div class="dropdown-item no-result">No Match Found</div>
+                                    </template>
+                                </div>
+                            </template>
+
+                        </div>
+
+
+                        <!-- Priority -->
+                        <div class="slds-col slds-size_1-of-6 col-padding">
+                            <div class={row.priorityClass}>
+                                <lightning-combobox value={row.priority} options={priorityOptions}
+                                    variant="label-hidden" data-id={row.id} onchange={handlePriorityChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+
+                        <!-- Due Date -->
+                        <div class="slds-col slds-size_1-of-6 col-padding">
+                            <lightning-input type="date" value={row.dueDate} variant="label-hidden" data-id={row.id}
+                                onchange={handleDueDateChange}>
+                            </lightning-input>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="slds-col slds-size_1-of-6 col-padding">
+                            <lightning-combobox value={row.status} options={statusOptions} variant="label-hidden"
+                                data-id={row.id} onchange={handleStatusChange}>
+                            </lightning-combobox>
+                        </div>
+
+                        <!-- Assigned To -->
+                        <div class="slds-col slds-size_1-of-6 col-padding">
+                            <lightning-combobox value={row.assignedTo} options={userOptions} variant="label-hidden"
+                                data-id={row.id} onchange={handleAssignChange}>
+                            </lightning-combobox>
+                        </div>
+
+                        <!-- Action Icons -->
+                        <div class="slds-col slds-size_1-of-6 col-padding action-icons">
+
+                            <span class="icon-circle success-circle" onclick={addRow}>
+                                <lightning-icon icon-name="utility:add" size="x-small"></lightning-icon>
+                            </span>
+
+                            <template if:true={rows.length}>
+                                <span class="icon-circle error-circle" onclick={deleteRow} data-id={row.id}>
+                                    <lightning-icon icon-name="utility:close" size="x-small"></lightning-icon>
+                                </span>
+                            </template>
+
+                        </div>
+
+                    </div>
+                </div>
+            </template>
+
+            <!-- Save Button -->
+            <div class="slds-m-top_large slds-align_absolute-center">
+                <lightning-button label="Save Tasks" variant="brand" onclick={saveTasks}></lightning-button>
+            </div>
+
+        </div>
+    </div>
+</template>

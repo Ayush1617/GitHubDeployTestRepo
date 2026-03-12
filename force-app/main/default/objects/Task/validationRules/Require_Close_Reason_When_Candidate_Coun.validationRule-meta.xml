@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Close_Reason_When_Candidate_Coun</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+AND(
+  ISPICKVAL(Status, &quot;Completed&quot;),
+  $RecordType.DeveloperName = &quot;Candidate_Submission&quot;,
+   $Profile.Name = &quot;Partner Community User&quot;
+),
+AND(
+  ISPICKVAL(Status, &quot;Ready for Review&quot;),
+  Candidates_to_submit__c &gt; Actual_Candidate_submitted__c,
+  ISBLANK(  Incomplete_Submission_Reason__c  ),
+  $RecordType.DeveloperName = &quot;Candidate_Submission&quot;,
+   $Profile.Name  = &quot;Partner Community User&quot;
+) )</errorConditionFormula>
+    <errorMessage>Candidate submissions do not match the target. An Incomplete Submission Reason is required to complete this record.</errorMessage>
+</ValidationRule>

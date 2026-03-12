@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightningCommunity__Page</target>
+      
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="recordIds" type="String" label="Candidate Record IDs"
+                      description="Selected Candidate IDs passed from Flow"/>
+                      <property name="done"
+                      type="Boolean"
+                      label="Done Flag"/>
+        </targetConfig>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="recordIds" type="String" label="Record Id"
+                      description="Enter Candidate record Id manually"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

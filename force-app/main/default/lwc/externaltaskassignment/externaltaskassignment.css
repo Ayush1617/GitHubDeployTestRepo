@@ -1,0 +1,117 @@
+/* Dashboard Wrapper */
+.dashboard-wrapper {
+    background: #f4f6f9;
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+/* Header */
+.custom-header {
+    font-size: 1.4rem;
+    font-weight: 700;
+    border-bottom: 3px solid #1589EE;
+    padding-bottom: 6px;
+    color: #16325c;
+}
+
+/* Common Column Padding */
+.col-padding {
+    padding: 3px;
+}
+
+/* Row Card */
+.custom-row-box {
+    background: #ffffff;
+    border-radius: 6px;
+    padding: 6px;
+    margin-bottom: 6px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Zebra Rows */
+.custom-row-box:nth-child(odd) {
+    background: #f4f6f9;
+}
+
+/* Table Header Text Wrapping */
+.slds-table th {
+    white-space: normal;
+    word-break: break-word;
+    text-align: center;
+}
+
+/* Row Column Text Wrapping */
+.custom-row-box .slds-col {
+    white-space: normal;
+    word-break: break-word;
+    text-align: center;
+}
+
+/* Fixed Column Width (10 columns = 100 / 10 ≈ 10%) */
+.slds-table th,
+.custom-row-box .slds-col {
+    width: 10%;
+}
+
+/* Prevent Flex Shrink */
+.custom-row-box .slds-col {
+    flex: 0 0 10%;
+}
+
+/* ICON COLUMN */
+.row-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    min-height: 40px;
+}
+
+/* Circle Icons */
+.icon-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Add Icon */
+.success-circle {
+    background-color: rgba(46, 132, 75, 0.66);
+}
+
+/* Delete Icon */
+.error-circle {
+    background-color: rgba(234, 0, 31, 0.64);
+}
+
+/* Icon Color */
+.icon-circle lightning-icon {
+    --sds-c-icon-color-foreground-default: #ffffff;
+}
+
+/* Hover Effect */
+.icon-circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.custom-header-row th {
+    font-size: 12px;      /* smaller size */
+    letter-spacing: 0.05rem; /* reduce spacing slightly */
+}
+/* Fix dropdown clipping issue */
+.custom-table-wrapper,
+.slds-box,
+.slds-table {
+    overflow: visible !important;
+}
+
+lightning-combobox {
+    position: relative;
+    z-index: 9999;
+}

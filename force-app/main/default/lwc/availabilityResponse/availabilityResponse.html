@@ -1,0 +1,153 @@
+<!-- File: availabilityResponse.cmp -->
+<template>
+    <div class="container">
+        <!-- Loading State -->
+        <template if:true={isLoading}>
+            <div class="loading">
+                <div class="slds-spinner slds-spinner_medium">
+                    <span class="slds-spinner__dot-a"></span>
+                    <span class="slds-spinner__dot-b"></span>
+                </div>
+                <p>Loading availability request...</p>
+            </div>
+        </template>
+
+        <!-- Main Form -->
+        <template if:true={showForm}>
+            <div class="header">
+                <h1>Interview Availability Request</h1>
+                <p class="subtitle">Please select the time slots you're available for</p>
+                <p class="contact-name">For: <strong>{contactName}</strong></p>
+            </div>
+
+            <div class="info-card">
+                <p><strong>Instructions:</strong> Check the boxes for the time slots you're available.</p>
+                <p class="note">Your selections will create calendar events when you submit.</p>
+            </div>
+
+            <!-- Data Table -->
+            <div class="table-container">
+                <template if:true={hasSlots}>
+                    <div class="table-header">
+                        <h3>Requested Time Slots</h3>
+                        <div class="table-actions">
+                            <button onclick={selectAll} class="action-link">Select All</button>
+                            <span class="divider">|</span>
+                            <button onclick={deselectAll} class="action-link">Deselect All</button>
+                        </div>
+                    </div>
+                    
+                    <table class="availability-table">
+                        <thead>
+                            <tr>
+                                <th width="50px">
+                                    <input 
+                                        type="checkbox" 
+                                        checked={allSelected}
+                                        onchange={toggleAllSelection}
+                                        class="select-all">
+                                </th>
+                                <th>Date</th>
+                                <th>Day</th>
+                                <th>Time Slot</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={groupedSlots} for:item="group">
+                                <template for:each={group.slots} for:item="slot">
+                                    <tr key={slot.id} >
+                                        <td class="checkbox-cell">
+                                            <input
+                                                type="checkbox"
+                                                checked={slot.selected}
+                                                onchange={handleSlotToggle}
+                                                data-id={slot.id}
+                                                class="slot-checkbox">
+                                        </td>
+                                        <td class="date-cell">{slot.formattedDate}</td>
+                                        <td class="day-cell">{slot.dayOfWeek}</td>
+                                        <td class="time-cell">
+                                            <span class="time-range">{slot.timeRange}</span>
+                                        </td>
+                                        <td class="duration-cell">{slot.duration}</td>
+                                    </tr>
+                                </template>
+                            </template>
+                        </tbody>
+                    </table>
+
+                    <div class="selection-summary">
+                        <div class="summary-card">
+                            <div class="summary-item">
+                                <span class="label">Total Slots:</span>
+                                <span class="value">{totalSlots}</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">Selected:</span>
+                                <span class="value selected-count">{selectedCount}</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">Status:</span>
+                                <span class="value status">
+                                    <template if:true={hasSelection}>
+                                        Ready to submit
+                                    </template>
+                                    <template if:false={hasSelection}>
+                                        No slots selected
+                                    </template>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="submit-section">
+                        <button 
+                            onclick={handleSubmit}
+                            class="submit-btn">
+                            <template if:true={isSubmitting}>
+                                <span class="spinner"></span>
+                                Submitting...
+                            </template>
+                            <template if:false={isSubmitting}>
+                                Submit Availability ({selectedCount} slots)
+                            </template>
+                        </button>
+                    </div>
+                </template>
+
+                <template if:false={hasSlots}>
+                    <div class="empty-state">
+                        <div class="empty-icon">📅</div>
+                        <h3>No Availability Requests Found</h3>
+                        <p>This link may have expired or there are no time slots requested.</p>
+                        <p>Please request a new link from your interviewer.</p>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <!-- Success Message -->
+        <template if:true={showSuccess}>
+            <div class="success-card">
+                <div class="success-icon">✓</div>
+                <h2>Thank You!</h2>
+                <p>{successMessage}</p>
+                <p class="note">Your availability has been recorded. You may close this window.</p>
+                <div class="success-details">
+                    <p><strong>{selectedCount}</strong> time slot(s) have been added to your calendar.</p>
+                </div>
+            </div>
+        </template>
+
+        <!-- Error Message -->
+        <template if:true={showError}>
+            <div class="error-card">
+                <div class="error-icon">!</div>
+                <h2>Unable to Process Request</h2>
+                <p>{errorMessage}</p>
+                <p class="note">Please request a new link from your interviewer.</p>
+            </div>
+        </template>
+    </div>
+</template>

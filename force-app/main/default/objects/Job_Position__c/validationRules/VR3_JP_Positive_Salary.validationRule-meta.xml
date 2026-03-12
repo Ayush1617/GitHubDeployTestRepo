@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR3_JP_Positive_Salary</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(Min_Salary__c &lt;=0, Max_Salary__c &lt;=0, Pay_Min_Salary__c &lt;=0, Pay_max_Salary__c &lt;=0)</errorConditionFormula>
+    <errorMessage>Amounts should be positive and greater than zero for Pay Min Salary,Pay max Salary,Min Salary and Max Salary</errorMessage>
+</ValidationRule>

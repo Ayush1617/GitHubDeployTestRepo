@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Work_Order_CompactLayout</fullName>
+    <fields>Name</fields>
+    <fields>Candidate_Name__c</fields>
+    <fields>Project__c</fields>
+    <fields>Renewed__c</fields>
+    <fields>Status__c</fields>
+    <fields>End_Date__c</fields>
+    <fields>OwnerId</fields>
+    <label>Work_Order_CompactLayout</label>
+</CompactLayout>

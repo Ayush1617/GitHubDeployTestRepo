@@ -1,0 +1,4 @@
+/* Only for drag cursor feedback */
+.candidate-field-badge {
+    cursor: grab;
+}

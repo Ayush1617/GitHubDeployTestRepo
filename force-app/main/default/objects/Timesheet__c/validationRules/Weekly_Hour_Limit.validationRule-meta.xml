@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Weekly_Hour_Limit</fullName>
+    <active>true</active>
+    <description>It will ensure that weekly hours are less than  60 hours.</description>
+    <errorConditionFormula>Total_Hours__c &gt; 60</errorConditionFormula>
+    <errorMessage>Total weekly hours cannot exceed 60 hours.</errorMessage>
+</ValidationRule>

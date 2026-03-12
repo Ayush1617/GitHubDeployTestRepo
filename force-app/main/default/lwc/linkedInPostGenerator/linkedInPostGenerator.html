@@ -1,0 +1,118 @@
+<template>
+    <lightning-card >
+        <div class="slds-p-around_medium">
+
+            <!-- Row 1 -->
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input type="text" name="Skills" label="Skill Required" value={skills} placeholder="Enter or edit skills" required message-when-value-missing="Complete this field" onchange={handleChange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input type="text" name="AdditionalSkill" label="Additional Skill" value={additionalskill} placeholder="Enter or edit skills" required message-when-value-missing="Complete this field" onchange={handleChange}>
+                    </lightning-input>
+                </div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="slds-grid slds-gutters slds-m-top_small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input type="text" name="Qualification" label="Qualification" value={qualification} placeholder="Enter or edit qualification" required message-when-value-missing="Complete this field" onchange={handleChange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input type="number" name="ExperienceRequired" label="Experience Required" value={experienceRequired} placeholder="Enter experience" required message-when-value-missing="Complete this field" onchange={handleChange} step="0.1">
+                    </lightning-input>
+                </div>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="slds-grid slds-gutters slds-m-top_small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input type="text" name="SoftSkill" label="Soft Skill" value={softskill} placeholder="Enter soft skills" required message-when-value-missing="Complete this field" onchange={handleChange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-combobox name="EmploymentType" label="Employment Type" required message-when-value-missing="Complete this field" value={employmentType} options={employmentOptions} onchange={handleChange}>
+                    </lightning-combobox>
+                </div>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="slds-grid slds-gutters slds-m-top_small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-combobox name="InterviewMode" label="Interview Mode" required message-when-value-missing="Complete this field" value={interview_Mode} options={interviewOptions} onchange={handleChange}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-combobox name="WorkMode" label="Work Mode" required message-when-value-missing="Complete this field" value={work_Mode} options={workModeOptions} onchange={handleChange}>
+                    </lightning-combobox>
+                </div>
+            </div>
+
+            <!-- Row 5 -->
+            <div class="slds-grid slds-gutters slds-m-top_small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input type="text" name="JobTitle" label="Job Title" required message-when-value-missing="Complete this field" value={job_Title} placeholder="Enter Job Title" onchange={handleChange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-combobox name="ShiftTime" label="Shift Time" required message-when-value-missing="Complete this field" value={shift_Time} options={shiftTimeOptions} onchange={handleChange}>
+                    </lightning-combobox>
+                </div>
+            </div>
+
+            <!-- Row 6 -->
+            <div class="slds-grid slds-gutters slds-m-top_small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input name="Email" label="Email" required message-when-value-missing="Complete this field" value={email} onchange={handleChange}>
+                    </lightning-input>
+                </div>
+            </div>
+
+            <!-- Generated Post -->
+            <lightning-textarea label="Generated Post Content" value={generatedContent} onchange={handleChange}>
+            </lightning-textarea>
+            <div class="slds-m-top_medium slds-text-align_center">
+            <lightning-button label="Cancel" class="slds-m-right_small" onclick={close}>
+            </lightning-button>
+            <lightning-button label="Generate Post Content" onclick={generateTextPost}>
+            </lightning-button>
+            <lightning-button label="Post" variant="brand" class="slds-m-left_small" onclick={createPostonLinkedin}>
+            </lightning-button>
+             <lightning-button 
+            label="Login with LinkedIn"
+            onclick={loginWithLinkedIn}
+            class="slds-m-right_small">
+            </lightning-button>
+            
+            </div>
+
+            <template if:true={isLoading}>
+                <div class="slds-m-top_medium slds-text-align_center">
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+            </template>
+
+        </div>
+
+            <template if:true={isLinkedInConnected}>
+            <div class="slds-m-top_small slds-text-align_center">
+            <lightning-badge label="✅ LinkedIn Connected"></lightning-badge>
+            <lightning-button 
+                label="Switch LinkedIn Account" 
+                onclick={switchLinkedInAccount}
+                class="slds-m-left_small">
+            </lightning-button>
+            </div>
+            </template>
+
+            <template if:false={isLinkedInConnected}>
+            <lightning-button 
+            label="🔗 Login with LinkedIn"
+            onclick={loginWithLinkedIn}
+            class="slds-m-right_small">
+            </lightning-button>
+            </template>
+    </lightning-card>
+</template>

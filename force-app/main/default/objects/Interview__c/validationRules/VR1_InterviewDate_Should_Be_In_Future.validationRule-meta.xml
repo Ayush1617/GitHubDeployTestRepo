@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR1_InterviewDate_Should_Be_In_Future</fullName>
+    <active>true</active>
+    <description>This validation rule ensures that the Interview Date is always set in the future</description>
+    <errorConditionFormula>Interview_Date__c &lt;= NOW()</errorConditionFormula>
+    <errorDisplayField>Interview_Date__c</errorDisplayField>
+    <errorMessage>Interview Date cannot be a past date/time</errorMessage>
+</ValidationRule>

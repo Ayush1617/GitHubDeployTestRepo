@@ -1,0 +1,68 @@
+<template>
+    <lightning-card title="Task Types" icon-name="standard:task">
+
+        <!-- Add Button -->
+        <div class="slds-p-around_small slds-text-align_right">
+            <lightning-button
+                label="New Task Type"
+                icon-name="utility:add"
+                variant="brand"
+                onclick={handleAddTaskType}>
+            </lightning-button>
+        </div>
+
+        <!-- Table -->
+        <div class="slds-p-horizontal_small">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr>
+                        <th>Task Type Name</th>
+                        <th>Billable / Non Billable</th>
+                        <th>Billing Rate (Per Hour)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <template for:each={taskTypes} for:item="task">
+                        <tr key={task.Id}>
+                            <!-- Name -->
+                           <td>
+                            <lightning-formatted-url
+                            value="javascript:void(0);"
+                            label={task.Name}
+                            data-id={task.Id}
+                            onclick={handleNavigateToTaskType}>
+                            </lightning-formatted-url>
+                            </td>
+
+
+                            <!-- Billable -->
+                            <td>
+                                <lightning-input
+                                    type="checkbox"
+                                    checked={task.Billable_Non_Billable__c}
+                                    data-id={task.Id}
+                                    onchange={handleBillableChange}>
+                                </lightning-input>
+                            </td>
+
+                            <!-- Billing Rate -->
+                            <td>
+                                <lightning-input
+                                    type="number"
+                                    variant="label-hidden"
+                                    class="rate-input"
+                                    value={task.Billing_rate_per_hour__c}
+                                    data-id={task.Id}
+                                    disabled={task.rateDisabled}
+                                    onchange={handleRateChange}>
+                                </lightning-input>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+
+    </lightning-card>
+</template>

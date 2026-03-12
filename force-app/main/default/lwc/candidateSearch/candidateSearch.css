@@ -1,0 +1,221 @@
+/*==== Layout Containers ====*/
+
+.search-page {   
+    background: var(--slds-g-color-neutral-base-100);
+}
+
+.container {
+    display: flex;
+    gap: 1rem;
+    height: var(--container-height, 100%);
+    background: var(--slds-g-color-neutral-base-100);
+}
+
+.search-panel {
+    flex: 2;
+    background: var(--slds-g-color-neutral-base-90);
+    padding: var(--c-padding, 1.5rem);
+    margin-right: var(--c-margin-right, 0.8rem);
+    border-radius: var(--c-radius, 5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.scrollable-filter-panel {
+    max-height: 90vh;
+    background: var(--slds-g-color-neutral-base-100);
+    overflow-y: auto;
+    padding-right: var(--c-padding-right, 0.5rem);
+    scrollbar-width: thin;
+    scrollbar-color: #ccc #f4f4f4;
+}
+
+.cards-panel {
+    flex: 8;
+    padding: var(--c-padding, 1rem);
+    background: var(--slds-g-color-neutral-base-100);
+}
+
+.custom-input-container {
+    height: var(--c-height, 100px);
+}
+
+/*==== Header ====*/
+.search-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--c-margin-bottom, 1rem);
+}
+
+.search-header-icon {
+    margin-right: var(--c-margin-right, 0.5rem);
+    --slds-c-icon-color-background: #0d1b2a;
+    --slds-c-icon-color-foreground: #e0e1dd;
+}
+
+.search-title {
+    font-size: var(--c-font-size, 1.6rem);
+    font-weight: var(--c-font-weight, 700);
+    color: var(--c-color-text, #e0e1dd);
+}
+
+/*==== Skills Section ====*/
+.skills-section {
+    color: var(--c-color-text, #0d1b2a);
+    font-weight: var(--c-font-weight, 600);
+}
+
+.label-with-help {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-bottom: var(--c-margin-bottom-negative, -1rem);
+}
+
+.custom-skill-label {
+    font-weight: 650;
+    color: var(--c-color-text, #0d1b2a);
+    padding-top: var(--c-padding-top, 5px);
+    display: block;
+    font-size: var(--c-font-size, 14px);
+}
+
+/*==== FIXED (Removed SDS tokens — now SLDS compliant) ====*/
+.custom-helptext::part(icon) {
+    --slds-c-icon-color-foreground: #C4FBFF;
+}
+.custom-helptext::part(icon):hover {
+    --slds-c-icon-color-foreground: #C4FBFF;
+}
+
+/* === From line 100 === */
+
+.skills-input-wrapper .input-spinner {
+    position: absolute;
+    top: var(--c-top, 66%);
+    right: var(--c-right, 0.5rem);
+    transform: translateY(-50%);
+    height: var(--c-height, 1rem);
+    width: var(--c-width, 1rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.skills-input-wrapper .input-spinner lightning-spinner {
+    width: var(--c-spinner-width, 1rem) !important;
+    height: var(--c-spinner-height, 1rem) !important;
+}
+
+/*==== Suggestions ====*/
+.suggestions-list {
+    border: var(--c-border, 1px solid #d8dde6);
+    border-radius: var(--c-border-radius, 0.25rem);
+    background: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackground, white));
+    margin-top: var(--c-margin-top, 0.25rem);
+    max-height: var(--c-max-height, 150px);
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    transition: box-shadow 0.2s ease;
+}
+.suggestions-list:hover {
+    box-shadow: var(--c-shadow-hover, 0 2px 8px rgba(0, 0, 0, 0.1));
+}
+
+.suggestion-item {
+    padding: var(--c-padding-vertical, 0.6rem) var(--c-padding-horizontal, 0.75rem);
+    cursor: pointer;
+    transition: background 0.2s ease, padding-left 0.2s ease;
+}
+.suggestion-item:hover {
+    background: var(--slds-g-color-neutral-base-100, var(--c-suggestion-hover-bg, #E8FDF9));
+    padding-left: var(--c-padding-left-hover, 1rem);
+}
+
+.tag-secion {
+    display: flex;
+}
+
+/*==== Skill Tags ====*/
+.skill-tag {
+    display: inline-flex;
+    align-items: center;
+    color: var(--slds-g-color-neutral-base-95, #e0e1dd);
+    background: var(--slds-g-color-brand-base-15, #0d1b2a);
+    padding: var(--c-skill-padding-vertical, 0.3rem) var(--c-skill-padding-horizontal, 0.8rem);
+    border-radius: var(--c-skill-radius, 1rem);
+    font-size: var(--c-skill-font-size, 0.85rem);
+    line-height: var(--c-line-height, 1);
+    margin-right: var(--c-skill-margin-right, 0.25rem);
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.skill-tag:hover {
+    color: var(--c-skill-hover-text, #0d1b2a);
+    background: var(--c-skill-hover-bg, #778da9);
+    transform: scale(var(--c-skill-hover-scale, 1.05));
+    box-shadow: var(--c-skill-hover-shadow, 0 4px 12px rgba(0, 0, 0, 0.08));
+}
+
+/*==== Search Button ====*/
+lightning-button[variant="brand"] {
+    --slds-c-button-brand-color-background: #415a77;
+    --slds-c-button-brand-color-border: #415a77;
+    --slds-c-button-brand-color-background-hover: #6d8ca1;
+    --slds-c-button-brand-color-border-hover: #6d8ca1;
+    --slds-c-button-text-color: #e0e1dd;
+    --slds-c-button-radius-border: 6px;
+}
+
+lightning-button[variant="neutral"] {
+    --slds-c-button-color-background: #2bd7a4;
+    --slds-c-button-color-border: #2bd7a4;
+    --slds-c-button-color-background-hover: #11ca93;
+    --slds-c-button-color-border-hover: #11ca93;
+    --slds-c-button-text-color: rgb(6, 6, 6);
+    --slds-c-button-radius-border: 6px;
+}
+
+/*==== Centered View (pre-search) ====*/
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: var(--c-centered-height, 100%);
+    background: var(--c-centered-bg, #e0e1dd);
+}
+
+.centered-search-panel {
+    width: var(--c-panel-width, 95%);
+    max-width: var(--c-panel-max-width, 1000px);
+    min-width: var(--c-panel-min-width, 600px);
+    background: var(--c-centered-panel-bg, #415a77);
+    padding: var(--c-panel-padding, 1.5rem);
+    border-radius: var(--c-panel-radius, 5px);
+    box-shadow: var(--c-panel-shadow, 0 4px 10px rgba(0, 0, 0, 0.08));
+}
+
+/*==== Spinner Overlay ====*/
+lightning-spinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--c-spinner-overlay-width, 100%);
+    height: var(--c-spinner-overlay-height, 100%);
+    z-index: 9999;
+    background: var(--c-spinner-overlay-bg, rgba(255, 255, 255, 0.6));
+}
+
+.button-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--c-btn-group-margin-top, 2rem);
+    gap: var(--c-btn-group-gap, 0.5rem);
+}
+
+.ann-style {
+    padding-top: var(--c-ann-padding-top, 1.5rem);
+}

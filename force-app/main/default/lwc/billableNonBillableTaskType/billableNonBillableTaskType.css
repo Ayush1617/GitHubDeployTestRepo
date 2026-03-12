@@ -1,0 +1,254 @@
+/* ================= VARIABLES ================= */
+
+:host {
+
+    /* COLORS */
+
+    --ts-bg-wrapper: #f5f7fb;
+    --ts-card-bg: #ffffff;
+    --ts-primary: #112f62;
+    --ts-primary-dark: #07224f;
+    --ts-grey-row: #434c5a;
+    --ts-border-light: #e6e6e6;
+    --ts-border-col: #e0e0e0;
+    --ts-white: #ffffff;
+    --ts-date-light: #d6e3ff;
+
+    /* SPACING */
+
+    --ts-space-0: 0;
+    --ts-space-xs: 4px;
+    --ts-space-sm: 6px;
+    --ts-space-md: 8px;
+    --ts-space-lg: 10px;
+    --ts-space-xl: 12px;
+    --ts-space-xxl: 16px;
+
+    /* FONT */
+
+    --ts-font-small: 13px;
+    --ts-font-date: 12px;
+
+    /* INPUT */
+
+    --ts-input-height: 34px;
+
+    /* GRID */
+
+    --ts-task-col-width: 240px;
+    --ts-add-col-width: 60px;
+
+    --ts-task-col-width-tablet: 200px;
+    --ts-task-col-width-mobile: 180px;
+
+    --ts-add-col-width-tablet: 50px;
+    --ts-add-col-width-mobile: 45px;
+
+    --ts-fr: 1fr;
+    --ts-days: 7;
+
+    /* BORDER */
+
+    --ts-border-thin: 1px;
+    --ts-border-thick: 2px;
+
+    /* RADIUS */
+
+    --ts-radius-sm: 6px;
+    --ts-radius-md: 10px;
+    --ts-radius-lg: 12px;
+
+    /* SCALE */
+
+    --ts-icon-scale: 1.2;
+    /* FONT WEIGHT */
+
+     --ts-font-weight-normal: 400;
+     --ts-font-weight-medium: 500;
+     --ts-font-weight-semibold: 600;
+     --ts-font-weight-bold: 700;
+
+     /* WIDTH */
+     --ts-width-full: 100%;
+}
+
+/* ================= ROOT WRAPPER ================= */
+
+.timesheet-wrapper {
+    background: var(--ts-bg-wrapper);
+    padding: var(--ts-space-lg);
+    border-radius: var(--ts-radius-lg);
+}
+
+/* ================= CARD ================= */
+
+.timesheet-card {
+    background: var(--ts-card-bg);
+    border-radius: var(--ts-radius-lg);
+    margin-bottom: var(--ts-space-lg);
+    border: var(--ts-border-thin) solid var(--ts-primary-dark);
+    overflow: visible;
+}
+
+/* ================= HEADER ================= */
+
+.header-row {
+    display: grid;
+    grid-template-columns: var(--ts-task-col-width) var(--ts-fr);
+    font-weight: var(--ts-font-weight-semibold);
+    background: var(--ts-primary);
+    color: var(--ts-white);
+    border-radius: var(--ts-radius-sm) var(--ts-radius-sm) var(--ts-space-0) var(--ts-space-0);
+    padding: var(--ts-space-lg) var(--ts-space-0);
+    border-bottom: var(--ts-border-thin) solid var(--ts-white);
+}
+
+.headertask {
+    padding-right: var(--ts-space-xl);
+    padding-left: var(--ts-space-xl);
+    border-right: var(--ts-border-thin) solid var(--ts-border-col);
+    display: flex;
+    align-items: center;
+}
+
+.task-header {
+    padding-right: var(--ts-space-xl);
+    border-right: var(--ts-border-thin) solid var(--ts-border-col);
+}
+
+.week-header {
+    padding-left: var(--ts-space-xxl);
+}
+
+/* ================= DAYS ROW ================= */
+
+.days-row {
+    display: grid;
+    grid-template-columns: var(--ts-task-col-width) repeat(var(--ts-days), var(--ts-fr)) var(--ts-add-col-width);
+    align-items: center;
+    border-bottom: var(--ts-border-thin) solid var(--ts-border-light);
+    color: var(--ts-white);
+    background: var(--ts-grey-row);
+}
+
+/* ================= DAY HEADER ================= */
+
+.day-header {
+    text-align: center;
+    font-weight: var(--ts-font-weight-semibold);
+    color: var(--ts-white);
+    border-left: var(--ts-border-thin) solid var(--ts-white);
+    padding-left: var(--ts-space-sm);
+}
+
+.day-header .date {
+    font-size: var(--ts-font-date);
+    color: var(--ts-date-light);
+}
+
+/* ================= DATA ROW ================= */
+
+.data-row {
+    display: grid;
+    grid-template-columns: var(--ts-task-col-width) repeat(var(--ts-days), var(--ts-fr)) var(--ts-add-col-width);
+    align-items: center;
+    gap: var(--ts-space-md);
+    margin-top: var(--ts-space-xl);
+    border-bottom: var(--ts-border-thin) solid var(--ts-primary-dark);
+    padding-bottom: var(--ts-space-md);
+}
+
+.data-row:last-child {
+    border-bottom: none;
+}
+
+/* ================= TASK COLUMN ================= */
+
+.task-col {
+    padding-right: var(--ts-space-xl);
+    padding-left: var(--ts-space-xl);
+    border-right: var(--ts-border-thin) solid var(--ts-border-col);
+    display: flex;
+    align-items: center;
+}
+
+/* ================= INPUT ================= */
+
+.ts-input {
+    height: var(--ts-input-height);
+    min-height: var(--ts-input-height);
+    font-size: var(--ts-font-small);
+    text-align: center;
+}
+
+/* ================= HOUR COLUMN ================= */
+
+.hour-col lightning-input {
+    width: var(--ts-width-full);
+}
+
+/* ================= ADD COLUMN ================= */
+
+.add-col {
+    text-align: center;
+    border-left: var(--ts-border-thin) solid var(--ts-white);
+}
+
+/* ================= BILLABLE TAG ================= */
+
+.billable-tag,
+.non-billable-tag {
+    font-size: var(--ts-font-date);
+    font-weight: var(--ts-font-weight-semibold);
+    text-align: center;
+}
+
+/* ================= HOUR CELL ================= */
+
+.hour-with-note {
+    display: flex;
+    align-items: center;
+    gap: var(--ts-space-xs);
+}
+
+.hour-with-note lightning-input {
+    flex: var(--ts-fr);
+    min-width: var(--ts-space-0);
+}
+
+.hour-with-note lightning-button-icon {
+    transform: scale(var(--ts-icon-scale));
+}
+
+/* ================= TOTAL ROW ================= */
+
+.total-row {
+    background: var(--ts-primary);
+    color: var(--ts-white);
+    font-weight: var(--ts-font-weight-semibold);
+    border-top: var(--ts-border-thick) solid var(--ts-primary-dark);
+}
+
+.total-row div {
+    color: var(--ts-white);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1024px) {
+
+    .days-row,
+    .data-row {
+        grid-template-columns: var(--ts-task-col-width-tablet) repeat(var(--ts-days), var(--ts-fr)) var(--ts-add-col-width-tablet);
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .days-row,
+    .data-row {
+        grid-template-columns: var(--ts-task-col-width-mobile) repeat(var(--ts-days), var(--ts-fr)) var(--ts-add-col-width-mobile);
+    }
+
+}

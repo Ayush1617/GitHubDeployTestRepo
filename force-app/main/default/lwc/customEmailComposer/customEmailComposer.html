@@ -1,0 +1,231 @@
+<template>
+    <template if:true={childstep}>
+        <!--section role="dialog"
+                 tabindex="-1"
+                 aria-modal="true"
+                 class="slds-modal slds-fade-in-open custom-modal"-->
+            <div class="modal__container">
+
+                <!-- HEADER -->
+               
+
+                <!-- CONTENT (scrollable region) -->
+                <div class=" slds-p-around_medium content-scroll">
+
+                    <!-- FROM -->
+                    <div class="field-row">
+                        <label class="field-label">From</label>
+                        <div class="field-control from-box">
+                            <div class="from-pill-container"
+                                 onclick={toggleFromPopup}
+                                 role="button"
+                                 tabindex="0">
+                                <span class="from-pill">
+                                    <span class="from-pill__label">{selectedFromDisplay}</span>
+                                    <lightning-icon icon-name="utility:down"
+                                                    size="xx-small"
+                                                    class="from-pill-caret">
+                                    </lightning-icon>
+                                </span>
+                            </div>
+
+                            <template if:true={showFromPopup}>
+                                <div class="from-popup slds-card">
+                                    <template for:each={fromOptions} for:item="opt">
+                                        <div key={opt.id}
+                                             class="from-option"
+                                             data-id={opt.id}
+                                             onclick={handleFromSelect}>
+                                            <div class="opt-title">{opt.displayName}</div>
+                                            <div class="opt-sub">{opt.address}</div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- TO -->
+                    <div class="field-row">
+                        <label class="field-label">To</label>
+                        <div class="field-control recipient-box">
+                            <div class="pills-wrapper" onclick={focusToInput}>
+                                <template for:each={toChips} for:item="chip">
+                                    <span key={chip}
+                                          class="slds-pill slds-pill_link pill-inline">
+                                        <span class="slds-pill__label">{chip}</span>
+                                        <button class="slds-button slds-button_icon slds-button_icon-x-small"
+                                                data-type="to"
+                                                data-value={chip}
+                                                onclick={removeChip}>
+                                            <lightning-icon icon-name="utility:close"
+                                                            size="x-small">
+                                            </lightning-icon>
+                                        </button>
+                                    </span>
+                                </template>
+
+                                <input class="pill-input"
+                                       placeholder="Enter email"
+                                       value={toInput}
+                                       oninput={handleToInputChange}
+                                       onkeyup={handleToInputKeyUp}/>
+                            </div>
+
+                            <div class="cc-bcc-links">
+                                <a class="slds-text-link" onclick={toggleCc}>Cc</a>
+                                <span class="sep">|</span>
+                                <a class="slds-text-link" onclick={toggleBcc}>Bcc</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CC -->
+                    <template if:true={showCc}>
+                        <div class="field-row">
+                            <label class="field-label">Cc</label>
+                            <div class="field-control recipient-box">
+                                <div class="pills-wrapper">
+                                    <template for:each={ccChips} for:item="chip">
+                                        <span key={chip}
+                                              class="slds-pill slds-pill_link pill-inline">
+                                            <span class="slds-pill__label">{chip}</span>
+                                            <button class="slds-button slds-button_icon slds-button_icon-x-small"
+                                                    data-type="cc"
+                                                    data-value={chip}
+                                                    onclick={removeChip}>
+                                                <lightning-icon icon-name="utility:close"
+                                                                size="x-small">
+                                                </lightning-icon>
+                                            </button>
+                                        </span>
+                                    </template>
+
+                                    <input class="pill-input"
+                                           placeholder="Add CC"
+                                           value={ccInput}
+                                           oninput={handleCcInputChange}
+                                           onkeyup={handleCcInputKeyUp}/>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- BCC -->
+                    <template if:true={showBcc}>
+                        <div class="field-row">
+                            <label class="field-label">Bcc</label>
+                            <div class="field-control recipient-box">
+                                <div class="pills-wrapper">
+                                    <template for:each={bccChips} for:item="chip">
+                                        <span key={chip}
+                                              class="slds-pill slds-pill_link pill-inline">
+                                            <span class="slds-pill__label">{chip}</span>
+                                            <button class="slds-button slds-button_icon slds-button_icon-x-small"
+                                                    data-type="bcc"
+                                                    data-value={chip}
+                                                    onclick={removeChip}>
+                                                <lightning-icon icon-name="utility:close"
+                                                                size="x-small">
+                                                </lightning-icon>
+                                            </button>
+                                        </span>
+                                    </template>
+
+                                    <input class="pill-input"
+                                           placeholder="Add BCC"
+                                           value={bccInput}
+                                           oninput={handleBccInputChange}
+                                           onkeyup={handleBccInputKeyUp}/>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- SUBJECT -->
+                    <div class="field-row" style="align-items: center;">
+                        <label class="field-label">Subject</label>
+                        <div class="field-control">
+                            <lightning-input value={subject}
+                                             onchange={handleSubjectChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <!-- BODY (Rich Text) -->
+                    <div class="field-row" style="width: 52rem;">
+    
+    <div class="field-control">
+
+        <!-- Outer scroll wrapper -->
+        <div class="rte-scroll-wrapper">
+
+            <!-- Required fixed-height box -->
+            <div class="rte-wrapper ">
+                <lightning-input-rich-text
+                    class="email-body"
+                    value={htmlBody}
+                    onchange={handleBodyChange}
+                    placeholder="Write your email..." style="width: 52rem;">
+                </lightning-input-rich-text>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+                    <!-- ATTACHMENTS -->
+                   <!-- <template if:true={selectedFiles}>
+                        <div class="field-row attach-row">
+                            <label class="field-label"></label>
+                            <div class="field-control attach-preview">
+                                <template for:each={selectedFiles} for:item="f">
+                                    <div key={f.Id} class="attach-item">
+                                        <img src={f.FilePhoto} alt="file"/>
+                                        <span>{f.Title}</span>
+                                        <button class="slds-button slds-button_icon"
+                                                data-id={f.Id}
+                                                onclick={removeAttachment}>
+                                            <lightning-icon icon-name="utility:close"
+                                                            size="x-small">
+                                            </lightning-icon>
+                                        </button>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template> -->
+
+                    <!-- RELATED TO -->
+                    <div class="field-row" style="align-items: center;">
+                        <label class="field-label">Related To</label>
+                        <div class="field-control related-box">
+                            <lightning-input type="text"
+                                             value={relatedToName}
+                                             disabled
+                                             placeholder="No record selected">
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                </div> <!-- content-scroll -->
+
+                <!-- FOOTER -->
+                <template if:true={showInternalFooter}>
+                    <div class="footer-fixed">
+                        <lightning-button 
+                            variant="brand"
+                            label="Send Email"
+                            onclick={handleSend}>
+                        </lightning-button>
+                    </div>
+                </template>
+
+            </div>
+        <!--/section-->
+        
+        <!--div class="slds-backdrop slds-backdrop_open"></div-->
+    </template>
+</template>

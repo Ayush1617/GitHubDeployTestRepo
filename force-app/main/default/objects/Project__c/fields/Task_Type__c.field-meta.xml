@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Task_Type__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Identifies the Task Type associated with this Project. The selected Task Type determines the applicable billable rate when the Project uses the Time &amp; Materials billing model with Rate Type set to Task Billable Rate.</description>
+    <inlineHelpText>Select the Task Type whose predefined billable rate should be applied to this project when Task Billable Rate is selected as the Rate Type.</inlineHelpText>
+    <label>Task Type</label>
+    <referenceTo>Task_Type__c</referenceTo>
+    <relationshipLabel>Projects</relationshipLabel>
+    <relationshipName>Projects</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

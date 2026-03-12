@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Next_Notification_Date_Time__c</fullName>
+    <description>This field stores the next scheduled date and time when a notification should be sent to the recruiter for the assigned daily task. The value is automatically calculated and updated by flows based on task creation and update logic.</description>
+    <label>Next Notification Date Time</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

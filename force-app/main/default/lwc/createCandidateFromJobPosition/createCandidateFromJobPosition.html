@@ -1,0 +1,8 @@
+<template>
+    <div class="slds-align_absolute-center slds-p-around_medium">
+        <lightning-spinner if:true={isLoading} alternative-text="Loading"></lightning-spinner>
+        <div if:false={isLoading} class="slds-text-align_center">
+            <p>Redirecting to candidate creation page...</p>
+        </div>
+    </div>
+</template>

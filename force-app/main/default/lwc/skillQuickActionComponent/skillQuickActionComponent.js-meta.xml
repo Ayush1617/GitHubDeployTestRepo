@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <isExposed>true</isExposed>
+
+    <targets>
+        <!-- Quick Action -->
+        <target>lightning__RecordAction</target>
+
+        <!-- Experience Cloud Pages -->
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+
+        <!-- FLOW SCREEN SUPPORT -->
+        <target>lightning__FlowScreen</target>
+    </targets>
+
+    <targetConfigs>
+        <!-- QUICK ACTION CONFIG -->
+        <targetConfig targets="lightning__RecordAction">
+            <actionType>ScreenAction</actionType>
+        </targetConfig>
+
+        <!-- FLOW SCREEN CONFIG -->
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="recordId" type="String" label="Record Id"/>
+        </targetConfig>
+
+        <!-- COMMUNITY CONFIG -->
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="recordId" type="String" label="Record Id"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

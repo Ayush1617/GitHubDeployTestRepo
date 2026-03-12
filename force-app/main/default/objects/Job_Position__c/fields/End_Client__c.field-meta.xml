@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>End_Client__c</fullName>
+    <description>Company for which actually candidate is outsourced.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Company for which actually candidate is outsourced.</inlineHelpText>
+    <label>End Client</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

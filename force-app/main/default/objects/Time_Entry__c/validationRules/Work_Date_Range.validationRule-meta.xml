@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Work_Date_Range</fullName>
+    <active>true</active>
+    <description>Work Date must be within Timesheet week start and end date</description>
+    <errorConditionFormula>OR(
+    Work_Date__c &lt; Timesheet__r.Week_Start_Date__c,
+    Work_Date__c &gt; Timesheet__r.Week_End_Date__c
+)</errorConditionFormula>
+    <errorDisplayField>Work_Date__c</errorDisplayField>
+    <errorMessage>Work Date must fall within the selected Timesheet week.</errorMessage>
+</ValidationRule>

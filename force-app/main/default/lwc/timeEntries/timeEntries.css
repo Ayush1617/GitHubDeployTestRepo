@@ -1,0 +1,55 @@
+.outer-box {
+    background: #f8f9fb;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+/* Table Base */
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Header Styling */
+.main-header th {
+    background: #f3f3f3;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px;
+}
+
+.sub-header th {
+    background: #fafafa;
+    font-weight: 500;
+    padding: 10px;
+}
+
+/* Date Text */
+.date-text {
+    font-size: 11px;
+    color: gray;
+}
+
+/* Divider between 2 main columns */
+.divider {
+    border-right: 2px solid #d8dde6;
+}
+
+/* Body cells */
+td {
+    padding: 10px;
+    border-top: 1px solid #ececec;
+}
+
+/* Center alignment */
+.center-cell {
+    text-align: center;
+}
+
+/* Input Styling */
+lightning-input {
+    width: 60px;
+}

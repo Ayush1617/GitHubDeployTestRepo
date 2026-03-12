@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Candidate_Positive_Salary_Validation</fullName>
+    <active>true</active>
+    <description>Ensure positive number for ctc fields</description>
+    <errorConditionFormula>AND(
+    RecordType.DeveloperName = &quot;Candidate&quot;,
+    OR(
+        Current_CTC__c &lt;= 0,
+        Expected_CTC__c &lt;= 0,
+        Offered_CTC__c &lt;= 0
+    )
+)</errorConditionFormula>
+    <errorMessage>Amounts should be positive and greater than zero for Current CTC, Expected CTC, and Offered CTC.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR3_Feedback_should_be_Updated</fullName>
+    <active>false</active>
+    <description>You should update feedback if either &quot;Round&quot; or &quot;Interview status&quot; fields are changed.</description>
+    <errorConditionFormula>AND(
+OR(
+        AND(
+            ISCHANGED(Interview_Status__c),
+            OR(
+                ISBLANK(Feedback__c),
+                Feedback__c = PRIORVALUE(Feedback__c)
+            )
+        ),
+        AND(
+            ISCHANGED(Round__c),
+            OR(
+                ISBLANK(Feedback__c),
+                Feedback__c = PRIORVALUE(Feedback__c)
+            )
+        )
+),
+  $Profile.Name != &quot;CandidateFormSite Profile&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Feedback__c</errorDisplayField>
+    <errorMessage>Feedback must be updated when Status or Round changes.</errorMessage>
+</ValidationRule>

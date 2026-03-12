@@ -1,0 +1,129 @@
+<template>
+    <lightning-card>
+        <div class="slds-p-around_medium">
+
+            <!-- Row 1 -->
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input
+                        type="text"
+                        label="Skills Required"
+                        value={skills}
+                        placeholder="Enter or edit skills"
+                        onchange={handleChange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input
+                        type="text"
+                        label="Additional skills"
+                        value={additionalskill}
+                        placeholder="Enter or edit skills"
+                        onchange={handleChange}>
+                    </lightning-input>
+                </div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="slds-grid slds-gutters slds-m-top_small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input
+                        type="text"
+                        label="Qualification"
+                        value={qualification}
+                        placeholder="Enter or edit qualification"
+                        onchange={handleChange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input
+                        type="text"
+                        label="Experience Required"
+                        value={experienceRequired}
+                        placeholder="Enter experience"
+                        onchange={handleChange}>
+                    </lightning-input>
+                </div>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="slds-grid slds-gutters slds-m-top_small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input
+                        type="text"
+                        label="Soft skills"
+                        value={softskill}
+                        placeholder="Enter soft skills"
+                        onchange={handleChange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-combobox
+                        name="tone"
+                        label="Select Tone of the content"
+                        value={tone}
+                        placeholder="Select Tone"
+                        options={toneOptions}
+                        onchange={handleChange}>
+                    </lightning-combobox>
+                </div>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="slds-grid slds-gutters slds-m-top_small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-combobox
+                        name="length"
+                        label="Select Length of the content"
+                        value={length}
+                        placeholder="Select Length"
+                        options={lengthOptions}
+                        onchange={handleChange}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    
+                </div>
+            </div>
+
+            <!-- Job Description full width -->
+            
+            <lightning-textarea
+                label="Job Description"
+                value={jobDescription}
+                onchange={handleChange}
+                placeholder="Generated job description will appear here..."
+                class="slds-m-top_small">
+            </lightning-textarea>
+            
+
+            <div class="slds-m-top_medium slds-text-align_center">
+                <lightning-button 
+                    variant="neutral"
+                    label="Cancel"
+                    class="slds-m-right_small"
+                    onclick={handleCancel}>
+                </lightning-button>
+
+                <lightning-button 
+                    variant="neutral"
+                    label="Add Job Description"
+                    onclick={generateDescription}>
+                </lightning-button>
+
+                <lightning-button 
+                    variant="brand"
+                    label="Save"
+                    class="slds-m-left_small"
+                    onclick={saveDescription}>
+                </lightning-button>
+            </div>
+
+            <template if:true={isLoading}>
+                <div class="slds-m-top_medium slds-text-align_center">
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

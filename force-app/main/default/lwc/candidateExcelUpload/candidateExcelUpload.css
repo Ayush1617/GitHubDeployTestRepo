@@ -1,0 +1,47 @@
+.custom-container{
+	color : black;
+}
+.modal-header-blue {
+    background-color: #0176d3;
+    color: #ffffff;
+}
+
+/* Add this CSS file (candidateExcelUpload.css) */
+.upload-page-container {
+    background-color: #f3f2f2;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.upload-header {
+    background-color: white;
+    border-bottom: 1px solid #dddbda;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.upload-body {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.upload-footer {
+    background-color: white;
+    border-top: 1px solid #dddbda;
+    position: sticky;
+    bottom: 0;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+}
+
+/* Make boxes full width */
+.slds-box {
+    width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .upload-body {
+        padding: 1rem;
+    }
+}

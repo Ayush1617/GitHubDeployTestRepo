@@ -1,0 +1,110 @@
+<!--
+@File Name        : holidayCard.html
+@Description     : 
+    This Lightning Web Component displays upcoming holidays in a card view.
+    Users can navigate through holidays using left and right arrows and
+    can view the complete list of holidays for the current year in a modal popup.
+    The component is designed for use in dashboards or community pages.
+
+@Author          : Ajay Kaurav
+@Last Modified On: December 2025
+-->
+
+<template>
+    
+        <div class={holidayContainerClass}>
+
+            <!-- Header -->
+            <div class="holiday-header">
+                <span>Holidays</span>
+                <a class="view-all" onclick={openModal}>View All</a>
+            </div>
+
+            <!-- Body -->
+            <div class="holiday-body">
+
+                <!-- Left Arrow -->
+                <div class="nav-slot">
+                    <template if:true={showLeftArrow}>
+                        <lightning-button-icon
+                            icon-name="utility:chevronleft"
+                            variant="bare"
+                            class="nav-btn"
+                            onclick={showPrevious}>
+                        </lightning-button-icon>
+                    </template>
+                </div>
+
+                <!-- Center -->
+                <div class="holiday-info">
+                    <div class="holiday-name">{currentHoliday.name}</div>
+                    <div class="holiday-date">
+                        {currentHoliday.day} {currentHoliday.month}
+                    </div>
+                </div>
+
+                <!-- Right Arrow -->
+                <div class="nav-slot">
+                    <template if:true={showRightArrow}>
+                        <lightning-button-icon
+                            icon-name="utility:chevronright"
+                            variant="bare"
+                            class="nav-btn"
+                            onclick={showNext}>
+                        </lightning-button-icon>
+                    </template>
+                </div>
+
+            </div>
+
+            <!-- Decoration -->
+            <div class="holiday-decoration"></div>
+        </div>
+    
+
+    <!-- ================= MODAL ================= -->
+    <template if:true={isModalOpen}>
+        <section class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container modal-container">
+
+                <!-- Header -->
+                <header class="slds-modal__header modal-header">
+    <h2 class="slds-text-heading_medium">
+        Holidays {currentYear}
+    </h2>
+
+    <lightning-button-icon
+        icon-name="utility:close"
+        variant="bare"
+        class="modal-close-btn"
+        onclick={closeModal}>
+    </lightning-button-icon>
+</header>
+                <!-- Body -->
+                <div class="slds-modal__content modal-body">
+                    <div class="holiday-grid">
+                        <template for:each={yearHolidays} for:item="holiday">
+                            <div
+                                key={holiday.id}
+                                class="holiday-row {holiday.rowClass}">
+
+                                <div class="date-box">
+                                    <div class="month">{holiday.month}</div>
+                                    <div class="day">{holiday.day}</div>
+                                </div>
+
+                                <div class="details">
+                                    <div class="name">{holiday.name}</div>
+                                    <div class="weekday">{holiday.weekday}</div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

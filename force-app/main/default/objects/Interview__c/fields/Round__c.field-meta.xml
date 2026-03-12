@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Round__c</fullName>
+    <description>The stage or round of the interview process. Helps track candidate progress.</description>
+    <label>Round</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Interview_Status__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Screening</fullName>
+                <default>false</default>
+                <label>Screening</label>
+            </value>
+            <value>
+                <fullName>Technical</fullName>
+                <default>false</default>
+                <label>L1 | Technical</label>
+            </value>
+            <value>
+                <fullName>Managerial</fullName>
+                <default>false</default>
+                <label>L2 | Technical / Managerial</label>
+            </value>
+            <value>
+                <fullName>HR</fullName>
+                <default>false</default>
+                <label>L3 | HR Round</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Interviewing</controllingFieldValue>
+            <valueName>Screening</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Interviewing</controllingFieldValue>
+            <valueName>Technical</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Interviewing</controllingFieldValue>
+            <valueName>Managerial</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Interviewing</controllingFieldValue>
+            <valueName>HR</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

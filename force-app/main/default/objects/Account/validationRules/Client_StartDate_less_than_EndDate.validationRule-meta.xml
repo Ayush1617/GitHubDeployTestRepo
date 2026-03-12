@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_StartDate_less_than_EndDate</fullName>
+    <active>true</active>
+    <description>Start Date Should be Less than EndDate</description>
+    <errorConditionFormula>AND(
+    RecordType.DeveloperName = &quot;Client&quot;,
+    Agreement_Start_Date__c &gt;= Agreement_End_Date__c
+)</errorConditionFormula>
+    <errorMessage>Start Date must be less than End Date.</errorMessage>
+</ValidationRule>

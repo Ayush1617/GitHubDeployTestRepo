@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Soft_Skills__c</fullName>
+    <description>This field stores the soft skills of the candidate.</description>
+    <inlineHelpText>Enter comma-separated soft skills. For example: Communication, Teamwork, Problem Solving, Leadership, etc.</inlineHelpText>
+    <label>Soft Skills</label>
+    <length>131072</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

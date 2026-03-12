@@ -1,0 +1,660 @@
+<template>
+        <section class="page-wrapper">
+
+            <!-- Cloudespacio Banner -->
+            <div class="top-banner ">
+                <h1 class="top-banner-title">Jobs</h1>
+                <p class="top-banner-subtitle">
+                    Explore career opportunities with CloudEspacio Software Private Limited
+                </p>
+            </div>
+
+            <!-- ========== VIEW 1: JOB LIST ========== -->
+            <template if:true={isListView}>
+
+                <div class="page-header">
+                    <h1 class="page-title">CURRENT OPENINGS</h1>
+                    <p class="page-subtitle">
+                        Browse available opportunities and click title to view full details
+                    </p>
+                </div>
+
+                <!-- Filters bar -->
+                <div class="filters-bar">
+                    <div class="filter-item">
+                        <label class="filter-label">Search</label>
+                        <input type="text"
+                            class="filter-input"
+                            placeholder="Job title"
+                            value={searchKey}
+                            oninput={handleSearchKeyChange}/>
+                    </div>
+
+                    <div class="filter-item">
+                        <label class="filter-label">City</label>
+                        <input type="text"
+                            class="filter-input"
+                            placeholder="City"
+                            value={cityFilter}
+                            oninput={handleCityChange}/>
+                    </div>
+
+                    <div class="filter-item">
+        <label class="filter-label">Experience</label>
+        <select class="filter-input"
+                onchange={handleExperienceChange}>
+            <template for:each={experienceOptionsComputed} for:item="opt">
+                <option key={opt.value}
+                        value={opt.value}
+                        selected={opt.selected}>
+                    {opt.label}
+                </option>
+            </template>
+        </select>
+    </div>
+
+                    <div class="filter-item filter-actions">
+                        <button class="btn-secondary" type="button"
+                                onclick={handleResetFilters} style="width: 7rem; background-color:#415A77; color:white; ">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+
+                <template if:true={loadingJobs}>
+                    <div class="loader">Loading jobs…</div>
+                </template>
+
+                <template if:true={jobs}>
+                    <ul class="job-list">
+                        <template for:each={jobs} for:item="job">
+                            <li key={job.Id} class="job-row">
+                                <div class="job-main">
+                                    <button class="job-title-link"
+                                            data-id={job.Id}
+                                            onclick={openJobDetails}>
+                                        {job.Job_Title__c}
+                                    </button>
+
+                                    <div class="job-meta-line">
+
+        <!-- Location -->
+        
+        <span class="job-location">
+            <svg class="mapIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+            <path fill="#e53935"
+            d="M172.3 501.7C26.97 291 0 269.4 0 192 0 85.96 
+            85.96 0 192 0S384 85.96 384 192c0 77.4-26.97 
+            99-172.3 309.7-9.5 13.8-29.9 13.8-39.4 0zM192 
+            272c44.18 0 80-35.82 80-80s-35.82-80-80-80-80 
+            35.82-80 80 35.82 80 80 80z"/>
+        </svg>
+            {job.Job_Location__City__s}
+        </span>
+
+        <span class="job-bullet">•</span>
+
+        
+        <!-- Experience -->
+        <template if:true={job.Required_Experience_Range__c}>
+            <span class="job-exp">
+                💼 {job.Required_Experience_Range__c} yrs
+            </span>
+            <span class="job-bullet">•</span>
+        </template>
+
+
+
+        <!-- Posted Date -->
+        <span class="job-date">
+            🗓️ 
+            <lightning-formatted-date-time
+                value={job.Open_Date__c}
+                year="numeric"
+                month="short"
+                day="2-digit">
+            </lightning-formatted-date-time>
+        </span>
+
+    <!-- <span class="job-bullet">•</span> -->
+
+        <!-- Job ID -->
+    <!--  <span class="job-id">
+            ID: {job.Name}
+        </span> -->
+
+        <span class="job-bullet">•</span>
+
+        <!-- Status -->
+        <!--span class="job-status badge-open">
+            {job.Status__c}
+        </span-->
+
+    </div>
+
+                                    <!--div class="job-skills-line">
+                                        <span class="label">Skills:</span>
+                                        <span class="value">{job.Skills_Required__c}</span>
+                                    </div-->
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+
+                <!-- Pagination info -->
+                <template if:true={totalRecords}>
+                    <div class="pagination-bar">
+                        <div class="pagination-info">
+                            Showing {firstRecordIndex}–{lastRecordIndex} of {totalRecords} jobs
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn-secondary"
+                                    type="button"
+                                    onclick={handlePrevPage}
+                                    disabled={disablePrev}>
+                                Previous
+                            </button>
+                            <span class="pagination-page">
+                                Page {pageNumber} of {totalPages}
+                            </span>
+                            <button class="btn-secondary"
+                                    type="button"
+                                    onclick={handleNextPage}
+                                    disabled={disableNext}>
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={noJobsMessage}>
+                    <div class="message message-muted">{noJobsMessage}</div>
+                </template>
+
+                <template if:true={jobsError}>
+                    <div class="message message-error">{jobsError}</div>
+                </template>
+            </template>
+
+            <!-- ========== VIEW 2: DETAIL PAGE ========== -->
+            <template if:true={isDetailView}>
+                <div class="detail-wrapper">
+                    <button class="back-link" onclick={backToList}>
+                        ← Previous
+                    </button>
+
+                    <article class="detail-card">
+                        <!--header class="detail-header">
+                            <h1 class="detail-title">{selectedJob.Job_Title__c}</h1>
+                            <div class="detail-meta">
+                                <span>Job ID: {selectedJob.Name}</span>
+                                <span class="dot">•</span>
+                                <span>{selectedJob.Job_Location__City__s}</span>
+                                <span class="dot">•</span>
+                                <span>Experience: {selectedJob.Experience_Required__c}</span>
+                            </div>
+                        </header-->
+                        <header class="detail-header">
+
+        <!-- TITLE ROW -->
+        <div class="detail-title-row">
+            <h1 class="detail-title">
+                {selectedJob.Job_Title__c}
+            </h1>
+
+            <button class={applyButtonClass} onclick={openApplyModal} disabled={appliedForSelectedJob}>
+                {applyButtonLabel}
+            </button>
+        </div>
+
+        <!-- META INFO (niche hi rahega) -->
+
+        <div class="job-meta-line">
+
+        <!-- Location -->
+        
+        <span class="job-location">
+            <svg class="mapIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+            <path fill="#e53935"
+            d="M172.3 501.7C26.97 291 0 269.4 0 192 0 85.96 
+            85.96 0 192 0S384 85.96 384 192c0 77.4-26.97 
+            99-172.3 309.7-9.5 13.8-29.9 13.8-39.4 0zM192 
+            272c44.18 0 80-35.82 80-80s-35.82-80-80-80-80 
+            35.82-80 80 35.82 80 80 80z"/>
+        </svg>
+            {selectedJob.Job_Location__City__s}
+        </span>
+
+        <span class="job-bullet">•</span>
+
+        
+        <!-- Experience -->
+        <template if:true={selectedJob.Required_Experience_Range__c}>
+            <span class="job-exp">
+                💼 {selectedJob.Required_Experience_Range__c} yrs
+            </span>
+            <span class="job-bullet">•</span>
+        </template>
+
+
+
+        <!-- Posted Date -->
+        <span class="job-date">
+            🗓️ 
+            <lightning-formatted-date-time
+                value={selectedJob.Open_Date__c}
+                year="numeric"
+                month="short"
+                day="2-digit">
+            </lightning-formatted-date-time>
+        </span>
+
+    <!-- <span class="job-bullet">•</span> -->
+
+        <!-- Job ID -->
+    <!--  <span class="job-id">
+            ID: {job.Name}
+        </span> -->
+
+        <span class="job-bullet">•</span>
+
+        <!-- Status -->
+        <!--span class="job-status badge-open">
+            {job.Status__c}
+        </span-->
+
+    </div>
+
+
+    </header>
+
+                        <template if:true={showSuccess}>
+                            <div class="message message-success">
+                                {successMessage}
+                            </div>
+                        </template>
+
+                        <section class="detail-section" >
+                            <h2 class="section-heading">Skills Required :-</h2>
+                            <p class="section-body">{selectedJob.Skills_Required__c}</p>
+                        </section>
+
+                        <section class="detail-section">
+                            <h2 class="section-heading">Job Description</h2>
+                            <div class="section-body">
+                                {selectedJob.Job_Description__c}
+                            </div>
+                        </section>
+
+                        <!--div class="detail-actions" style="display: flex; justify-content: flex-end">
+                            <button class={applyButtonClass}
+                                    onclick={openApplyModal}
+                                    disabled={appliedForSelectedJob}>
+                                {applyButtonLabel}
+                            </button>
+                        </div-->
+                    </article>
+                </div>
+            </template>
+
+            <!-- ========== APPLY FORM MODAL ============ -->
+            <template if:true={showFormModal}>
+                <section class="modal-backdrop"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label="Apply for job"
+                        onclick={closeFormModal}>
+                    <div class="modal modal-form" onclick={stopModalBubble}>
+                        <button class="modal-close"
+                                onclick={closeFormModal}
+                                aria-label="Close">×</button>
+
+                        <div class="form-card">
+                            
+                            <h1 class="form-title">
+                            {selectedJob.Job_Title__c}
+                            </h1>
+                            
+                            <div class="form-header">
+                            <div class="job-meta-line">
+
+        <!-- Location -->
+        
+        <span class="job-location">
+            <svg class="mapIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+            <path fill="#e53935"
+            d="M172.3 501.7C26.97 291 0 269.4 0 192 0 85.96 
+            85.96 0 192 0S384 85.96 384 192c0 77.4-26.97 
+            99-172.3 309.7-9.5 13.8-29.9 13.8-39.4 0zM192 
+            272c44.18 0 80-35.82 80-80s-35.82-80-80-80-80 
+            35.82-80 80 35.82 80 80 80z"/>
+        </svg>
+            {selectedJob.Job_Location__City__s}
+        </span>
+
+        <span class="job-bullet">•</span>
+
+        
+        <!-- Experience -->
+        <template if:true={selectedJob.Required_Experience_Range__c}>
+            <span class="job-exp">
+                💼 {selectedJob.Required_Experience_Range__c} yrs
+            </span>
+            <span class="job-bullet">•</span>
+        </template>
+
+
+
+        <!-- Posted Date -->
+        <span class="job-date">
+            🗓️ 
+            <lightning-formatted-date-time
+                value={selectedJob.Open_Date__c}
+                year="numeric"
+                month="short"
+                day="2-digit">
+            </lightning-formatted-date-time>
+        </span>
+
+    <!-- <span class="job-bullet">•</span> -->
+
+        <!-- Job ID -->
+    <!--  <span class="job-id">
+            ID: {job.Name}
+        </span> -->
+
+        <span class="job-bullet">•</span>
+
+        <!-- Status -->
+        <!--span class="job-status badge-open">
+            {job.Status__c}
+        </span-->
+
+    </div>
+                            </div>
+
+                            <!-- <p class="form-subtitle">
+                                <strong>Job ID:</strong> {selectedJob.Name}
+                                <span class="subtitle-sep">•</span>
+                                <strong>Location:</strong> {selectedJob.Job_Location__City__s}
+                                <span class="subtitle-sep">•</span>
+                                <strong>Experience:</strong> {selectedJob.Experience_Required__c}
+                            </p> -->
+
+                            <template if:true={globalErrorMessage}>
+                                <div class="message message-error">
+                                    {globalErrorMessage}
+                                </div>
+                            </template>
+                            <template if:true={isExistingCandidate}>
+                                <div class="message message-info">
+                                    Existing Candidate Found.
+                                </div>
+                            </template>
+                            <template if:false={isExistingCandidate}>
+                                <div class="message message-muted">
+                                    Please fill the below form.
+                                </div>
+                            </template>
+
+                            <!-- ================= FORM ================= -->
+                            <form onsubmit={handleSubmit} class="apply-form" novalidate>
+
+                                <!-- NAME -->
+                                <div class="grid-2">
+                                    <div class="field">
+                                        <label>First Name *</label>
+                                        <input type="text"
+                                            name="firstName"
+                                            value={formData.firstName}
+                                            onchange={handleInputChange}
+                                            required />
+                                    </div>
+                                    <div class="field">
+                                        <label>Last Name *</label>
+                                        <input type="text"
+                                            name="lastName"
+                                            value={formData.lastName}
+                                            onchange={handleInputChange}
+                                            required />
+                                    </div>
+                                </div>
+
+                                <!-- EMAIL PHONE -->
+                                <div class="grid-2">
+                                    <div class="field">
+                                        <label>Email *</label>
+                                        <input type="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onchange={handleInputChange}
+                                            onblur={handleEmailBlur}
+                                            required />
+                                        <template if:true={emailCheckMessage}>
+                                            <div class="hint small">
+                                                {emailCheckMessage}
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="field">
+                                        <label>Phone *</label>
+                                        <input type="tel"
+                                            name="phone"
+                                            value={formData.phone}
+                                            onchange={handleInputChange}
+                                            required />
+                                    </div>
+                                </div>
+                                <!-- Loc / Location -->
+                                <div class="grid-2">
+                                            <div class="field">
+                                                <label>Current Location</label>
+                                                <input type="text"
+                                                name="currentLocation"
+                                                value={formData.currentLocation}
+                                                onchange={handleInputChange} />
+                                                </div>
+
+                                            <div class="field">
+                                            <label>Current Company</label>
+                                                    <input type="text"
+                                                    name="currentCompany"
+                                                    value={formData.currentCompany}
+                                                    onchange={handleInputChange} />
+                                                    </div>
+                                    </div>
+
+                                <!-- EXP / EXPECTED -->
+
+                                        <div class="grid-2">
+                                        <div class="field">
+                                        <label>Current CTC</label>
+                                        <input type="number"
+                                            min="0"
+                                            
+                                            name="currentCTC"
+                                            value={formData.currentCTC}
+                onchange={handleInputChange} />
+        </div>
+
+        <div class="field">
+            <label>Expected CTC</label>
+            <input type="number"
+                min="0"
+                step="0.01"
+                name="expectedSalary"
+                value={formData.expectedSalary}
+                onchange={handleInputChange} />
+        </div>
+    </div>
+
+            <!-- COMPANY / DESIGNATION -->
+    <div class="grid-2">
+        <div class="field">
+            <label>Experience (Years)</label>
+            <input type="number"
+                min="0"
+                name="experienceYears"
+                value={formData.experienceYears}
+                onchange={handleInputChange} />
+        </div>
+
+        <div class="field">
+            <label>Designation</label>
+            <input type="text"
+                name="jobTitle"
+                value={formData.jobTitle}
+                onchange={handleInputChange} />
+        </div>
+    </div>                   
+     <!-- NOTICE -->
+                                <div class="field">
+                                    <label>Notice Period</label>
+                                    <select name="noticePeriod"
+                                            onchange={handleInputChange}>
+                                        <option value="">-- Select --</option>
+                                        <template for:each={noticeOptionsComputed} for:item="opt">
+                                            <option key={opt.value}
+                                                    value={opt.value}
+                                                    selected={opt.selected}>
+                                                {opt.label}
+                                            </option>
+                                        </template>
+                                    </select>
+                                </div>
+
+                                <!-- SKILLS -->
+                                <div class="grid-2">
+                                    <!-- Skill Search Input -->
+                                    <div class="skill-wrapper">
+                                     <div class="field">
+                                        <label>Skills</label>
+                                        <lightning-input
+                                            variant="label-hidden"
+                                            value={skillInput}
+                                            onchange={handleSkillTyping}
+                                            onkeydown={handleSkillKeyDown}>
+                                        </lightning-input>
+
+                                        <!-- Suggestions Dropdown -->
+                                        <template if:true={skillSuggestions}>
+                                            <div class="dropdown">
+                                                <template for:each={skillSuggestions} for:item="skill">
+                                                    <div key={skill}
+                                                        data-value={skill}
+                                                        onclick={handleSkillSelect}
+                                                        class="dropdown-item">
+                                                        {skill}
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </template>
+
+                                        <!-- Selected Skills Tags -->
+                                        <div class="selected-skills">
+                                            <template for:each={selectedSkills} for:item="skill">
+                                                <span key={skill} class="skill-tag">
+                                                    {skill}
+                                                    <lightning-button-icon
+                                                        icon-name="utility:close"
+                                                        alternative-text="Remove"
+                                                        size="x-small"
+                                                        data-value={skill}
+                                                        onclick={removeSkill}>
+                                                    </lightning-button-icon>
+                                                </span>
+                                            </template>
+                                        </div>
+                                     </div>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- Soft Skills -->
+                                <div class="skill-wrapper">
+                                 <div class="field">
+                                    
+                                    <label class="label-with-hint">Industrial knowledge
+                                        <lightning-helptext 
+                                          content="Industry-specific knowledge such as Banking, Healthcare, Manufacturing, Telecom, etc.">
+                                        </lightning-helptext>
+                                    </label>
+                                    <lightning-input
+                                        value={softSkillInput}
+                                        onchange={handleSoftSkillTyping}
+                                        onkeydown={handleSoftSkillKeyDown}>
+                                    </lightning-input>
+
+                                    <template if:true={softSkillSuggestions}>
+                                        <div class="dropdown">
+                                            <template for:each={softSkillSuggestions} for:item="skill">
+                                                <div key={skill}
+                                                    data-value={skill}
+                                                    onclick={handleSoftSkillSelect}
+                                                    class="dropdown-item">
+                                                    {skill}
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </template>
+
+                                    <div class="selected-skills">
+                                        <template for:each={selectedSoftSkills} for:item="skill">
+                                            <span key={skill} class="skill-tag">
+                                                {skill}
+                                                <lightning-button-icon
+                                                    icon-name="utility:close"
+                                                    size="x-small"
+                                                    data-value={skill}
+                                                    onclick={removeSoftSkill}>
+                                                </lightning-button-icon>
+                                            </span>
+                                        </template>
+                                    </div>
+                                 </div>
+
+                                </div>
+
+
+                                <!-- FILE -->
+                                <div class="field">
+                                    <label class="label-with-hint">Upload Resume
+                                        <lightning-helptext 
+                                          content="PDF or DOC/DOCX preferred, max 5MB.">
+                                        </lightning-helptext>
+                                    </label>
+                                    <input type="file"
+                                        accept=".pdf,.doc,.docx"
+                                        onchange={handleFileChange} />
+                                    
+                                    <template if:true={resume.fileName}>
+                                        <div class="resume-meta">
+                                            <strong>{resume.fileName}</strong>
+                                            <button type="button"
+                                                    class="link"
+                                                    onclick={removeResume}>Remove</button>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="actions">
+                                    <button type="submit"
+                                            class="btn-primary"
+                                            disabled={isSubmitting}>
+                                        <template if:true={isSubmitting}>
+                                            Submitting...
+                                        </template>
+                                        <template if:false={isSubmitting}>
+                                            Submit Application
+                                        </template>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </template>
+        </section>
+    </template>

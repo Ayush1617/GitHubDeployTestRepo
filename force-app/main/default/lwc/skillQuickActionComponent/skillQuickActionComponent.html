@@ -1,0 +1,139 @@
+<template>
+    <lightning-card title="Add Skill(s)" icon-name="standard:skill">
+        <div class="action-container">
+
+            <!-- Skills and Soft Skills side by side -->
+            <div class="skills-row">
+
+                <!-- Skills -->
+                <div class="skills-section">
+                    <lightning-input
+                        label="Technical Skills"
+                        value={skillInput}
+                        onkeyup={handleSkillTyping}
+                        onkeydown={handleSkillKeyPress}
+                        field-level-help="Add technical skills like Java, Salesforce, SQL. Start typing to see suggestions. If you can't find what you are looking for type the desired skill and press ENTER">
+                    </lightning-input>
+
+                    <template if:true={skillSuggestions.length}>
+                        <ul class="suggestions-list">
+                            <template for:each={skillSuggestions} for:item="s">
+                                <li key={s}
+                                    data-value={s}
+                                    onclick={handleSkillSelect}
+                                    class="suggestion-item">
+                                    {s}
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+
+                    <template if:true={skills.length}>
+                        <div class="slds-m-top_x-small slds-wrap">
+                            <template for:each={skills} for:item="skill">
+                                <span key={skill} class="skill-tag slds-m-right_x-small slds-m-bottom_x-small">
+                                    {skill}
+                                    <lightning-button-icon
+                                        icon-name="utility:close"
+                                        data-value={skill}
+                                        onclick={removeSkill}
+                                        variant="bare"
+                                        alternative-text="Remove">
+                                    </lightning-button-icon>
+                                </span>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Soft Skills -->
+                <div class="skills-section">
+                    <lightning-input
+                        label="Soft Skills"
+                        value={softSkillInput}
+                        onkeyup={handleSoftSkillTyping}
+                        onkeydown={handleSoftSkillKeyPress}
+                        field-level-help="Add interpersonal skills like Communication, Teamwork, Problem Solving. Start typing to see suggestions. If you can't find what you are looking for type the desired skill and press ENTER">
+                    </lightning-input>
+
+                    <template if:true={softSkillSuggestions.length}>
+                        <ul class="suggestions-list">
+                            <template for:each={softSkillSuggestions} for:item="ss">
+                                <li key={ss}
+                                    data-value={ss}
+                                    onclick={handleSoftSkillSelect}
+                                    class="suggestion-item">
+                                    {ss}
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+
+                    <template if:true={softSkills.length}>
+                        <div class="slds-m-top_x-small slds-wrap">
+                            <template for:each={softSkills} for:item="ss">
+                                <span key={ss} class="skill-tag slds-m-right_x-small slds-m-bottom_x-small">
+                                    {ss}
+                                    <lightning-button-icon
+                                        icon-name="utility:close"
+                                        data-value={ss}
+                                        onclick={removeSoftSkill}
+                                        variant="bare"
+                                        alternative-text="Remove">
+                                    </lightning-button-icon>
+                                </span>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Industrial Skills -->
+                <div class="skills-section">
+                    <lightning-input
+                        label="Industrial Skills"
+                        value={industrialSkillInput}
+                        onkeyup={handleindustrialSkillTyping}
+                        onkeydown={handleindustrialSkillKeyPress}
+                        field-level-help="Add industrial skills like Manufacturing, Information Technology, Healthcare, Banking, Automotive, etc.. Start typing to see suggestions. If you can't find what you are looking for type the desired skill and press ENTER">
+                    </lightning-input>
+
+                    <template if:true={industrialSkillSuggestions.length}>
+                        <ul class="suggestions-list">
+                            <template for:each={industrialSkillSuggestions} for:item="sss">
+                                <li key={sss}
+                                    data-value={sss}
+                                    onclick={handleindustrialSkillSelect}
+                                    class="suggestion-item">
+                                    {sss}
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+
+                    <template if:true={industrialSkills.length}>
+                        <div class="slds-m-top_x-small slds-wrap">
+                            <template for:each={industrialSkills} for:item="sss">
+                                <span key={sss} class="skill-tag slds-m-right_x-small slds-m-bottom_x-small">
+                                    {sss}
+                                    <lightning-button-icon
+                                        icon-name="utility:close"
+                                        data-value={sss}
+                                        onclick={removeIndustrySkill}
+                                        variant="bare"
+                                        alternative-text="Remove">
+                                    </lightning-button-icon>
+                                </span>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="slds-m-top_medium slds-align_absolute-center">
+                <lightning-button variant="brand" label="Save" onclick={handleSave}></lightning-button>
+                <lightning-button variant="neutral" label="Cancel" onclick={handleCancel} class="slds-m-left_small"></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>

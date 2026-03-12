@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsBillable__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field shows whether the candidate is billable(on project) or not.</description>
+    <label>Billable</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

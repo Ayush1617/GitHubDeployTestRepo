@@ -1,0 +1,238 @@
+<template>
+    <div class="slds-p-around_small">
+
+        <!-- ================= PAGE 1 : PROJECT SELECTION ================= -->
+        <template if:false={showTimesheetView}>
+
+            <!-- Header -->
+            <div class="slds-text-align_center slds-m-bottom_medium">
+                <h1 class="slds-text-heading_medium">Timesheet Entry</h1>
+                <div>
+                <h1 class="slds-text-heading_large">
+                    Select Project
+                </h1>
+                </div>
+
+                <p class="slds-text-color_weak slds-m-top_x-small">
+                    Choose the project for which you want to log time for.<br>
+                    Only projects assigned to you are shown.
+                </p>
+            </div>
+
+            <!-- Project Selection Card -->
+            <div class="slds-grid slds-grid_align-center slds-grid_vertical-align-center" style="height:40vh;">
+                <div class="slds-col slds-size_2-of-5">
+
+                    <lightning-card>
+                        <div class="slds-p-around_xx-small">
+
+                            <!-- Loading Spinner -->
+                            <template if:true={isLoading}>
+                                <div class="slds-align_absolute-center">
+                                    <lightning-spinner alternative-text="Loading projects..."></lightning-spinner>
+                                </div>
+                            </template>
+
+                            <!-- Project Dropdown -->
+                            <template if:false={isLoading}>
+
+                                <div class="slds-form-element">
+
+                                    <label class="slds-form-element__label">
+                                        <lightning-icon
+                                            icon-name="utility:open_folder"
+                                            size="x-small"
+                                            class="slds-m-right_x-small">
+                                        </lightning-icon>
+
+                                        <strong>Project</strong>
+                                        <span class="slds-text-color_error slds-m-left_xx-small">*</span>
+                                    </label>
+
+                                    <lightning-combobox
+                                        name="project"
+                                        value={selectedProjectId}
+                                        placeholder="Search or select project"
+                                        options={projectOptions}
+                                        onchange={handleProjectChange}>
+                                    </lightning-combobox>
+
+                                </div>
+
+                                <!-- Buttons -->
+                                <div class="slds-m-top_medium slds-text-align_right">
+
+                                    <lightning-button
+                                        label="Cancel"
+                                        variant="neutral"
+                                        class="slds-m-right_small">
+                                    </lightning-button>
+
+                                    <lightning-button
+                                        label="Next"
+                                        variant="brand"
+                                        icon-name="utility:forward"
+                                        icon-position="right"
+                                        onclick={handleNext}>
+                                    </lightning-button>
+
+                                </div>
+
+                            </template>
+
+                        </div>
+                    </lightning-card>
+                    <div class="slds-m-top_small slds-p-around_x-small" style="background-color:#f3f3f3;">
+    💡 Tip: You can only log time for projects assigned to you.
+</div>
+
+                </div>
+            </div>
+
+        </template>
+
+
+
+        <!-- ================= PAGE 2 : TIMESHEET VIEW ================= -->
+        <template if:true={showTimesheetView}>
+
+            <!-- Top Buttons -->
+            <div class="slds-m-bottom_small">
+
+                <lightning-button-group>
+
+                    <lightning-button
+                        label="Back to Projects"
+                        variant="neutral"
+                        icon-name="utility:back"
+                        onclick={handleBackToProjects}>
+                    </lightning-button>
+
+                    <lightning-button
+                        label="Create Timesheet"
+                        variant="brand"
+                        icon-name="utility:add"
+                        onclick={handleCreateTimesheet}
+                        disabled={timesheetCreated}>
+                    </lightning-button>
+
+                </lightning-button-group>
+
+            </div>
+
+
+            <!-- Timesheet Card -->
+            <lightning-card title="Timesheet Information">
+
+                <!-- Week Navigation -->
+                <div class="slds-m-bottom_xx-small slds-p-left_medium">
+                    <div class="slds-grid slds-grid_align-start">
+
+                        <lightning-button
+                            variant="brand"
+                            size="small"
+                            icon-name="utility:chevronleft"
+                            alternative-text="Previous"
+                            title="Previous"
+                            class="slds-m-right_x-small"
+                            onclick={handlePrevioustime}>
+                        </lightning-button>
+
+                        <lightning-button
+                            variant="brand"
+                            size="small"
+                            icon-name="utility:chevronright"
+                            alternative-text="Next"
+                            title="Next"
+                            onclick={handleNexttime}>
+                        </lightning-button>
+
+                    </div>
+                </div>
+
+
+                <div class="slds-p-horizontal_small slds-p-vertical_x-small">
+
+                    <!-- Single Line Metadata -->
+                    <div class="meta-row slds-m-bottom_small">
+
+                        <!-- Left Side -->
+                        <div class="meta-left">
+                            <span class="meta-text">
+                                <strong>Project:</strong> {selectedProjectName}
+                            </span>
+
+                            <span class="meta-text">
+                                <strong>Status:</strong> {status}
+                            <!-- Status Message -->
+                            <span class={statusClass}>
+                                <template if:true={timesheetCreated}>
+                                    <lightning-icon icon-name="utility:success" size="x-small"
+                                        class="slds-m-right_xx-small">
+                                    </lightning-icon>
+                                    {timesheetStatus}
+                                </template>
+
+                                <template if:false={timesheetCreated}>
+                                    {timesheetStatus}
+                                </template>
+                            </span>
+                                                        </span>
+
+                        </div>
+
+                        <!-- Right Side -->
+                        <div class="meta-right">
+                            <span class="meta-text slds-m-right_medium">
+                                <strong>Current Week:</strong> {currentWeekRange}
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Divider + Grid Section -->
+                    <div class="slds-border_top slds-m-top_small slds-pt_x-small">
+
+                        <!-- If Timesheet Exists -->
+                        <template if:true={timesheetCreated}>
+
+                            <p class="slds-text-color_success slds-m-bottom_x-small">
+
+                                <lightning-icon
+                                    icon-name="utility:success"
+                                    size="small"
+                                    class="slds-m-right_xx-small">
+                                </lightning-icon>
+
+                                Timesheet exists for this week. You can now add or edit entries.
+
+                            </p>
+
+                            <c-billable-non-billable-task-type
+                                record-id={selectedProjectId}
+                                timesheet-id={timesheetId}
+                                week-start-date={currentWeekStart}>
+                            </c-billable-non-billable-task-type>
+
+                        </template>
+
+                        <!-- If Timesheet Not Created -->
+                        <template if:false={timesheetCreated}>
+
+                            <p class="slds-text-color_destructive">
+                                Click "Create Timesheet" to create a new timesheet for this week.
+                            </p>
+
+                        </template>
+
+                    </div>
+
+                </div>
+
+            </lightning-card>
+
+        </template>
+
+    </div>
+</template>

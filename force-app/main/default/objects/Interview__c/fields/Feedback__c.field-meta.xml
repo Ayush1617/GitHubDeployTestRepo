@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Feedback__c</fullName>
+    <description>Interviewer&apos;s comments or evaluation notes. Provides qualitative insight for decision making.</description>
+    <label>Feedback</label>
+    <length>12000</length>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

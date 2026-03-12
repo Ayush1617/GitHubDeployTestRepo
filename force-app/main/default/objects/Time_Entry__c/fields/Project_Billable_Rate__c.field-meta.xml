@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Project_Billable_Rate__c</fullName>
+    <description>Stores the hourly billing rate defined at the project level for Time &amp; Materials billing when Rate Type is set to Project Rate.</description>
+    <formula>Project__r.Project_Billable_Rate__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Enter the hourly billing rate for this project. This rate will be applied to all time entries when Rate Type is set to Project Rate under Time &amp; Materials billing.</inlineHelpText>
+    <label>Project Billable Rate</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

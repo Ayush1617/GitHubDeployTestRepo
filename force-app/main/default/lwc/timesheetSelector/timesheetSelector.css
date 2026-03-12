@@ -1,0 +1,28 @@
+:host{
+    --meta-gap: 20px;
+    --meta-font-size: 18px;
+    --meta-font-weight: 500;
+}
+.meta-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.meta-left{
+    display:flex;
+    align-items:center;
+    gap:var(--meta-gap);
+    font-size:var(--meta-font-size);
+    font-weight:var(--meta-font-weight);
+}
+
+.meta-right{
+    display:flex;
+    font-size:var(--meta-font-size);
+    font-weight:var(--meta-font-weight);
+}
+
+.meta-text{
+    font-size:var(--meta-font-size);
+}

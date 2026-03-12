@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Billable_Hours_For_Non_Billable</fullName>
+    <active>true</active>
+    <description>It blocks the Billable Hours, not allowed for Non-Billable projects.</description>
+    <errorConditionFormula>AND(
+ Project__r.RecordType.DeveloperName = &quot;Non_Billable&quot;,
+ NOT(ISBLANK(Hours__c))
+)</errorConditionFormula>
+    <errorMessage>Hours are not allowed for Non-Billable projects.</errorMessage>
+</ValidationRule>

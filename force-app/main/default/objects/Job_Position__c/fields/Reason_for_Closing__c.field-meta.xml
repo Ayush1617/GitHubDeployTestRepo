@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reason_for_Closing__c</fullName>
+    <description>If the Job Position status is set to &apos;Closed&apos;, the team must provide a specific reason for closing the Job Position.</description>
+    <inlineHelpText>Required when the Job Position status is set to &apos;Closed&apos;. Select or enter the specific reason for closing this position</inlineHelpText>
+    <label>Reason for Closing</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

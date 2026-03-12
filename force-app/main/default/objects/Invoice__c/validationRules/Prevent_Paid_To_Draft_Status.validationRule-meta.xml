@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Paid_To_Draft_Status</fullName>
+    <active>true</active>
+    <description>Invoice cannot move from Paid back to Draft.</description>
+    <errorConditionFormula>AND(
+    ISPICKVAL(PRIORVALUE(Status__c), &quot;Paid&quot;),
+    ISPICKVAL(Status__c, &quot;Draft&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>Status__c</errorDisplayField>
+    <errorMessage>Invoice cannot be moved from Paid back to Draft.</errorMessage>
+</ValidationRule>

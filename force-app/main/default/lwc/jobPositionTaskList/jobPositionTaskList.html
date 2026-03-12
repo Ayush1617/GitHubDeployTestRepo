@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title="Tasks" icon-name="standard:task">
+
+        <div class="slds-m-around_small">
+            <lightning-button
+                label="New Task"
+                variant="brand"
+                onclick={handleNewTask}>
+            </lightning-button>
+        </div>
+
+        <template if:true={tasks}>
+            <lightning-datatable
+                key-field="Id"
+                data={tasks}
+                columns={columns}
+                onrowaction={handleRowAction}
+                hide-checkbox-column>
+            </lightning-datatable>
+        </template>
+
+        <template if:false={tasks}>
+            <div class="slds-p-around_medium slds-text-color_weak">
+                No Tasks found for this Job Position.
+            </div>
+        </template>
+
+    </lightning-card>
+</template>

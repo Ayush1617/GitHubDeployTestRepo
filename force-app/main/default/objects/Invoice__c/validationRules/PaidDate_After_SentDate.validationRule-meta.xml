@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PaidDate_After_SentDate</fullName>
+    <active>true</active>
+    <description>Paid Date cannot be earlier than Sent Date.</description>
+    <errorConditionFormula>AND(
+    NOT(ISBLANK(Paid_Date__c)),
+    NOT(ISBLANK(Sent_Date__c)),
+    Paid_Date__c &lt; Sent_Date__c
+)</errorConditionFormula>
+    <errorDisplayField>Paid_Date__c</errorDisplayField>
+    <errorMessage>Paid Date cannot be earlier than Sent Date.</errorMessage>
+</ValidationRule>

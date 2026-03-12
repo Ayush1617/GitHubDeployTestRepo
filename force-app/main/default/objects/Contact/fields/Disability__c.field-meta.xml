@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disability__c</fullName>
+    <label>Disability</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>I don&apos;t wish to answer</fullName>
+                <default>false</default>
+                <label>I don&apos;t wish to answer</label>
+            </value>
+            <value>
+                <fullName>No, I don&apos;t have a disability or a history / record of having a disability</fullName>
+                <default>false</default>
+                <label>No, I don&apos;t have a disability or a history / record of having a disability</label>
+            </value>
+            <value>
+                <fullName>Yes, I have a disability or have a history / record of having a disability</fullName>
+                <default>false</default>
+                <label>Yes, I have a disability or have a history / record of having a disability</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

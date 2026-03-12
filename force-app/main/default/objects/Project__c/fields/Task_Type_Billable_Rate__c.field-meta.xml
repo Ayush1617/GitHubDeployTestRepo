@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Task_Type_Billable_Rate__c</fullName>
+    <description>Displays the billable rate derived from the selected Task Type. Auto-calculated billable rate from the related Task Type.</description>
+    <formula>IF(
+TEXT(Rate_Type__c) = &quot;Task Rate&quot;,
+Task_Type__r.Billing_rate_per_hour__c,
+NULL
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Automatically shows the billable rate defined on the selected Task Type.</inlineHelpText>
+    <label>Task Type Billable Rate</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

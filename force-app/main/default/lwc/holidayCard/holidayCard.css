@@ -1,0 +1,161 @@
+/* Remove default card */
+.no-card-style {
+    --slds-c-card-color-background: transparent;
+    --slds-c-card-shadow: none;
+}
+
+/* Main card */
+.holiday-container {
+    padding: 1rem 1.25rem;
+    border-radius: 14px;
+    min-height: 120px;
+    position: relative;
+    height: 100%;
+    margin: 0px;
+}
+
+/* Header */
+.holiday-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Body */
+.holiday-body {
+    display: grid;
+    grid-template-columns: 40px 1fr 40px;
+    align-items: center;
+    margin-top: 0.75rem;
+}
+
+.holiday-info {
+    text-align: center;
+}
+
+.holiday-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.holiday-date {
+    font-size: 0.85rem;
+}
+
+/* ================= LIGHT THEMES (TOP CARD) ================= */
+
+.theme-jan {
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+    color: #0f172a;
+}
+
+.theme-feb {
+    background: linear-gradient(135deg, #ffe4e6, #fecdd3);
+    color: #0f172a;
+}
+
+.theme-mar {
+    background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+    color: #0f172a;
+}
+
+.theme-apr {
+    background: linear-gradient(135deg, #ccfbf1, #99f6e4);
+    color: #0f172a;
+}
+
+.theme-jun {
+    background: linear-gradient(135deg, #fef9c3, #fde68a);
+    color: #0f172a;
+}
+
+.theme-jul {
+    background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+    color: #0f172a;
+}
+
+.theme-aug {
+    background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+    color: #0f172a;
+}
+
+.theme-oct {
+    background: linear-gradient(135deg, #fff7ed, #fed7aa);
+    color: #0f172a;
+}
+
+.theme-nov {
+    background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+    color: #0f172a;
+}
+
+.theme-dec {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    color: #7f1d1d;
+}
+
+.theme-default {
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    color: #0f172a;
+}
+
+
+/* ================= MODAL ================= */
+.modal-body {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.holiday-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+/* Rows */
+.holiday-row {
+    display: flex;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+}
+
+/* Month colors */
+.row-jan { background:#e0f2fe; }
+.row-feb { background:#fee2e2; }
+.row-mar { background:#fce7f3; }
+.row-apr { background:#ccfbf1; }
+.row-jun { background:#fef3c7; }
+.row-jul { background:#ede9fe; }
+.row-aug { background:#f3e8ff; }
+.row-oct { background:#fde68a; }
+.row-nov { background:#ddd6fe; }
+.row-dec { background:#fee2e2; }
+.row-default { background:#f3f4f6; }
+
+/* Date box */
+.date-box {
+    width: 60px;
+    text-align: center;
+    background: #fff;
+    border-radius: 8px;
+}
+/* ================= MODAL HEADER ================= */
+.modal-header {
+    position: relative;
+    text-align: center;
+}
+
+/* Close icon top-right */
+.modal-close-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+
+    --slds-c-icon-color-foreground-default: #6b7280;
+}
+
+.modal-close-btn:hover {
+    --slds-c-icon-color-foreground-default: #111827;
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Adhaar_Card__c</fullName>
+    <label>Adhaar Card</label>
+    <length>20</length>
+    <maskChar>X</maskChar>
+    <maskType>lastFour</maskType>
+    <required>false</required>
+    <type>EncryptedText</type>
+</CustomField>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lock_record_if_status_is_submitted</fullName>
+    <active>false</active>
+    <description>If candidate submitted timesheet, then lock the record from being edited. only status changes are allowed.</description>
+    <errorConditionFormula>AND(
+
+    /* Record was already in Submitted status */
+    ISPICKVAL(PRIORVALUE(Status__c), &quot;Submitted&quot;),
+
+    /* Allow ONLY change to Approved or Rejected */
+    NOT(
+        OR(
+            ISPICKVAL(Status__c, &quot;Approved&quot;),
+            ISPICKVAL(Status__c, &quot;Rejected&quot;)
+        )
+    )
+
+)</errorConditionFormula>
+    <errorMessage>You can modify record once it is Submitted. Only Approved/Rejected options are allowed.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title="Job Positions">
+        <div class="slds-p-around_small">
+            <lightning-input 
+                type="search"
+                label="Search"
+                placeholder="Search by Job Name or Title..."
+                onchange={handleSearch}>
+            </lightning-input>
+        </div>
+
+        <lightning-datatable
+            key-field="Id"
+            data={filteredJobPositions}
+            columns={columns}
+            selected-rows={selectedRows}
+            onrowselection={handleRowSelection}>
+        </lightning-datatable>
+
+        <div class="slds-p-around_small">
+            <lightning-button
+                label="Add Candidate to Selected Jobs"
+                onclick={handleAddCandidate}
+                variant="brand"
+                disabled={isButtonDisabled}>
+            </lightning-button>
+        </div>
+    </lightning-card>
+</template>

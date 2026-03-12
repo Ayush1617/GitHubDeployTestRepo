@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Work_Authorization__c</fullName>
+    <label>Work Authorization</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>B1</fullName>
+                <default>false</default>
+                <label>B1</label>
+            </value>
+            <value>
+                <fullName>Can work for any employer</fullName>
+                <default>false</default>
+                <label>Can work for any employer</label>
+            </value>
+            <value>
+                <fullName>Canada Authorized</fullName>
+                <default>false</default>
+                <label>Canada Authorized</label>
+            </value>
+            <value>
+                <fullName>Canadian Citizen</fullName>
+                <default>false</default>
+                <label>Canadian Citizen</label>
+            </value>
+            <value>
+                <fullName>Citizen</fullName>
+                <default>false</default>
+                <label>Citizen</label>
+            </value>
+            <value>
+                <fullName>Current Employer Only</fullName>
+                <default>false</default>
+                <label>Current Employer Only</label>
+            </value>
+            <value>
+                <fullName>Employment Auth. Document</fullName>
+                <default>false</default>
+                <label>Employment Auth. Document</label>
+            </value>
+            <value>
+                <fullName>Employment Authorization Document</fullName>
+                <default>false</default>
+                <label>Employment Authorization Document</label>
+            </value>
+            <value>
+                <fullName>GC</fullName>
+                <default>false</default>
+                <label>GC</label>
+            </value>
+            <value>
+                <fullName>GC-EAD</fullName>
+                <default>false</default>
+                <label>GC-EAD</label>
+            </value>
+            <value>
+                <fullName>Green Card Holder</fullName>
+                <default>false</default>
+                <label>Green Card Holder</label>
+            </value>
+            <value>
+                <fullName>H1-B</fullName>
+                <default>false</default>
+                <label>H1-B</label>
+            </value>
+            <value>
+                <fullName>Have H1 Visa</fullName>
+                <default>false</default>
+                <label>Have H1 Visa</label>
+            </value>
+            <value>
+                <fullName>L1-A</fullName>
+                <default>false</default>
+                <label>L1-A</label>
+            </value>
+            <value>
+                <fullName>L1-B</fullName>
+                <default>false</default>
+                <label>L1-B</label>
+            </value>
+            <value>
+                <fullName>L2-EAD</fullName>
+                <default>false</default>
+                <label>L2-EAD</label>
+            </value>
+            <value>
+                <fullName>HAFAD.</fullName>
+                <default>false</default>
+                <label>HAFAD.</label>
+            </value>
+            <value>
+                <fullName>H4-EAD</fullName>
+                <default>false</default>
+                <label>H4-EAD</label>
+            </value>
+            <value>
+                <fullName>Need H1 Visa</fullName>
+                <default>false</default>
+                <label>Need H1 Visa</label>
+            </value>
+            <value>
+                <fullName>Need H1 Visa Sponsor</fullName>
+                <default>false</default>
+                <label>Need H1 Visa Sponsor</label>
+            </value>
+            <value>
+                <fullName>OPT EAD</fullName>
+                <default>false</default>
+                <label>OPT EAD</label>
+            </value>
+            <value>
+                <fullName>Sponsorship Required</fullName>
+                <default>false</default>
+                <label>Sponsorship Required</label>
+            </value>
+            <value>
+                <fullName>TN Permit Holder</fullName>
+                <default>false</default>
+                <label>TN Permit Holder</label>
+            </value>
+            <value>
+                <fullName>TN Visa</fullName>
+                <default>false</default>
+                <label>TN Visa</label>
+            </value>
+            <value>
+                <fullName>United Kingdom Authorized</fullName>
+                <default>false</default>
+                <label>United Kingdom Authorized</label>
+            </value>
+            <value>
+                <fullName>US Authorized</fullName>
+                <default>false</default>
+                <label>US Authorized</label>
+            </value>
+            <value>
+                <fullName>US Citizen</fullName>
+                <default>false</default>
+                <label>US Citizen</label>
+            </value>
+            <value>
+                <fullName>US Citizenship</fullName>
+                <default>false</default>
+                <label>US Citizenship</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

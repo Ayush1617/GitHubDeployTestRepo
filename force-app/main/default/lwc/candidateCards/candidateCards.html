@@ -1,0 +1,246 @@
+<template>
+    <template if:true={candidates}>
+        <template if:true={searchFlag}>
+            <div class="candidate-section">
+                
+                <!-- Highlight Bar (always visible at top of section) -->
+                <div class="highlight-bar">
+                    <div class="candidate-count">
+                        <lightning-icon
+                            icon-name="standard:contact"
+                            alternative-text="Candidates"
+                            size="small"
+                            class="candidate-group-icon">
+                        </lightning-icon>
+                        Candidate(s) Found: {candidates.length}
+                    </div>
+                    <div class="button-group">
+                        <lightning-button
+                            label="Add to Job Position"
+                            onclick={handleShortlist}
+                            variant={buttonVariant}
+                            disabled={isShortlistDisabled}
+                            class="btn-left">
+                        </lightning-button>
+
+                        <lightning-button
+                            label="Submit to Client"
+                            onclick={handleSubmitToCLient}
+                            variant={buttonVariant}
+                            disabled={isShortlistDisabled}
+                            class="btn-middle">
+                        </lightning-button>
+
+                         <lightning-button 
+                            label="Export To Excel"
+                            onclick={handleExportButtonClick}
+                            variant={buttonVariant}
+                            disabled={isShortlistDisabled}
+                            class="btn-right">
+                        </lightning-button>
+
+                        <c-export-to-excel></c-export-to-excel>
+
+                        <div class="sort-wrapper">
+                            <lightning-combobox
+                                name="sortOptions"
+                                value={sortOption}
+                                options={sortOptions}
+                                onchange={handleSortChange}
+                                placeholder="Sort By"
+                                class="btn-sort">
+                            </lightning-combobox>
+                        </div>
+                        <!-- <lightning-combobox
+                            name="sortOptions"
+                            value={sortOption}
+                            options={sortOptions}
+                            onchange={handleSortChange}
+                            class="btn-sort">
+                        </lightning-combobox> -->
+                    </div>
+
+                   <template if:true={showSubmitToClient}>
+                        <section role="dialog" tabindex="-1" 
+                            class="slds-modal slds-fade-in-open custom-center-modal">
+                            <div class="slds-modal__container custom-width">
+
+                                <!-- Header -->
+                                <header class="slds-modal__header">
+                                    <h2 class="slds-text-heading_medium">Submit Candidate to Client</h2>
+                                    <button class="slds-button slds-button_icon slds-modal__close"
+                                            title="Close" onclick={closeSubmitToClientModal}>
+                                        <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                                    </button>
+                                </header>
+
+                                <!-- Body -->
+                                <div class="slds-modal__content slds-p-around_medium">
+                                    <c-submit-candidate-to-client record-ids={selectedCandidateIds}></c-submit-candidate-to-client>
+                                </div>
+
+                                <!-- Footer -->
+                                <footer class="slds-modal__footer">
+                                    <lightning-button variant="neutral" label="Cancel" onclick={closeSubmitToClientModal}></lightning-button>
+                                </footer>
+                            </div>
+                        </section>
+
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </template>
+
+
+                    <!--   <lightning-button
+                    label="Submit to client"
+                    onclick={handleSubmitToCLient}
+                    variant={buttonVariant}
+                    disabled={isShortlistDisabled}
+                    class="shortlist-button">
+                    </lightning-button>-->
+
+
+                    <!-------------------------------------->
+                    <template if:true={isLoading}>
+                        <div class="spinner-overlay">
+                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                        </div>
+                    </template>
+                </div>
+
+                <c-jobposition-card></c-jobposition-card>
+
+                <!-- Scrollable Candidate Cards -->
+                <template if:true={hasCandidates}>
+                    <div class="card-scroll">
+                        <template for:each={candidates} for:item="c">
+                            <div key={c.Id} class="full-width-card">
+                                <!-- <div class="card-header">
+                                    <lightning-input
+                                        type="checkbox"
+                                        onchange={handleCheckboxChange}
+                                        data-id={c.Id}
+                                        class="candidate-checkbox">
+                                    </lightning-input>
+
+                                    <div class="candidate-info">
+                                        <h2 class="card-title">
+                                            <a href={c.recordUrl} target="_blank" class="record-link">
+                                                {c.Name}
+                                            </a>
+                                        </h2>
+                                        <div class="candidate-meta">
+                                            <div class="meta-item">
+                                                <lightning-icon icon-name="utility:clock" size="x-small" class="meta-icon"></lightning-icon>
+                                                <span>{c.Total_Experience__c} y</span>
+                                            </div>
+                                            <div class="meta-item">
+                                                <lightning-icon icon-name="utility:currency" size="x-small" class="meta-icon"></lightning-icon>
+                                                <span>₹ {c.Current_CTC__c}</span>
+                                            </div>
+                                            <div class="meta-item">
+                                                <lightning-icon icon-name="utility:location" size="x-small" class="meta-icon"></lightning-icon>
+                                                <span>{c.Current_Location__c}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="spacer"></div>
+
+                                    <img
+                                        src={linkedInLogo}
+                                        alt="LinkedIn"
+                                        title={c.linkedInTitle}
+                                        class={c.linkedInClass}
+                                        data-url={c.linkedInUrl}
+                                        onclick={handleLinkedInClick}
+                                    />
+                                </div> -->
+
+                                <div class="card-header">
+                                    <div class="header-left">
+                                        <lightning-input
+                                            type="checkbox"
+                                            onchange={handleCheckboxChange}
+                                            data-id={c.Id}
+                                            class="candidate-checkbox">
+                                        </lightning-input>
+
+                                        <div class="candidate-info">
+                                            <h2 class="card-title">
+                                                <a href={c.recordUrl} target="_blank" class="record-link">
+                                                    {c.Name}
+                                                </a>
+                                            </h2>
+                                            <div class="candidate-meta">
+                                                <div class="meta-item">
+                                                    <lightning-icon icon-name="utility:clock" size="small" class="meta-icon"></lightning-icon>
+                                                    <span class="icon-label-value">{c.Total_Experience__c} Years</span>
+                                                </div>
+                                                <div class="meta-item">
+                                                    <lightning-icon icon-name="utility:currency" size="small" class="meta-icon"></lightning-icon>
+                                                    <span class="icon-label-value">₹ {c.Current_CTC__c}</span>
+                                                </div>
+                                                <div class="meta-item">
+                                                    <lightning-icon icon-name="utility:pinned" size="small" class="meta-icon"></lightning-icon>
+                                                    <span class="icon-label-value">{c.Current_Location__c}</span>
+                                                </div>
+                                                <div class="meta-item">
+                                                    <lightning-icon icon-name="utility:call" size="small" class="meta-icon"></lightning-icon>
+                                                    <span class="icon-label-value">{c.Phone__c}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="header-right">
+                                        <img
+                                            src={linkedInLogo}
+                                            alt="LinkedIn"
+                                            title={c.linkedInTitle}
+                                            class={c.linkedInClass}
+                                            data-url={c.linkedInUrl}
+                                            onclick={handleLinkedInClick}
+                                        />
+                                    </div>
+                                </div>
+
+
+                                <div class="card-body">
+                                   
+                                    <div class="left">
+                                       <div class="fieldClass"><strong>Preferred Location:</strong> {c.Preferred_Location__c}</div>
+                                       <div class="fieldClass"><strong>Highest Qualification:</strong> {c.Highest_Qualification__c}</div>
+                                       <div class="fieldClass"><strong>Rating:</strong> {c.Rating__c}</div>
+                                       <div class="fieldClass"><strong>Notice Period:</strong> {c.Notice_Period__c}</div>
+                                       <div class="fieldClass"><strong>Skills:</strong> {c.Skills__c}</div>
+                                    </div>
+
+
+                                    <div class="right">
+                                        <template if:true={c.photoUrl}>
+                                                <img src={c.photoUrl} alt="Candidate Photo" class="candidate-photo" />
+                                            </template>
+                                            <template if:false={c.photoUrl}>
+                                                <div class="photo-placeholder">
+                                                    <lightning-icon icon-name="standard:avatar" size="large"></lightning-icon>
+                                                </div>
+                                            </template>
+                                    </div>
+                                   
+                                </div>
+
+                            </div>
+                        </template>
+                    </div>
+                </template>
+
+                <template if:false={hasCandidates}>
+                    <div class="empty-message">
+                        <span class="emoji">☹️</span>
+                        No candidates found.
+                    </div>
+                </template>
+            </div>
+        </template>
+    </template>
+</template>

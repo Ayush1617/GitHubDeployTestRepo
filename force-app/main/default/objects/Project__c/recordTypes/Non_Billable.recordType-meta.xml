@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_Billable</fullName>
+    <active>true</active>
+    <description>Not billed to the client</description>
+    <label>Non Billable</label>
+    <picklistValues>
+        <picklist>Billable_Rate__c</picklist>
+        <values>
+            <fullName>No Billable Rate</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Person Billable Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Billable Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Task Billable Rate</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Rate_Type__c</picklist>
+        <values>
+            <fullName>Non Billable Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Person Billable Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Project Billable Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Task Billable Rate</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

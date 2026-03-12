@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <apiVersion>65.0</apiVersion>
+    <isExposed>true</isExposed>
+
+    <targets>
+        <!-- Internal Salesforce Record Page -->
+        <target>lightning__RecordPage</target>
+
+        <!-- Experience Cloud Pages -->
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+
+    <!-- recordId config ONLY for internal record page -->
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="recordId" type="String" />
+        </targetConfig>
+    </targetConfigs>
+
+</LightningComponentBundle>

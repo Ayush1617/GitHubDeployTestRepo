@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_Agreement_Signed_dependencies</fullName>
+    <active>true</active>
+    <description>don&apos;t allow to enter dates if agreement checkbox is not selected</description>
+    <errorConditionFormula>AND(
+    RecordType.DeveloperName = &quot;Client&quot;,
+    OR(
+        AND(
+            NOT(Agreement_Signed__c),
+            OR(
+                NOT(ISBLANK(Agreement_Start_Date__c)),
+                NOT(ISBLANK(Agreement_End_Date__c))
+            )
+        ),
+        AND(
+            Agreement_Signed__c,
+            OR(
+                ISBLANK(Agreement_Start_Date__c),
+                ISBLANK(Agreement_End_Date__c)
+            )
+        )
+    )
+)</errorConditionFormula>
+    <errorMessage>Agreement dates can be provided only after the Agreement Signed checkbox is selected. When not selected, both dates must be empty.</errorMessage>
+</ValidationRule>

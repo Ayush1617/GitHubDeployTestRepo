@@ -1,0 +1,205 @@
+<template>
+<template if:true={isInterviewLocked}>
+    <lightning-card title="Panelist List">
+
+    <div class="slds-box slds-theme_warning slds-text-align_center slds-m-around_medium">
+        <h1 class="slds-text-heading_small">
+            This candidate has already completed 'Internal Assessment' Round.
+        </h1>
+    </div>
+    </lightning-card>
+
+</template >
+
+<template if:false={isInterviewLocked}>
+    <!-- ================= PANELIST LIST ================= -->
+    <lightning-card title="Panelist List">
+        <template if:true={panelists.length}>
+            <div class="slds-scrollable_x">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Designation</th>
+                            <th>Skills</th>
+                            <th>Slots</th>
+                            <th>Request Slots</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={panelists} for:item="p">
+                            <tr key={p.id}>
+                                <td>{p.name}</td>
+                                <td>{p.email}</td>
+                                <td>{p.designation}</td>
+                                <td class="skills-cell">{p.skills}</td>
+                               <td>
+                                    <lightning-button
+                                        label="View Slots"
+                                        variant="brand-outline"
+                                        class="slds-m-right_small"
+
+                                        data-id={p.id}
+                                        data-name={p.name}
+                                        onclick={openModal}>
+                                    </lightning-button>
+                            </td>
+
+
+                            <td>
+                                    <lightning-button
+                                        label="Request Slots"
+                                        class="slds-m-right_small"
+                                        variant="brand"
+                                        data-id={p.id}
+                                        data-name={p.name}
+                                        onclick={openRequestSlotsModal}>
+                                    </lightning-button>
+                            </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </template>
+        <template if:false={panelists.length}>
+            <div class="slds-p-around_small">No Panelists Found</div>
+        </template>
+    </lightning-card>
+
+    <!-- ================= MODAL FOR VIEWING SLOTS ================= -->
+    <template if:true={isModalOpen}>
+        <section role="dialog" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">
+                        Available Slots - {selectedPanelistName}
+                    </h2>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium">
+
+                    <template if:true={groupedEvents.length}>
+                        <template for:each={groupedEvents} for:item="e">
+                            <div key={e.date}
+                                 class="slds-box slds-m-bottom_small slds-grid slds-grid_align-spread">
+
+                                <!-- LEFT SIDE -->
+                                <div>
+                                    <b>{e.subject}</b><br/>
+                                    <span class="slds-text-color_weak">{e.date}</span>
+
+                                    <!-- TIME SLOT BUTTONS -->
+                                    <div class="slds-m-top_small slds-grid slds-wrap">
+                                        <template for:each={e.slots} for:item="slot">
+                                            <div key={slot.Id}
+                                                 class="slds-m-right_small slds-m-bottom_small">
+                                                <lightning-button
+                                                    label={slot.timeLabel}
+                                                    variant={slot.variant}
+                                                    size="small"
+                                                    data-id={slot.Id}
+                                                    data-datetime={slot.StartDateTime}
+                                                    onclick={handleSelectSlot}>
+                                                </lightning-button>
+                                            </div>
+                                             <template if:true={slot.showFeedback}>
+                                           
+                                               <div key={slot.Id} class="slds-col slds-size_1-of-1 slds-m-top_small">
+
+                                                <div class="slds-form-element__label slds-grid slds-align-middle">
+                                                    <span>Interview Feedback</span>
+
+                                                    <lightning-helptext
+                                                        content={helpTextMessage}
+                                                        class="slds-m-left_x-small">
+                                                    </lightning-helptext>
+                                                </div>
+
+                                                <lightning-textarea
+                                                    value={interviewFeedback}
+                                                    onchange={handleFeedbackChange}>
+                                                </lightning-textarea>
+
+                                            </div>
+                                        </template>
+                                        
+                                        </template>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </template>
+                    </template>
+
+                    <template if:false={groupedEvents.length}>
+                        <p class="slds-text-align_center">No Slots Found</p>
+                    </template>
+
+                </div>
+
+                <!-- ✅ BOOK BUTTON CORRECTLY INSIDE VIEW MODAL -->
+                <footer class="slds-modal__footer">
+
+                    <template if:true={selectedSlotId}>
+                        <lightning-button
+                            label="Book Selected Slot"
+                            variant="brand"
+                            class="slds-m-right_small"
+                            onclick={handleBook}>
+                        </lightning-button>
+                    </template>
+
+                    <lightning-button
+                        label="Close"
+                        onclick={closeModal}>
+                    </lightning-button>
+
+                </footer>
+
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- ================= MODAL FOR REQUESTING SLOTS ================= -->
+    <template if:true={isRequestSlotsModalOpen}>
+        <section role="dialog"
+                 class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container"
+                 style="width: 90%; max-width: 1200px;">
+
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">
+                        Request Slots from {selectedPanelistName}
+                    </h2>
+                    <button class="slds-button slds-button_icon slds-modal__close"
+                            onclick={closeRequestSlotsModal}>
+                        <lightning-icon icon-name="utility:close"
+                                        size="small"></lightning-icon>
+                    </button>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium">
+                    <c-panelist-availability-calendar
+                        contact-id={selectedPanelistId}
+                        record-id={recordId}>
+                    </c-panelist-availability-calendar>
+                </div>
+
+                <!-- 🔹 ONLY CLOSE HERE -->
+                <footer class="slds-modal__footer">
+                    <lightning-button
+                        label="Close"
+                        onclick={closeRequestSlotsModal}>
+                    </lightning-button>
+                </footer>
+
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
+</template>

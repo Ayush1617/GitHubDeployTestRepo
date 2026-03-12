@@ -1,0 +1,43 @@
+<template>
+    <div class="modal-backdrop">
+        <div class="modal-container">
+
+            <div class="modal-header">
+                New time entry
+            </div>
+
+            <div class="modal-body">
+
+                <div class="field">
+                    <label>Project / Task</label>
+                    <select onchange={handleProjectChange}>
+                        <option value="">Select Project</option>
+                        <option value="Example Project">Example Project</option>
+                        <option value="Vendor Management">Vendor Management</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Task Type</label>
+                    <select onchange={handleTaskChange}>
+                        <option value="Design">Design</option>
+                        <option value="Development">Development</option>
+                        <option value="Testing">Testing</option>
+                    </select>
+                </div>
+
+                <div class="row">
+                    <input type="text" placeholder="Notes (optional)" onchange={handleNotesChange}/>
+                    <input class="time-input" value={timeValue} onchange={handleTimeChange}/>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="start-btn" onclick={saveEntry}>Start timer</button>
+                <button class="cancel-btn" onclick={close}>Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</template>

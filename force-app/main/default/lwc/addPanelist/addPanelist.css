@@ -1,0 +1,18 @@
+.slds-modal_large .slds-modal__container {
+    width: 90% !important;
+    max-width: 1200px !important;
+}
+.skills-cell {
+    white-space: normal;        /* auto wrap */
+    word-break: break-word;     /* long words break */
+    max-width: 250px;           /* control column width */
+    line-height: 1.4;
+}
+
+
+
+.modal-content-container {
+    min-height: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+}

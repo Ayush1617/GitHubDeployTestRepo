@@ -1,0 +1,136 @@
+<template>
+    <lightning-card>
+
+        <!-- 🔹 EMPTY STATE -->
+        <template if:false={hasData}>
+            <div class="empty-state">
+                No matched candidates found
+            </div>
+        </template>
+
+        <!-- 🔹 TOP BULK BAR -->
+        <template if:true={hasData}>
+            <div class="bulk-bar slds-grid slds-grid_align-end">
+                <lightning-button
+                    label={bulkButtonLabel}
+                    variant="brand"
+                    onclick={handleBulkAdd}
+                    disabled={isBulkDisabled}>
+                </lightning-button>
+            </div>
+        </template>
+
+        <!-- 🔹 TABLE -->
+        <template if:true={hasData}>
+            <div class="table-wrapper">
+
+                <!-- HEADER -->
+                <div class="table-header slds-grid">
+                    <div class="col checkbox-col">
+                        <lightning-input
+                            type="checkbox"
+                            checked={isAllSelected}
+                            onchange={handleSelectAll}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="col name">Candidate Name</div>
+                    <div class="col match slds-text-align_center">Match %</div>
+                    <div class="col rating slds-text-align_center">Rating</div>
+                    <div class="col skills">Primary Skills</div>
+                    <div class="col exp slds-text-align_center">Relevant Exp</div>
+                    <div class="col notice slds-text-align_center">Notice Period</div>
+                    <div class="col updated slds-text-align_center">Last Updated</div>
+                    <div class="col action slds-text-align_center">Action</div>
+                </div>
+
+                <!-- ROWS -->
+                <template for:each={pagedData} for:item="row">
+                    <div key={row.candidateId} class="table-row slds-grid">
+
+                        <div class="col checkbox-col">
+                            <lightning-input
+                                type="checkbox"
+                                checked={row.isSelected}
+                                data-id={row.candidateId}
+                                onchange={handleCheckboxChange}>
+                            </lightning-input>
+                        </div>
+
+                        <div class="col name">
+                            <a class="slds-text-link"
+                            data-id={row.candidateId}
+                            onclick={handleNavigateToRecord}>
+                                {row.candidateName}
+                            </a>
+                        </div>
+                        <div class="col match slds-text-align_center">{row.matchPercentage}%</div>
+                        <div class="col rating slds-text-align_center">{row.candidateRating}</div>
+                        <div class="col skills">{row.primarySkills}</div>
+                        <div class="col exp slds-text-align_center">{row.relevantExperience}</div>
+                        <div class="col notice slds-text-align_center">{row.noticePeriod}</div>
+                        <div class="col updated slds-text-align_center">{row.lastProfileUpdate}</div>
+
+                        <div class="col action">
+                            <lightning-button
+                                label="Add"
+                                size="small"
+                                variant="brand"
+                                disabled={row.isSelected}
+                                data-id={row.candidateId}
+                                onclick={handleSingleAdd}>
+                            </lightning-button>
+                        </div>
+
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <!-- 🔹 PAGINATION FOOTER -->
+        <template if:true={hasData}>
+            <template if:true={totalPages}>
+                <div class="pagination-footer">
+
+                    <!-- ROW 1 : Records per page (RIGHT) -->
+                    <div class="pagination-top">
+                        <div class="pagination-right">
+                            <span class="records-label">Records per page:</span>
+                            <lightning-combobox
+                                value={pageSize}
+                                options={pageSizeOptions}
+                                variant="label-hidden"
+                                onchange={handlePageSizeChange}>
+                            </lightning-combobox>
+                        </div>
+                    </div>
+
+                    <!-- ROW 2 : Pagination (CENTER, LOWER) -->
+                    <div class="pagination-bottom">
+                        <lightning-button
+                            label="Previous"
+                            onclick={handlePrev}
+                            disabled={isFirstPage}
+                            icon-name="utility:chevronleft"
+                            icon-position="left">
+                        </lightning-button>
+
+                        <span class="page-info">
+                            Page {currentPage} of {totalPages}
+                        </span>
+
+                        <lightning-button
+                            label="Next"
+                            onclick={handleNext}
+                            disabled={isLastPage}
+                            icon-name="utility:chevronright"
+                            icon-position="right">
+                        </lightning-button>
+                    </div>
+
+                </div>
+            </template>
+        </template>
+
+    </lightning-card>
+</template>

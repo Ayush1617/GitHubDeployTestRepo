@@ -1,0 +1,224 @@
+<template>
+        <div class="page-bg">
+            <c-cloud-espacio-logo></c-cloud-espacio-logo>
+    <h1 class="title">{jobPositionTitle}</h1>        
+            
+            <template if:true={isLoading}>
+                <div class="slds-align_absolute-center slds-p-around_large">
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+            </template>
+            
+            <template if:true={hasError}>
+                <div class="slds-notify slds-notify_alert slds-theme_error" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    <h2>{errorMessage}</h2>
+                    <p>Please check the link or contact the recruitment team.</p>
+                </div>
+            </template>
+            
+            <template if:true={hasCandidates}>
+                <div class="card">
+
+                    <!-- 🔹 TOP BAR -->
+                    <div class="top-bar">
+                        <div class="left-info">
+                            <h2>Total Candidates</h2>
+                            <span class="count-badge">{candidateCount}</span>
+                        </div>
+
+                        <button class="slds-button slds-button_brand" onclick={downloadAsExcel}>
+                            <lightning-icon icon-name="utility:download" size="small" class="slds-m-right_x-small"></lightning-icon>
+                            Download Excel
+                        </button>
+                    </div>
+
+                    <template if:true={showSuccess}>
+                        <div class="slds-notify slds-notify_alert slds-theme_success slds-m-bottom_medium">
+                            <span class="slds-assistive-text">Success</span>
+                            <h2>{message}</h2>
+                        </div>
+                    </template>
+
+                    <template if:true={showError}>
+                        <div class="slds-notify slds-notify_alert slds-theme_error slds-m-bottom_medium">
+                            <span class="slds-assistive-text">Error</span>
+                            <h2>{message}</h2>
+                        </div>
+                    </template>
+
+                    <!-- 🔹 TABLE -->
+                    <div class="slds-scrollable_x">
+                        <table class="slds-table slds-table_bordered slds-table_cell-buffer custom-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Date Added</th>
+                                    <th>Candidate Name</th>
+                                    <th>Current Location</th>
+                                    <th>Rate </th>
+                                    
+                                    <th>Notice Period</th>
+                                    <th>Skills</th>
+                                    <th class="center-col">Actions</th>
+                                    <th class="center-col">Shortlist</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={paginatedCandidates} for:item="candidate">
+                                    <tr key={candidate.recordId}>
+                                        <td>{candidate.id}</td>
+                                        <td>{candidate.createdDate}</td>
+                                        <td>
+                                            <strong>{candidate.name}</strong><br/>
+                                            <small class="slds-text-color_weak">
+                                                <!-- Source: {candidate.source} -->
+                                            </small>
+                                        </td>
+                                        <td>{candidate.currentLocation}</td>
+                                        <td>{candidate.Rate}</td>
+                                        
+                                        <td>{candidate.noticePeriod}</td>
+                                        <td>
+                                            <div class="wrap-text skills-container">
+                                                {candidate.skills}
+                                            </div>
+                                        </td>
+
+                                        <!-- 🔹 ACTION BUTTONS -->
+                                        <td>
+                                            <div class="action-group">
+
+                                                <!-- Preview -->
+                                                <div class="icon-wrapper">
+                                                    <lightning-button-icon
+                                                        icon-name="utility:preview"
+                                                        variant="bare"
+                                                        size="medium"
+                                                        alternative-text="Talent Summary"
+                                                        title="Talent Summary"
+                                                        onclick={handlePreview}
+                                                        data-id={candidate.recordId}>
+                                                    </lightning-button-icon>
+                                                </div>
+
+                                                <!-- Download -->
+                                                <div class="icon-wrapper">
+                                                    <lightning-button-icon
+                                                        icon-name="utility:download"
+                                                        variant="bare"
+                                                        size="medium"
+                                                        alternative-text="Download Resume"
+                                                        title="Download Resume"
+                                                        onclick={handleDownload}
+                                                        data-id={candidate.recordId}>
+                                                    </lightning-button-icon>
+                                                </div>
+
+                                                <!-- Feedback -->
+                                                <div class="icon-wrapper feedback-icon">
+                                                    <lightning-button-icon
+                                                        icon-name="utility:note"
+                                                        variant="bare"
+                                                        size="medium"
+                                                        alternative-text="Add Feedback"
+                                                        title="Add Feedback"
+                                                        onclick={handleFeedback}
+                                                        data-id={candidate.recordId}>
+                                                    </lightning-button-icon>
+
+                                                    <!-- Green notification dot -->
+                                                    <span class="notification-dot"></span>
+                                                </div>
+
+                                            </div>
+                                        </td>
+
+
+                                        <!-- 🔹 CHECKBOX -->
+                                        <td class="shortlist-col">
+                                            <lightning-input
+                                                type="checkbox"
+                                                name={candidate.recordId}
+                                                checked={candidate.isShortlisted}
+                                                disabled={candidate.isDisabled}
+                                                onchange={handleShortlistChange}>
+                                            </lightning-input>
+                                        </td>
+
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 🔹 FOOTER BAR -->
+                    <div class="footer-bar">
+
+                                <!-- LEFT -->
+                                <div class="footer-left">
+                                Showing {candidateCount} candidates
+                                </div>
+
+                                <!-- CENTER -->
+                                <div class="footer-center">
+                                <lightning-button
+                                label="Submit"
+                                variant="brand"
+                                class="submit-btn"
+                                onclick={handleSubmit}>
+                                </lightning-button>
+                                </div>
+
+                            <!-- RIGHT SIDE STACK -->
+                            <div class="footer-right-stack">
+
+                                <!-- 🔹 Pagination -->
+                                <div class="pagination">
+                                <lightning-button-icon
+                                    icon-name="utility:chevronleft"
+                                    variant="bare"
+                                    onclick={handlePrevious}
+                                    disabled={isFirstPage}>
+                                    </lightning-button-icon>
+
+                                <span class="page-info">Page {currentPage} of {totalPages} </span>
+
+                                <lightning-button-icon
+                                    icon-name="utility:chevronright"
+                                    variant="bare"
+                                    onclick={handleNext}
+                                    disabled={isLastPage}>
+                                </lightning-button-icon>
+                            </div>
+
+                            <!-- 🔹 Generated On -->
+                            <div class="generated-date">
+                                Generated on: {currentDate}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </template>
+
+            <!-- MODALS -->
+            <template if:true={showFeedbackModal}>
+                <c-candidate-feedback
+                    candidate-id={selectedCandidateId}
+                    feedback-list={selectedFeedbackList}
+                    is-final-decision={isFinalDecision}
+                    onsavefeedback={handleFeedbackSaved}
+                    onclose={closeFeedbackModal}>
+                    
+                </c-candidate-feedback>
+            </template>
+            
+
+            <template if:true={showPreviewModal}>
+                <c-candidate-summary record-id={previewCandidateId}></c-candidate-summary>
+            </template>
+        </div>
+    </template>

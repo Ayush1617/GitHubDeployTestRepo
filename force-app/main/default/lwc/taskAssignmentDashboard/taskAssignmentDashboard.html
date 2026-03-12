@@ -1,0 +1,168 @@
+<template>
+    <div class="dashboard-wrapper">
+
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div class="header-left">
+                <h1>Execution Dashboard</h1>
+            </div>
+
+        </div>
+        <div class="header-underline"></div>
+        <p class="slds-text-body_small slds-text-color_weak slds-p-horizontal_small slds-m-top_x-small">
+            Assign internal tasks to the recruiters from the list below.
+        </p>
+
+        <!-- Filters -->
+        <div class="filter-bar">
+            <div class="filter-item">
+                <span class="filter-label">Filter by Priority</span>
+                <lightning-combobox value={selectedPriority} options={priorityOptions} onchange={handlePriorityChange}
+                    variant="label-hidden">
+                </lightning-combobox>
+            </div>
+
+            <div class="filter-item">
+                <span class="filter-label">Filter by Assigned Recruiter</span>
+                <lightning-combobox value={selectedRecruiter} options={recruiterOptions}
+                    onchange={handleRecruiterChange} variant="label-hidden">
+                </lightning-combobox>
+            </div>
+            <div class="filter-item">
+               <span class="filter-label">Filter by Record Type</span>
+               <lightning-combobox
+                    value={selectedRecordType}
+                    options={recordTypeOptions}
+                    onchange={handleRecordTypeChange}
+                    variant="label-hidden">
+                </lightning-combobox>
+            </div>
+
+            <div class="filter-item date-filter">
+                <span class="filter-label">Filter by Created Date</span>
+
+                <!-- Row : Date Range -->
+                <div class="date-row">
+                    <lightning-input type="date" variant="label-hidden" value={startDate}
+                        onchange={handleStartDateChange}>
+                    </lightning-input>
+
+                    <lightning-input type="date" variant="label-hidden" value={endDate} onchange={handleEndDateChange}>
+                    </lightning-input>
+
+                    <lightning-button label="Apply" class="custom-apply-btn" variant="brand" onclick={applyDateFilter}>
+                    </lightning-button>
+
+                    <lightning-button label="Reset" class="custom-apply-btn" variant="brand" onclick={handleResetDate}>
+                    </lightning-button>
+                </div>
+
+            </div>
+            <!-- RIGHT SIDE QUICK FILTERS -->
+            <div class="header-right header-quick-filters">
+                <lightning-button label="Today" data-type="today" variant="neutral" class="quick-filter-btn"
+                    onclick={handleQuickDate}>
+                </lightning-button>
+
+                <lightning-button label="Yesterday" data-type="yesterday" variant="neutral" class="quick-filter-btn"
+                    onclick={handleQuickDate}>
+                </lightning-button>
+
+                <lightning-button label="Last 7 Days" data-type="last7" variant="neutral" class="quick-filter-btn"
+                    onclick={handleQuickDate}>
+                </lightning-button>
+
+                <lightning-button-icon icon-name="utility:refresh" alternative-text="Refresh" title="Refresh"
+                    onclick={handleRefresh} variant="bare">
+                </lightning-button-icon>
+            </div>
+
+        </div>
+
+        <!-- Section Header -->
+        <div class="section-header">
+            Assign Daily Tasks
+        </div>
+
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Refreshing" size="small">
+            </lightning-spinner>
+        </template>
+
+
+        <!-- ✅ Custom Table (NO CHECKBOXES) -->
+        <div class="table-wrapper">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>TASK SUBJECT</th>
+                        <th>Expected Completion Time</th>
+                        <th>Actual Working Hours</th> 
+                        <th>Candidates To Submit</th>
+                        <th>Actual Candidate Submitted</th>                        
+                        <th>STATUS</th>
+                        <th>Created Date</th>
+                        <th>DUE DATE</th>
+                        <th>PRIORITY</th>
+                        <th>ASSIGNED RECRUITER</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <template for:each={tasks} for:item="task">
+                        <tr key={task.Id}>
+                            <td>
+                                <a href={task.taskUrl} target="_blank" class="task-link">
+                                    {task.Subject}
+                                </a>
+                            </td>
+                          
+                            <td class = "slds-text-align_center">{task.expectedTimeDisplay}</td>
+                            <td class = "slds-text-align_center">{task.actualHoursDisplay}</td>
+                            <td class = "slds-text-align_center">{task.candidatesToSubmit}</td>
+                            <td class = "slds-text-align_center">{task.actualCandidateSubmitted}</td>
+                            <td class = "slds-text-align_center">{task.Status}</td>
+                            <td class = "slds-text-align_center">{task.createdDateFormatted}</td>
+                            <td class = "slds-text-align_center">{task.dueDateFormatted}</td>
+                          
+
+                            <td>
+                                <span class={task.priorityClass}>
+                                    {task.Priority}
+                                </span>
+                            </td>
+
+                            <td>{task.OwnerName}</td>
+                        </tr>
+                    </template>
+
+                    <template if:true={isNoData}>
+                        <tr>
+                            <td colspan="5" class="no-data">
+                                No tasks found
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-bar">
+            <div class="pagination-info">
+                Tasks {startRecord}–{endRecord} of {totalRecords}
+            </div>
+
+            <div class="pagination-actions">
+                <lightning-button label="Previous" variant="brand" class="custom-pagination-btn"
+                    onclick={handlePrevious} disabled={disablePrevious}>
+                </lightning-button>
+
+                <lightning-button label="Next" variant="brand" class="custom-pagination-btn" onclick={handleNext}
+                    disabled={disableNext}>
+                </lightning-button>
+            </div>
+        </div>
+
+    </div>
+</template>

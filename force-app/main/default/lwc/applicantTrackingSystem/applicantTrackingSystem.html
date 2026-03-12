@@ -1,0 +1,538 @@
+<template>
+            <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-wrap slds-p-around_xx-small">
+
+                <!-- Pill Design -->                
+                <div class="slds-grid slds-grid_vertical-align-center slds-wrap pill-wrapper">
+                    <template for:each={pillData} for:item="pill">
+                        <div class="pill-container" key={pill.status}>
+                            <span class="pill-label">{pill.status}</span>
+                            <span class="pill-count">{pill.count}</span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            <div class="slds-grid slds-grid_vertical-align-center" style="justify-content: flex-end;">
+
+                <!-- Toolbar Buttons -->
+                        <div class="slds-grid slds-grid_vertical-align-center slds-wrap">
+
+                            <!-- Record Update Button  
+                                <lightning-button-icon 
+                                        icon-name="action:edit_groups"
+                                        alternative-text="Update Interview"
+                                        onclick={openModal}
+                                        class="slds-icon-text-success slds-m-right_xx-small"
+                                        size="large"
+                                        variant="standard"
+                                        disabled={isActionDisabled}>
+                                </lightning-button-icon> --> 
+
+                            <!-- Remove Candidate Button -->                 
+                                <lightning-button-icon 
+                                    icon-name="utility:delete"
+                                    alternative-text="Remove Candidate"
+                                    onclick={handleRemoveCandidate}
+                                    class="slds-icon-text-error slds-m-right_xx-small"
+                                    size="large"
+                                    variant="border-filled"
+                                    disabled={isActionDisabled}>
+                                </lightning-button-icon> 
+
+                            <!-- Request Feedback Button -->                                 
+                                <lightning-button-icon 
+                                    icon-name="utility:record_update"
+                                    alternative-text="Request Feedback"
+                                    class="slds-m-right_xx-small"
+                                    onclick={handleRequestFeedback}
+                                    size="large"
+                                    variant="border-filled"
+                                    disabled={isActionDisabled}>
+                                </lightning-button-icon>   
+                                <c-submit-job-email-button 
+                                    record-ids={selectedRecordIds}
+                                    record-id={recordId}
+                                    class="slds-m-right_xx-small">
+                                </c-submit-job-email-button>     
+                                <!--Ayush-->
+                                <!-- Export to Excel button in Parent -->
+                                <lightning-button-icon 
+                                    icon-name="utility:share_mobile"
+                                    alternative-text="Export to Excel"
+                                    onclick={handleExportButtonClick}
+                                    class="slds-m-right_xx-small"
+                                    variant="border-filled"
+                                    size="large"
+                                    disabled={isActionDisabled}>
+                                </lightning-button-icon>
+
+                                <!-- Child component -->
+                                <c-export-to-excel></c-export-to-excel>
+
+                        <!-- Email Button --------------------------------------------------------------------------->
+                        <lightning-button-icon 
+                            icon-name="utility:sender_email"
+                            alternative-text="Submit Candidate To Client"
+                            onclick={handleSubmitToClient}
+                            class="slds-m-right_xx-small "
+                            variant="border-filled"
+                            size="medium"
+                            disabled={isActionDisabled}>
+                        </lightning-button-icon>
+                        <template if:true={showSubmitToClient}>
+                            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open custom-center-modal">
+                                <div class="slds-modal__container custom-big-modal">
+                                    <!-- Header -->
+                                    <header class="slds-modal__header">
+                                        <h2 class="slds-text-heading_medium">Submit Candidate to Client</h2>
+                                        <button class="slds-button slds-button_icon slds-modal__close"
+                                                title="Close" onclick={closeSubmitToClient}>
+                                            <lightning-icon icon-name="utility:close" size="medium"></lightning-icon>
+                                        </button>
+                                    </header>
+
+                                    <!-- Body -->
+                                    <div class="slds-modal__content slds-p-around_medium">
+                                        <c-submit-candidate-to-client 
+                                            record-ids={selectedCandidateIds}
+                                                job-position-id={recordId}
+                                                 onclosemodal={handleCloseSubmitModal}
+                                                 onshownextfooter={handleShowSendButton}
+                                                 oncloseall={handleEmailSuccess}
+                                                >
+
+                                            
+                                        </c-submit-candidate-to-client>
+                                    </div>
+
+                                    <!-- Footer -->
+                                    <footer class="slds-modal__footer">
+                                        <lightning-button variant="neutral" label="Cancel" onclick={closeSubmitToClient}></lightning-button>
+                                        <template if:true={showFinalSendBtn}>
+                                        <lightning-button
+                                               variant="brand"
+                                               label="Send Email"
+                                               onclick={handleSendEmailClick}
+                                               class="slds-m-left_small">
+                                               </lightning-button>
+                                               </template>
+                                  <!-- <c-submit-candidate-to-client
+                                 send-email-flag={sendEmailFlag}>
+                                  </c-submit-candidate-to-client> -->
+                                    </footer>
+                                </div>
+                            </section>
+
+                            <!-- Modal Backdrop -->
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </template>                
+
+                    <!-- Filter Button -->
+                    <lightning-button-icon 
+                        icon-name="utility:filterList"
+                        alternative-text="Filter"
+                        onclick={handleFilterClick}
+                        class="slds-m-right_xx-small"
+                        variant="border-filled"
+                        size="medium">
+                    </lightning-button-icon>
+                </div>
+            </div>
+                <lightning-card>
+                        <template if:true={hasData}>
+                            
+                            <!-- Column Headers -->
+                            <div class="slds-grid slds-p-horizontal_x-small slds-p-vertical_xx-small slds-text-title_bold slds-border_bottom header-bar">
+                                <!-- Checkbox Column -->
+                                <div class="slds-col slds-size_1-of-12 slds-align_absolute-center">
+                                    <lightning-input
+                                        type="checkbox"
+                                        checked={allSelected}
+                                        onchange={handleSelectAll}
+                                        label="">
+                                    </lightning-input>  
+                                </div>
+
+                                    <div class="slds-col slds-size_2-of-12">Applicant</div>
+                                    <div class="slds-col slds-size_2-of-12">Rounds</div>
+                                    <div class="slds-col slds-size_2-of-12">Current Location</div>
+                                    <div class="slds-col slds-size_2-of-12">Phone No.</div>
+                                    <div class="slds-col slds-size_3-of-12">Last Modified By</div>
+                            </div>
+
+                            <div class="container_boundary">
+                            <template for:each={computedData} for:item="record">
+                                <div key={record.Id} class={record.rowClass}>                               
+                                    <!-- Top Row -->
+                                    <div class="slds-grid slds-p-vertical_xx-small">
+                                        <div class="slds-col slds-size_1-of-12 slds-align_absolute-center">
+                                            <lightning-input
+                                                type="checkbox"
+                                                checked={record.selected}
+                                                data-id={record.Id}
+                                                onchange={handleCheckboxChange}>
+                                            </lightning-input>
+                                        </div>
+
+                                        <div class="slds-col slds-size_2-of-12">
+                                            <a href="javascript:void(0);"
+                                                data-id={record.Candidate_Name__c}
+                                                onclick={handleCandidateClick}>
+                                                {record.Candidate_Name__r.Name}
+                                            </a>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-12">
+                                            {record.Round__c}
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-12">
+                                            {record.Candidate_Name__r.Current_Location__c}
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-12">
+                                            {record.Candidate_Name__r.Phone}
+                                        </div>                                
+                                        <div class="slds-col slds-size_5-of-24">
+                                            {record.Candidate_Name__r.LastModifiedBy.Name}
+                                        </div>
+                                        <a href={record.Candidate_Name__r.Resume_Link__c} target="_blank">
+                                            <lightning-button-icon 
+                                                icon-name="utility:link"
+                                                alternative-text="View Resume"
+                                                class="slds-icon-text-brand slds-m-right_x-small"
+                                                size="small"
+                                                variant="border-filled"
+                                                disabled={record.isResumeLinkEmpty}>
+                                            </lightning-button-icon>
+                                        </a>
+                                            <lightning-button-icon 
+                                                icon-name="utility:edit"
+                                                alternative-text="Edit"
+                                                data-id={record.Id}
+                                                onclick={handleOpenEditModal}
+                                                class="slds-icon-text-brand slds-m-right_xx-small"
+                                                size="small"
+                                                variant="border-filled">
+                                                </lightning-button-icon>
+                                            <lightning-button-icon 
+                                                icon-name="utility:delete"
+                                                alternative-text="Remove Candidate"
+                                                data-id={record.Id}
+                                                onclick={handleOpenDeleteConfirm}
+                                                class="slds-icon-text-error slds-m-right_xx-small"
+                                                size="small"
+                                                variant="border-filled">
+                                            </lightning-button-icon>  
+                                        </div>
+
+                                    <!-- Bottom Row -->
+                                    <div class="slds-col slds-size_12-of-12 slds-p-vertical-small">
+                                        <template if:true={record.displaySteps}>
+                                            <div class="outer-wrapper">
+                                                    <div class="full-progress slds-size_11-of-12"> 
+                                                            <lightning-progress-indicator
+                                                                current-step={record.pathCurrentStep}
+                                                                type="path"
+                                                                variant="base"
+                                                                class="custom-progress">
+                                                                
+                                                                <template for:each={record.displaySteps} for:item="step">
+                                                                    <lightning-progress-step
+                                                                        key={step.value}
+                                                                        label={step.label}
+                                                                        value={step.value}>
+                                                                    </lightning-progress-step>
+                                                                </template>
+
+                                                            </lightning-progress-indicator>
+                                                    </div>    
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+                            </div>
+                            <!-- Page Size Selector -->
+                        <!-- Records per page selector -->
+
+                        <div class="slds-col slds-grid slds-grid_vertical-align-center slds-m-top_xx-small slds-m-right_xx-small slds-grid_align-end">
+                            <label class=" slds-m-right_x-small  slds-text-body_regular slds-text-heading_small" style="font-size: .9rem;">Records per page:</label>
+                            <input 
+                                type="number" 
+                                value={pageSize}
+                                min="1"
+                                onchange={handlePageSizeChange}
+                                class="slds-input slds-input_x-small"
+                                style="width: 40px;">
+                        </div>
+
+
+                    <div class="slds-align_absolute-center" style="height:5rem">                
+                        <!-- Previous Button -->
+                        <lightning-button
+                            disabled={isPreviousDisabled}
+                            icon-name="utility:chevronleft"
+                            label="Previous"
+                            variant={prevVariant}
+                            onclick={handlePrev}>
+                        </lightning-button>
+
+                        <!-- Page Info -->
+                        <span class="slds-badge slds-m-horizontal_small" style="font-size: .9rem; font-weight: bold;">
+                            Page {currentPage} of {totalPages}
+                        </span>
+
+                        <!-- Next Button -->
+                        <lightning-button
+                            disabled={isNextDisabled}
+                            icon-name="utility:chevronright"
+                            label="Next"
+                            variant={nextVariant}
+                            onclick={handleNext}
+                            icon-position="right">
+                        </lightning-button>   
+                    </div>
+                    </template>
+
+                    <template if:false={hasData}>
+                        <div class=" slds-text-align_center">              
+                            <span class=" slds-text-heading_large">😔</span>
+                        </div>
+
+                    <div class="slds-text-body_regular slds-text-color_weak slds-align_absolute-center slds-m-around_medium ">
+                        No records found for this job position.
+                    </div>
+                    </template>            
+
+                    <template if:true={error}>
+                        <div class=" slds-text-color_error slds-m-around_medium">Error: {error}</div>
+                    </template>
+                </lightning-card>
+
+                <!-- Spinner -->
+                <template if:true={isLoading}>
+                    <div class="spinner-overlay">
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </div>
+                </template>
+
+            <!-- Update Interview Modal -->
+                <template if:true={isModalOpen}>
+                    <section role="dialog" tabindex="-1" class="update-modal">
+                        <div class="update-modal-container">
+
+                            <!-- Header -->
+                            <header class="update-modal-header">
+                                <h2>Update Interview Records:</h2>
+                            </header>
+
+                            <!-- Body -->
+                            <div class="update-modal-body">
+                                <div class="form-row">
+                                    <lightning-combobox
+                                        name="Stages"
+                                        label="Status"
+                                        value={selectedStage}
+                                        options={picklistSteps}
+                                        onchange={handleStageChange}>
+                                    </lightning-combobox>
+
+                                    <!--lightning-combobox
+                                        name="Rounds"
+                                        label="Round"
+                                        value={selectedRound}
+                                        options={roundOptions}
+                                        onchange={handleRound}>
+                                    </lightning-combobox-->
+                                </div>
+
+                                <!-- New Picklist for Feedback Type -->
+                                <div class="form-row">
+                                    <lightning-combobox
+                                        name="FeedbackType"
+                                        label="Feedback Type"
+                                        value={selectedFeedbackType}
+                                        options={feedbackTypeOptions}
+                                        onchange={handleFeedbackTypeChange}>
+                                    </lightning-combobox>
+                                </div>
+
+                                <!-- Feedback Field -->
+                                <div class="form-row">
+                                    <lightning-textarea
+                                        name="Feedback"
+                                        label="Feedback"
+                                        placeholder="Minimum 100 characters are required."
+                                        value={feedback}
+                                        onchange={handleFeedbackChange}
+                                        disabled={isFeedbackDisabled}>
+                                    </lightning-textarea>
+                                </div>
+
+                                <div class="note-text">
+                                    <strong>Note:</strong> Feedback value is compulsory if you are updating Interview Status values.
+                                </div>
+                            </div>
+
+                            <!-- Footer -->
+                            <footer class="update-modal-footer">
+                                <lightning-button variant="destructive" label="Cancel" onclick={closeModal}></lightning-button>
+                                <lightning-button variant="brand" label="Save" onclick={handleSave} disabled={isSaveDisabled}></lightning-button>
+                                    
+                                              
+                                 
+                            </footer>
+                        </div>
+                    </section>
+                </template>
+
+                <!-- Delete Confirmation Modal -->
+                <template if:true={isDeleteModalOpen}>
+                    <section role="dialog" tabindex="-1" class="delete-modal">
+                        <div class="delete-modal-container">
+
+                            <!-- Header -->
+                            <header class="delete-modal-header">
+                                <h2>Delete Interview Record</h2>
+                            </header>
+
+                            <!-- Body -->
+                            <div class="delete-modal-body">
+                                <div class="note-text">
+                                    Warning: Do you want to delete this interview record?
+                                </div>
+                            </div>
+
+                            <!-- Footer -->
+                            <footer class="delete-modal-footer">
+                                <lightning-button variant="neutral" label="No" onclick={handleCloseDeleteConfirm}></lightning-button>
+                                <lightning-button variant="brand" label="Yes" onclick={handleConfirmDelete}></lightning-button>
+                            </footer>
+                        </div>
+                    </section>
+                </template>
+
+                <!-- Edit Modal -->
+
+                    <template if:true={isEditModalOpen}>
+                        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                
+                                <!-- Header -->
+                                <header class="slds-modal__header">
+                                    <h2 class="slds-text-heading_medium">Edit Interview</h2>
+                                    <button class="slds-button slds-button_icon slds-modal__close" 
+                                            title="Close" onclick={handleCloseEditModal}>
+                                        <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                                        <span class="slds-assistive-text">Close</span>
+                                    </button>
+                                </header>
+
+                                <!-- Body -->
+                                <div class="slds-modal__content slds-p-around_medium">
+                                    <lightning-record-edit-form 
+                                        object-api-name="Interview__c" 
+                                        record-id={editRecordId}
+                                        onsuccess={handleSuccessEdit}>
+                                        
+                                        <lightning-messages></lightning-messages>
+                                         <lightning-input-field field-name="Interview_Status__c"></lightning-input-field>
+                                        <lightning-input-field field-name="Round__c"></lightning-input-field>                                       
+                                        <lightning-input-field field-name="Feedback__c"></lightning-input-field>
+                                        <lightning-input-field field-name="Interview_Date__c"></lightning-input-field>
+                                        <lightning-input-field field-name="Interview_Mode__c"></lightning-input-field>
+                                        <!-- You can add more fields as needed -->
+                                        
+                                        <div class="slds-modal__footer">
+                                            <lightning-button variant="white" label="Cancel" onclick={handleCloseEditModal} class="slds-m-right_small"></lightning-button>
+                                            <lightning-button variant="brand" type="submit" label="Save" class="slds-m-right_smalll"></lightning-button>
+                                        </div>
+                                    </lightning-record-edit-form>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </template>
+                    
+<!--------------- Filter Modal----------------------->
+                    <template if:true={isFilterModalOpen}>
+                        <section class="slds-panel slds-panel_docked slds-panel_docked-right slds-is-open custom-side-panel">
+
+                            <!-- HEADER -->
+                            <header class="slds-panel__header">
+                                <h2 class="slds-panel__header-title">Filter Records</h2>
+                                <button class="slds-button slds-button_icon slds-button_icon-small"
+                                    onclick={closeFilterModal}>
+                                    <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                                </button>
+                            </header>
+
+                            <!-- BODY -->
+                            <div class="slds-panel__body slds-p-around_medium">
+
+                                <!-- Stage Filter -->
+                                <lightning-combobox
+                                    name="stageFilter"
+                                    label="Stage"
+                                    value={selectedStageFilter}
+                                    options={picklistSteps}
+                                    onchange={handleStageFilterChange}>
+                                </lightning-combobox>
+
+                                <!-- Source Filter -->
+                                <lightning-combobox
+                                    class="slds-m-top_medium"
+                                    name="sourceFilter"
+                                    label="Source"
+                                    value={selectedSourceFilter}
+                                    options={sourceOptions}
+                                    onchange={handleSourceFilterChange}>
+                                </lightning-combobox>
+
+                                <div class="slds-m-vertical_medium slds-border_bottom"></div>
+
+                                <!-- Date Filters -->
+                                <div class="slds-grid slds-gutters slds-m-bottom_medium">
+
+                                    <div class="slds-col">
+                                        <lightning-input
+                                            type="date"
+                                            label="Start Date"
+                                            value={startDateFilter}
+                                            onchange={handleStartDateChange}>
+                                        </lightning-input>
+                                    </div>
+
+                                    <div class="slds-col">
+                                        <lightning-input
+                                            type="date"
+                                            label="End Date"
+                                            value={endDateFilter}
+                                            onchange={handleEndDateChange}>
+                                        </lightning-input>
+                                    </div>
+
+                                </div>
+
+                                <!-- Quick Date Filters -->
+                                <label class="slds-form-element__label slds-text-title_caps slds-m-bottom_x-small">
+                                    Quick Date Filters
+                                </label>
+
+                                <lightning-button-group>
+                                    <lightning-button label="Today" value="today" onclick={handleQuickDateSelect}></lightning-button>
+                                    <lightning-button label="Yesterday" value="yesterday" onclick={handleQuickDateSelect}></lightning-button>
+                                    <lightning-button label="Last 7 Days" value="last7" onclick={handleQuickDateSelect}></lightning-button>
+                                </lightning-button-group>
+
+                            </div>
+
+                            <!-- FOOTER -->
+                            <footer class="slds-panel__footer slds-p-around_small">
+                                <lightning-button label="Clear Filters" onclick={clearFilters}></lightning-button>
+                                <lightning-button label="Cancel" class="slds-m-left_small" onclick={closeFilterModal}></lightning-button>
+                                <lightning-button label="Apply" variant="brand" class="slds-m-left_small" onclick={applyFilters}></lightning-button>
+                            </footer>
+
+                        </section>
+                    </template>
+
+
+        </template>

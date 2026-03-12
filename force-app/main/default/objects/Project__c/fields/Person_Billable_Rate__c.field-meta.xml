@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Person_Billable_Rate__c</fullName>
+    <description>Displays the billable rate defined on the related Work Order when the Project uses Person Billable Rate as the selected Rate Type.</description>
+    <formula>IF(
+TEXT(Rate_Type__c) = &quot;Person Rate&quot;,
+Work_Order__r.Person_Billable_Rate__c,
+NULL
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>This rate is automatically derived from the associated Work Order and used when Person Billable Rate is selected as the Rate Type.</inlineHelpText>
+    <label>Person Billable Rate</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

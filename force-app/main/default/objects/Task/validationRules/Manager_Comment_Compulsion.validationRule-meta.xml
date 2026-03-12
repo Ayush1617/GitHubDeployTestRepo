@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Manager_Comment_Compulsion</fullName>
+    <active>true</active>
+    <description>If manager want to change Task status to complete then need to add comment.</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(Status, &quot;Completed&quot;),
+Candidates_to_submit__c &gt; Actual_Candidate_submitted__c,
+ISBLANK( Manager_Comment__c ),
+$RecordType.DeveloperName = &quot;Recruiter_Page_Layout&quot;,
+$UserRole.DeveloperName = &quot;SVPHumanResources&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Manager_Comment__c</errorDisplayField>
+    <errorMessage>Manager need to add comment before setting status to &quot;Complete&quot;.</errorMessage>
+</ValidationRule>

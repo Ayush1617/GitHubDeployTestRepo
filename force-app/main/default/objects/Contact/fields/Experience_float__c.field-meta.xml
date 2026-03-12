@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Experience_float__c</fullName>
+    <description>This formula field gives a float value from the value of Experience year and Experience month from the layout, this field should be hidden from layout and only be used by developers</description>
+    <externalId>false</externalId>
+    <formula>IF(
+    ISBLANK(Experience_Year__c), 0, Experience_Year__c
+) +
+(
+    IF(ISBLANK(Experience_Month__c), 0, Experience_Month__c) / 12
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Experience_float</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

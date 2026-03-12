@@ -1,0 +1,299 @@
+<template>
+    <!-- Main Upload Page (Full Width - No Modal) -->
+    <template if:true={isOpen}>
+        <!-- Full width page container -->
+        <div class="upload-page-container">
+            <!-- Header - Full width -->
+            <header class="upload-header slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-p-around_medium">
+                <div>
+                    <h2 class="slds-text-heading_medium slds-m-right_small">
+                        Upload Candidates
+                    </h2>
+                    <p class="slds-text-body_small slds-text-color_weak">
+                        Upload an Excel file (.xlsx) to create or update candidate records
+                    </p>
+                </div>
+            </header>
+
+            <!-- Body - Full width with padding -->
+            <div class="upload-body slds-p-around_medium">
+                
+                <!-- File Upload Section - Full width box -->
+                <div class="slds-box slds-theme_default slds-m-bottom_medium">
+                    <h3 class="slds-text-heading_small slds-m-bottom_small">Step 1: Select Excel File</h3>
+                    
+                    <lightning-input
+                        type="file"
+                        accept=".xlsx"
+                        label="Select Excel File"
+                        message="Upload .xlsx file with candidate data"
+                        onchange={handleFileUpload}
+                        class="slds-m-bottom_small">
+                    </lightning-input>
+
+                    <!-- Instructions -->
+                    <div class="slds-text-body_small slds-text-color_weak slds-m-bottom_medium">
+                        <p><strong>Instructions:</strong></p>
+                        <ul class="slds-list_dotted">
+                            <li>File must be in .xlsx format</li>
+                            <li>First row should contain column headers</li>
+                            <li>Required columns: First Name, Last Name, Email</li>
+                            <li>Optional columns: Phone, Job Position, etc.</li>
+                            <li>Max file size: 10MB</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- File Preview -->
+                <template if:true={file}>
+                    <div class="slds-box slds-theme_shade slds-m-bottom_medium">
+                        <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                            <div>
+                                <p class="slds-text-body_regular">
+                                    <strong>Selected File:</strong> {file.name}
+                                </p>
+                                <p class="slds-text-body_small slds-text-color_weak">
+                                    Size: {fileSize} | Type: {file.type}
+                                </p>
+                            </div>
+                            <div class="slds-grid slds-grid_align-center slds-grid_vertical-align-center">
+                                <lightning-button-icon
+                                    icon-name="utility:delete"
+                                    variant="border-filled"
+                                    alternative-text="Remove file"
+                                    onclick={removeFile}
+                                    class="slds-m-right_x-small">
+                                </lightning-button-icon>
+                                <span class="slds-text-body_small slds-text-color_weak">
+                                    Click upload button to process
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Upload Progress -->
+                <template if:true={isUploading}>
+                    <div class="slds-box slds-theme_info slds-m-bottom_medium">
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <lightning-spinner size="small" class="slds-m-right_small"></lightning-spinner>
+                            <div>
+                                <p class="slds-text-body_regular slds-text-color_inverse">
+                                    <strong>Processing upload...</strong>
+                                </p>
+                                <p class="slds-text-body_small slds-text-color_inverse">
+                                    Please wait while we process your file. Do not close this window.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Previous Result Summary -->
+                <template if:true={showPreviousResult}>
+                    <div class="slds-box slds-theme_success slds-m-bottom_medium">
+                        <h3 class="slds-text-heading_small slds-m-bottom_x-small">Last Upload Summary</h3>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <span class="slds-text-body_small">Total:</span>
+                                <span class="slds-text-heading_small slds-m-left_x-small">{uploadResult.totalRecords}</span>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <span class="slds-text-body_small">Created:</span>
+                                <span class="slds-text-heading_small slds-m-left_x-small">{uploadResult.candidatesCreated}</span>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <span class="slds-text-body_small">Updated:</span>
+                                <span class="slds-text-heading_small slds-m-left_x-small">{uploadResult.candidatesUpdated}</span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Footer with actions -->
+                <footer class="upload-footer slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-p-around_medium">
+                    <div class="slds-text-body_small slds-text-color_weak">
+                        <template if:true={file}>
+                            Ready to process {file.name}
+                        </template>
+                        <template if:false={file}>
+                            Select a file to begin
+                        </template>
+                    </div>
+                    <div>
+                        <lightning-button
+                            label="Upload & Process"
+                            variant="brand"
+                            onclick={handleUpload}
+                            disabled={disableUpload}>
+                        </lightning-button>
+                    </div>
+                </footer>
+
+            </div>
+        </div>
+    </template>
+
+    <!-- Result Summary Modal (Keep as Popup) -->
+    <template if:true={showResultModal}>
+        <section class="slds-modal slds-fade-in-open slds-modal_large" role="dialog" tabindex="-1">
+            <div class="slds-modal__container">
+                
+                <!-- Header -->
+                <header class="slds-modal__header modal-header-blue">
+                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                        <h2 class="slds-text-heading_medium">
+                            Upload Complete
+                        </h2>
+                        <button class="slds-button slds-button_icon slds-button_icon-inverse" 
+                                onclick={handleResultClose} 
+                                title="Close">
+                            <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Body -->
+                <div class="slds-modal__content slds-p-around_medium">
+                    
+                    <!-- Success Summary -->
+                    <div class="slds-box slds-theme_brand">
+                        <h3 class="slds-text-heading_small slds-m-bottom_medium">Upload Summary</h3>
+                        
+                        <!-- Stats Grid -->
+                        <div class="slds-grid slds-wrap slds-m-bottom_large">
+                            <div class="slds-col slds-size_1-of-4 slds-p-around_x-small">
+                                <div class="slds-box slds-box_small slds-text-align_center slds-theme_default">
+                                    <span class="slds-text-heading_large">{uploadResult.totalRecords}</span>
+                                    <p class="slds-text-body_small">Total Records</p>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4 slds-p-around_x-small">
+                                <div class="slds-box slds-box_small slds-text-align_center slds-theme_success">
+                                    <span class="slds-text-heading_large">{uploadResult.candidatesCreated}</span>
+                                    <p class="slds-text-body_small">Candidates Created</p>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4 slds-p-around_x-small">
+                                <div class="slds-box slds-box_small slds-text-align_center slds-theme_info">
+                                    <span class="slds-text-heading_large">{uploadResult.candidatesUpdated}</span>
+                                    <p class="slds-text-body_small">Candidates Updated</p>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4 slds-p-around_x-small">
+                                <div class="slds-box slds-box_small slds-text-align_center slds-theme_warning">
+                                    <span class="slds-text-heading_large">{uploadResult.interviewsCreated}</span>
+                                    <p class="slds-text-body_small">Interviews Created</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Warnings -->
+                        <template if:true={hasWarnings}>
+                            <div class="slds-notice slds-notice_warning slds-m-bottom_medium">
+                                <div class="slds-notice__content">
+                                    <h3 class="slds-text-heading_small">Warnings ({uploadResult.warnings.length})</h3>
+                                    <ul class="slds-list_dotted slds-m-left_medium">
+                                        <template for:each={uploadResult.warnings} for:item="warning">
+                                            <li key={warning.id}>
+                                                Row {warning.rowNumber}: {warning.message}
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Failed Records -->
+                    <template if:true={hasFailedRecords}>
+                        <div class="slds-box slds-theme_error slds-m-top_medium">
+                            <div class="slds-grid slds-grid_align-spread slds-m-bottom_small">
+                                <h3 class="slds-text-heading_small">Failed Records ({uploadResult.failedRecords.length})</h3>
+                                <lightning-button
+                                    label="Download Error Report"
+                                    variant="neutral"
+                                    onclick={downloadErrorReport}
+                                    icon-name="utility:download">
+                                </lightning-button>
+                            </div>
+                            
+                            <div class="slds-scrollable_y" style="max-height: 200px;">
+                                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                                    <thead>
+                                        <tr class="slds-text-title_caps">
+                                            <th scope="col">Row Number</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Field</th>
+                                            <th scope="col">Error Message</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={uploadResult.failedRecords} for:item="error">
+                                            <tr key={error.id}>
+                                                <td class="slds-text-color_default">{error.rowNumber}</td>
+                                                <td class="slds-text-color_default">{error.email}</td>
+                                                <td class="slds-text-color_default">{error.field}</td>
+                                                <td class="slds-text-color_default">{error.error}</td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Detailed Summary -->
+                    <div class="slds-box slds-theme_default slds-m-top_medium">
+                        <h3 class="slds-text-heading_small slds-m-bottom_small">Detailed Summary</h3>
+                        
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2">
+                                <dl class="slds-dl_horizontal">
+                                    <dt class="slds-dl_horizontal__label">Processing Time:</dt>
+                                    <dd class="slds-dl_horizontal__detail">{uploadResult.processingTime} seconds</dd>
+                                    
+                                    <dt class="slds-dl_horizontal__label">Total Processed:</dt>
+                                    <dd class="slds-dl_horizontal__detail">{uploadResult.totalRecords} records</dd>
+                                    
+                                    <dt class="slds-dl_horizontal__label">Candidates Created:</dt>
+                                    <dd class="slds-dl_horizontal__detail">{uploadResult.candidatesCreated} records</dd>
+                                </dl>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <dl class="slds-dl_horizontal">
+                                    <dt class="slds-dl_horizontal__label">Candidates Updated:</dt>
+                                    <dd class="slds-dl_horizontal__detail">{uploadResult.candidatesUpdated} records</dd>
+                                    
+                                    <dt class="slds-dl_horizontal__label">Interviews Created:</dt>
+                                    <dd class="slds-dl_horizontal__detail">{uploadResult.interviewsCreated} records</dd>
+                                    
+                                    <dt class="slds-dl_horizontal__label">Skipped Interviews:</dt>
+                                    <dd class="slds-dl_horizontal__detail">{uploadResult.duplicateInterviewsSkipped} records</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <footer class="slds-modal__footer">
+                    <lightning-button
+                        label="Upload Another File"
+                        variant="neutral"
+                        onclick={handleUploadAnother}
+                        class="slds-m-right_small">
+                    </lightning-button>
+                    <lightning-button
+                        label="Close"
+                        variant="brand"
+                        onclick={handleResultClose}>
+                    </lightning-button>
+                </footer>
+
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

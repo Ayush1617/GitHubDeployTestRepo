@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Reason_For_Leave_When_FullOrHalf</fullName>
+    <active>false</active>
+    <description>Require Reason_for_Leave__c when Status__c is Full Day Leave or Half Day Leave.</description>
+    <errorConditionFormula>AND(
+    NOT(Bypass_Validation__c),  /* Skip if bypass is true */
+    OR(
+        /* Your original conditions */
+        ISPICKVAL(Status__c, &quot;Full Day Leave&quot;) &amp;&amp; ISBLANK(Reason_for_Leave__c),
+        ISPICKVAL(Status__c, &quot;Half Day Leave&quot;) &amp;&amp; ISBLANK(Reason_for_Leave__c)
+        /* Add other existing validation conditions here if any */
+    )
+)</errorConditionFormula>
+    <errorMessage>Reason for Leave is required when Status is Full Day Leave or Half Day Leave.</errorMessage>
+</ValidationRule>

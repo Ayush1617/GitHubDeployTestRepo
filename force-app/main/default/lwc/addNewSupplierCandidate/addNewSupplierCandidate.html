@@ -1,0 +1,189 @@
+<template>
+    <!-- NO grid, NO centering -->
+    <section class="slds-p-around_medium">
+
+        <div class="slds-card slds-p-around_medium slds-size_1-of-1">
+
+            <!-- Header -->
+            <div class="slds-m-bottom_medium">
+                <h1 class="slds-text-heading_large slds-m-bottom_xx-small">
+                    Apply for a Role
+                </h1>
+                <p class="slds-text-body_regular slds-text-color_weak">
+                    Please fill in your details. Fields marked * are mandatory.
+                </p>
+            </div>
+
+            <!-- Error -->
+            <template if:true={errorMessage}>
+                <div class="slds-notify slds-notify_alert slds-theme_error slds-m-bottom_medium">
+                    {errorMessage}
+                </div>
+            </template>
+
+            <!-- Success -->
+            <template if:true={showSuccess}>
+                <div class="slds-notify slds-notify_alert slds-theme_success slds-m-bottom_medium">
+                    Your application has been submitted.
+                </div>
+            </template>
+
+            <form onsubmit={handleSubmit} class="slds-form">
+
+                <!-- Row 1 -->
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            label="First Name"
+                            required
+                            name="firstName"
+                            value={formData.firstName}
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            label="Last Name"
+                            required
+                            name="lastName"
+                            value={formData.lastName}
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="slds-grid slds-gutters slds-m-top_medium">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            type="email"
+                            label="Email"
+                            required
+                            name="email"
+                            value={formData.email}
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            type="tel"
+                            label="Phone"
+                            required
+                            name="phone"
+                            value={formData.phone}
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="slds-grid slds-gutters slds-m-top_medium">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            type="number"
+                            label="Experience (Years)"
+                            name="experienceYears"
+                            value={formData.experienceYears}
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            type="number"
+                            label="Expected Salary"
+                            name="expectedSalary"
+                            value={formData.expectedSalary}
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+
+                <!-- Row: 4 Current Company & Job Title -->
+                <div class="slds-grid slds-gutters slds-m-top_medium">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            type="text"
+                            label="Current Company"
+                            name="currentCompany"
+                            value={formData.currentCompany}
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            type="text"
+                            label="Job Title"
+                            name="jobTitle"
+                            value={formData.jobTitle}
+                            onchange={handleInputChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+
+                <!-- Notice -->
+                <div class="slds-m-top_medium">
+                    <lightning-combobox
+                        label="Notice Period"
+                        name="noticePeriod"
+                        value={formData.noticePeriod}
+                        options={noticeOptions}
+                        onchange={handleInputChange}>
+                    </lightning-combobox>
+                </div>
+
+                <!-- Skills -->
+                <div class="slds-m-top_medium">
+                    <lightning-textarea
+                        label="Skills"
+                        name="skills"
+                        value={formData.skills}
+                        rows="4"
+                        onchange={handleInputChange}>
+                    </lightning-textarea>
+                </div>
+
+                <!-- Resume -->
+                <div class="slds-m-top_medium">
+                    <lightning-input
+                        type="file"
+                        label="Upload Resume"
+                        accept=".pdf,.doc,.docx"
+                        data-id="resumeFile"
+                        onchange={handleFileChange}>
+                    </lightning-input>
+
+                    <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">
+                        PDF or DOC/DOCX preferred, max ~5MB.
+                    </p>
+
+                    <!-- show selected filename -->
+                    <template if:true={resume.fileName}>
+                        <p class="selected-file">Selected file: {resume.fileName}</p>
+                    </template>
+                </div>
+
+                <!-- Submit -->
+                <div class="slds-m-top_large slds-text-align_right">
+                    <button
+                        type="submit"
+                        class="slds-button slds-button_brand"
+                        disabled={isSubmitting}>
+
+                        <template if:true={isSubmitting}>
+                            Submitting…
+                        </template>
+
+                        <template if:false={isSubmitting}>
+                            Submit Application
+                        </template>
+
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+</template>

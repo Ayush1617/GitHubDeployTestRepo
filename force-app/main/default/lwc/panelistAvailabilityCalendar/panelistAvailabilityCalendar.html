@@ -1,0 +1,171 @@
+<template>
+    <lightning-card>
+        <h2 class="main-title">Interview Availability</h2>
+
+        <div class="slds-p-around_medium">
+            <!-- BLUE OUTER FRAME -->
+            <div class="outer-frame">
+                <div class="container">
+                    <!-- LEFT : CALENDAR -->
+                    <div class="left white-panel">
+                        <h3 class="section-title">SELECT DATES</h3>
+
+                        <!-- QUICK RANGE BUTTONS -->
+                        <div class="range-buttons">
+                            <lightning-button label="Custom Dates" variant={customVariant} onclick={handleCustomDates}></lightning-button>
+                            <lightning-button label="7 Days" variant={sevenVariant} onclick={handle7Days}></lightning-button>
+                            <lightning-button label="30 Days" variant={thirtyVariant} onclick={handle30Days}></lightning-button>
+                        </div>
+
+                        <!-- MONTH HEADER -->
+                        <div class="month-header">
+                            <lightning-button-icon icon-name="utility:chevronleft" alternative-text="Previous" onclick={prevMonth}></lightning-button-icon>
+                            <span class="month-text">{monthLabel}</span>
+                            <lightning-button-icon icon-name="utility:chevronright" alternative-text="Next" onclick={nextMonth}></lightning-button-icon>
+                        </div>
+
+                        <!-- LIGHT BLUE CALENDAR PANEL -->
+                        <div class="calendar-wrapper">
+                            <!-- WEEK NAMES -->
+                            <div class="calendar-grid week">
+                                <span>Sun</span><span>Mon</span><span>Tue</span>
+                                <span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                            </div>
+
+                            <!-- CALENDAR DAYS -->
+                            <div class="calendar-grid">
+                                <template for:each={calendarDays} for:item="day">
+                                    <div
+                                        key={day.key}
+                                        class={day.cssClass}
+                                        data-date={day.isoDate}
+                                        onclick={handleDateClick}>
+                                        <template if:false={day.empty}>
+                                            {day.day}
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT : TIME SLOT -->
+                    <div class="right white-panel">
+                        <!-- TOP BLUE SECTION -->
+                        <div class="right-top">
+                            <!-- HEADER -->
+                            <div class="right-header">
+                                SELECT TIME RANGES
+                            </div>
+
+                            <!-- TIME ROW -->
+                            <div class="time-row">
+                                <div class="time-col">
+                                    <label class="time-label">From Time</label>
+                                    <lightning-combobox
+                                        variant="label-hidden"
+                                        options={timeOptions}
+                                        value={fromTime}
+                                        onchange={handleFromTimeChange}>
+                                    </lightning-combobox>
+                                </div>
+
+                                <div class="time-col">
+                                    <label class="time-label">To Time</label>
+                                    <lightning-combobox
+                                        variant="label-hidden"
+                                        options={timeOptions}
+                                        value={toTime}
+                                        onchange={handleToTimeChange}>
+                                    </lightning-combobox>
+                                </div>
+
+                                <div class="add-btn-col">
+                                    <lightning-button
+                                        label="Add"
+                                        variant="brand"
+                                        onclick={handleAddSlot}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BOTTOM WHITE SECTION -->
+                        <div class="right-bottom">
+                            <!-- NO SLOT -->
+                            <template if:false={hasSlots}>
+                                <p class="placeholder center-text">No Time slot selected</p>
+                            </template>
+
+                            <!-- SLOT LIST -->
+                            <template if:true={hasSlots}>
+                                <p class="count-text">{timeSlots.length} slot(s) selected</p>
+                                <div class="slots">
+                                    <template for:each={timeSlots} for:item="slot">
+                                        <div key={slot.id} class="slot">
+                                            <span>{slot.label}</span>
+                                            <lightning-button-icon
+                                                icon-name="utility:close"
+                                                variant="bare"
+                                                size="small"
+                                                class="remove-btn"
+                                                data-id={slot.id}
+                                                onclick={handleRemoveSlot}>
+                                            </lightning-button-icon>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+
+                            <!-- ACTION BUTTONS -->
+                            <div class="action-buttons">
+                                <lightning-button
+                                    label="ADD SLOTS"
+                                    variant="brand"
+                                    onclick={handleSaveAvailability}
+                                    class="action-btn">
+                                </lightning-button>
+                                
+                                <lightning-button
+                                    label="SEND AVAILABILITY LINK"
+                                    variant="brand"
+                                    onclick={handleRequestLink}
+                                    class="action-btn"
+                                    >
+                                </lightning-button>
+                            </div>
+
+                            <!-- GENERATED LINK SECTION -->
+                            <!--template if:true={generatedLink}>
+                                <div class="link-container slds-m-top_medium">
+                                    <h4 class="slds-text-heading_small slds-m-bottom_x-small">Share this link with the contact:</h4>
+                                    <div class="link-box">
+                                        <lightning-input
+                                            readonly
+                                            value={generatedLink}
+                                            variant="label-hidden">
+                                        </lightning-input>
+                                        <lightning-button-icon
+                                            icon-name="utility:copy"
+                                            alternative-text="Copy"
+                                            onclick={copyToClipboard}
+                                            class="copy-btn">
+                                        </lightning-button-icon>
+                                    </div>
+                                    <div class="slds-m-top_small">
+                                        <lightning-button
+                                            label="Send Email"
+                                            variant="brand"
+                                            onclick={sendEmail}
+                                            icon-name="utility:email">
+                                        </lightning-button>
+                                    </div>
+                                </div>
+                            </template--->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

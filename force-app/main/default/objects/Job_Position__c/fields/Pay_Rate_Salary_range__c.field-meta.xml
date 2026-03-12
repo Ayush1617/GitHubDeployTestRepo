@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pay_Rate_Salary_range__c</fullName>
+    <externalId>false</externalId>
+    <formula>&quot;₹&quot; &amp; TEXT(Pay_Min_Salary__c) &amp; &quot; - &quot; &amp; &quot;₹&quot; &amp; TEXT(Pay_max_Salary__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Amount offered to Candidate or Supplier</inlineHelpText>
+    <label>Pay Rate/ Salary range</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

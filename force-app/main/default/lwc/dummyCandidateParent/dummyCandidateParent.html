@@ -1,0 +1,55 @@
+<template>
+    <lightning-card title="Dummy Candidates">
+
+        <div class="slds-p-around_medium">
+
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Experience</th>
+                        <th>Final Decision</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={candidates} for:item="candidate" >
+                        <tr key={candidate.id}>
+                            <td>{candidate.serialNumber}</td>
+                            <td>{candidate.name}</td>
+                            <td>{candidate.experience} Years</td>
+                            <td>
+                                <lightning-icon 
+                                    icon-name={candidate.decisionIcon} 
+                                    size="small">
+                                </lightning-icon>
+                            </td>
+                            <td>
+                                <lightning-button
+                                    label="Add Feedback"
+                                    variant="brand"
+                                    onclick={openFeedback}
+                                    data-id={candidate.id}
+                                    data-final={candidate.isFinalDecision}>
+                                </lightning-button>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Child Modal -->
+        <template if:true={showModal}>
+            <c-candidate-feedback
+                candidate-id={selectedCandidateId}
+                is-final-decision={selectedFinalDecision}
+                feedback-list={selectedFeedbackList}
+                onsavefeedback={handleFeedbackSaved}
+                onclose={closeModal}>
+            </c-candidate-feedback>
+        </template>
+
+    </lightning-card>
+</template>

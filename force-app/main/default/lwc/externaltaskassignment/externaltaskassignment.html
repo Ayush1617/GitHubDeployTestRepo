@@ -1,0 +1,169 @@
+<template>
+    <div class="dashboard-wrapper">
+
+        <!-- Header -->
+        <div class="custom-header slds-p-horizontal_small slds-p-vertical_x-small">
+            Job Assignment Console
+        </div>
+
+        <p class="slds-text-body_small slds-text-color_weak slds-p-horizontal_small slds-m-top_x-small">
+            Assign tasks to your team members to submit candidates for job positions.
+        </p>
+
+        <!-- Wrapper Box -->
+        <div class="slds-m-around_x-small custom-table-wrapper">
+            <!-- FILTER SECTION -->
+            <div class="slds-grid slds-gutters slds-m-bottom_small">
+
+                <!-- Job Title Filter -->
+                <div class="slds-col slds-size_1-of-8">
+                    <lightning-input label="Job Title" placeholder="Search Job Title" onchange={handleJobTitleFilter}>
+                    </lightning-input>
+                </div>
+
+                <!-- Client Filter -->
+                <div class="slds-col slds-size_1-of-8">
+                    <lightning-input label="Client" placeholder="Search Client" onchange={handleClientFilter}>
+                    </lightning-input>
+                </div>
+                <!-- Priority Filter -->
+                <div class="slds-col slds-size_1-of-8">
+                    <lightning-combobox label="Job Priority" options={jobPriorityFilterOptions}
+                        value={selectedJobPriorityFilter} onchange={handleJobPriorityFilter}>
+                    </lightning-combobox>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="slds-p-around_x-small">
+            <div class="slds-box slds-box_x-small custom-table-wrapper">
+
+
+                <!-- TABLE HEADER -->
+                <table
+                    class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table_striped slds-m-bottom_small">
+                    <thead>
+                        <tr class="slds-text-title_caps slds-text-align_center custom-header-row">
+                            <th>Open Date</th>
+                            <th>Job Title</th>
+                            <th>Requirements</th>
+                            <th>Job Priority</th>
+                            <th>Client</th>
+                            <th>Assign To</th>
+                            <th>Task Priority</th>
+                            <th>Target</th>
+                            <th>Expected Time</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={rows} for:item="row">
+                            <tr key={row.id}>
+
+                                <td class="slds-text-align_center">
+                                    <lightning-formatted-date-time value={row.openDate} year="numeric" month="short"
+                                        day="2-digit">
+                                    </lightning-formatted-date-time>
+                                </td>
+
+                                <td class="slds-text-align_center">
+                                    <a href={row.jobUrl} target="_blank" class="job-link">
+                                        {row.jobTitle}
+                                    </a>
+                                </td>
+
+                                <td class="slds-text-align_center">{row.requirements}</td>
+
+                                <td class="slds-text-align_center">
+                                    <span class={row.priorityClass}>{row.priority}</span>
+                                </td>
+
+                                <td class="slds-text-align_center">{row.client}</td>
+
+                                <td>
+                                    <div class="slds-grid slds-grid_align-center">
+                                        <lightning-combobox class="full-width" value={row.assignedTo}
+                                            options={userOptions} variant="label-hidden" data-id={row.id}
+                                            onchange={handleAssignChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="slds-grid slds-grid_align-center">
+                                        <lightning-combobox class="full-width" value={row.taskPriority}
+                                            options={taskPriorityOptions} variant="label-hidden" data-id={row.id}
+                                            onchange={handleTaskPriorityChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="slds-grid slds-grid_align-center">
+                                        <lightning-input type="number" value={row.targetCount} variant="label-hidden"
+                                            data-id={row.id} style="width: 40px;" onchange={handleTargetChange}>
+                                        </lightning-input>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="slds-grid slds-grid_align-center">
+                                        <lightning-input type="number" value={row.expectedtime} variant="label-hidden"
+                                            data-id={row.id} style="width: 40px;" onchange={handletimeChange}>
+                                        </lightning-input>
+                                    </div>
+                                </td>
+
+                                <td class="row-icons">
+
+                                    <span class="icon-circle success-circle"
+                                        data-id={row.id}
+                                        onclick={handleAddRow}>
+                                        <lightning-icon icon-name="utility:add" size="x-small"></lightning-icon>
+                                    </span>
+
+                                    <span class="icon-circle error-circle"
+                                        data-id={row.id}
+                                        onclick={handleDeleteRow}>
+                                        <lightning-icon icon-name="utility:close" size="x-small"></lightning-icon>
+                                    </span>
+
+                                </td>
+
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slds-align_absolute-center slds-m-top_small">
+
+    <lightning-button
+        label="Previous"
+        onclick={handlePrev}
+        disabled={isPrevDisabled}>
+    </lightning-button>
+
+    <span class="slds-m-horizontal_medium">
+        Page {page} of {totalPages}
+    </span>
+
+    <lightning-button
+        label="Next"
+        onclick={handleNext}
+        disabled={isNextDisabled}>
+    </lightning-button>
+
+</div>
+
+
+        <!-- Save Button -->
+        <div class="slds-m-top_large slds-align_absolute-center">
+            <lightning-button label="Save Assignments" variant="brand" onclick={saveAssignments}>
+            </lightning-button>
+        </div>
+    </div>
+
+</template>

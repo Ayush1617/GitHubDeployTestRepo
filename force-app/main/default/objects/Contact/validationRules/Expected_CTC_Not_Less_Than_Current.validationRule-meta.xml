@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Expected_CTC_Not_Less_Than_Current</fullName>
+    <active>true</active>
+    <description>Validation Check - Expected salary should not be less than current salary</description>
+    <errorConditionFormula>AND(
+    RecordType.DeveloperName = &quot;Candidate&quot;,
+    NOT(ISBLANK(Expected_CTC__c)),
+    NOT(ISBLANK(Current_CTC__c)),
+    Expected_CTC__c &lt; Current_CTC__c
+)</errorConditionFormula>
+    <errorMessage>Expected CTC must be greater than or equal to Current CTC.</errorMessage>
+</ValidationRule>

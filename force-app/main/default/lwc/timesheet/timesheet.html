@@ -1,0 +1,80 @@
+<template>
+    <article class="slds-card">
+
+        <div class="slds-card__header">
+            <h2 class="slds-text-heading_x-small">Timesheet (Weekly)</h2>
+        </div>
+
+        <div class="slds-card__body slds-p-around_x-small">
+
+            <!-- HEADER -->
+            <div class="slds-grid slds-theme_shade slds-p-vertical_x-small slds-text-body_small">
+                <div class="slds-col" style="width:220px;"><b>Task</b></div>
+
+                <template for:each={weekDateLabels} for:item="d">
+                    <div key={d.key} class="slds-col slds-text-align_center" style="width:90px;">
+                        <div>{d.day}</div>
+                        <div class="slds-text-color_weak">{d.date}</div>
+                    </div>
+                </template>
+
+                <div class="slds-col slds-text-align_center" style="width:60px;"><b>Total</b></div>
+            </div>
+
+            <!-- ROWS -->
+            <template for:each={rows} for:item="row">
+                <div key={row.key} class="slds-grid slds-border_bottom slds-p-vertical_x-small">
+
+                    <div class="slds-col" style="width:220px;">
+                        <div class="slds-text-title_bold">{row.workOrderName}</div>
+                        <div class="slds-text-body_x-small slds-text-color_weak">{row.taskTypeName}</div>
+                    </div>
+
+                    <template for:each={row.dailyHours} for:item="day">
+                        <div key={day.date} class="slds-col slds-align_absolute-center" style="width:90px;">
+                            <lightning-input
+                                type="number"
+                                variant="label-hidden"
+                                value={day.hours}
+                                data-rowkey={row.key}
+                                data-date={day.date}
+                                class="slds-size_xx-small"
+                                style="width:48px;text-align:center;"
+                                onchange={handleHourChange}>
+                            </lightning-input>
+                        </div>
+                    </template>
+
+                    <div class="slds-col slds-text-align_center" style="width:60px;">
+                        <b>{row.total}</b>
+                    </div>
+                </div>
+            </template>
+
+            <!-- FOOTER -->
+            <div class="slds-grid slds-theme_shade slds-p-vertical_x-small slds-text-body_small">
+                <div class="slds-col" style="width:220px;"><b>Total</b></div>
+
+                <template for:each={dayTotalsArray} for:item="dt">
+                    <div key={dt.date} class="slds-col slds-text-align_center" style="width:90px;">
+                        {dt.total}
+                    </div>
+                </template>
+
+                <div class="slds-col slds-text-align_center" style="width:60px;">
+                    <b>{weekTotal}</b>
+                </div>
+            </div>
+
+            <!-- SAVE -->
+            <div class="slds-m-top_small slds-text-align_right">
+                <lightning-button
+                    variant="brand"
+                    label="Save"
+                    onclick={handleSave}>
+                </lightning-button>
+            </div>
+
+        </div>
+    </article>
+</template>

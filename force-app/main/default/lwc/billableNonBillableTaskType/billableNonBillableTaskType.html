@@ -1,0 +1,425 @@
+<template>
+    <div class="timesheet-wrapper">
+
+        <!-- ================= BILLABLE SECTION ================= -->
+        <div class="timesheet-card">
+                                      
+            <!-- Top Header -->
+            <div class="header-row">
+                <div class="headertask">Billable Task Type</div>
+                <div class="headertask">Weekly Entry</div>
+            </div>
+
+            <!-- Days Header -->
+            <div class="days-row">
+                <div class="task-col"></div>
+
+                <template for:each={days} for:item="day">
+                    <div key={day.key} class="day-header">
+                        <div class="day">{day.label}</div>
+                        <div class="date">{day.date}</div>
+                    </div>
+                </template>
+
+                <div class="add-col">Billable</div>
+            </div>
+
+            <!-- ================= UPDATE BILLABLE ROWS ================= -->
+
+            <template for:each={updateBillableRows} for:item="row">
+                <div key={row.id} class="data-row update-row">
+
+                    <!-- Task Type (display only) -->
+                    <div class="task-col">
+                        {row.taskTypeName}
+                    </div>
+
+                    <!-- Hours -->
+                    <template for:each={row.hours} for:item="hour">
+                        <div key={hour.day} class="hour-col">
+                            <div class="hour-with-note">
+
+                                <lightning-input
+                                    type="number"
+                                    class="compact-field"
+                                    min="0"
+                                    max="12"
+                                    variant="label-hidden"
+                                    value={hour.value}
+                                    data-id={row.id}
+                                    data-day={hour.day}
+                                    onchange={handleUpdateBillableHourChange}
+                                    disabled={isTimesheetSubmitted}>
+                                </lightning-input>
+
+                                <!-- NOTE BUTTON -->
+                                <lightning-button-icon
+                                    icon-name="utility:note"
+                                    alternative-text="Add Note"
+                                    variant="bare"
+                                    data-id={row.id}
+                                    data-day={hour.day}
+                                    data-section="updateBillable"
+                                    onclick={openNoteModal}>
+                                </lightning-button-icon>
+
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Empty column -->
+                    <div class="add-col"></div>
+
+                </div>
+            </template>
+
+            <!-- Billable Rows -->
+            <template for:each={billableRows} for:item="row">
+                <div key={row.id} class="data-row">
+
+                    <!-- Task Type -->
+                    <div class="task-col">
+                        <lightning-combobox
+                            class="compact-field"
+                            value={row.taskTypeId}
+                            options={billableTaskTypeOptions}
+                            placeholder="Select Task Type"
+                            variant="label-hidden"
+                            data-id={row.id}
+                            onchange={handleBillableTaskTypeChange}>
+                        </lightning-combobox>
+                    </div>
+
+                    <!-- Hours -->
+                    <template for:each={row.hours} for:item="hour">
+                        <div key={hour.day} class="hour-col">
+                            <div class="hour-with-note">
+
+                                <lightning-input
+                                    type="number"
+                                    class="compact-field"
+                                    min="0"
+                                    variant="label-hidden"
+                                    value={hour.value}
+                                    data-id={row.id}
+                                    data-day={hour.day}
+                                    onchange={handleBillableHourChange}>
+                                </lightning-input>
+
+                                <lightning-button-icon
+                                    icon-name="utility:note"
+                                    alternative-text="Add Note"
+                                    variant="bare"
+                                    data-id={row.id}
+                                    data-day={hour.day}
+                                    data-section="billable"
+                                    onclick={openNoteModal}>
+                                </lightning-button-icon>
+
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Add Button -->
+                    <div class="add-col">
+                        <lightning-button-icon
+                            icon-name="utility:add"
+                            alternative-text="Add Billable Row"
+                            variant="bare"
+                            onclick={addBillableRow}>
+                        </lightning-button-icon>
+                        <lightning-button-icon
+                            icon-name="utility:delete"
+                            alternative-text="Delete Row"
+                            variant="bare"
+                            data-id={row.id}
+                            data-section="billable"
+                            onclick={handleDeleteRow}>
+                        </lightning-button-icon>
+                    </div>
+                    
+
+                </div>
+            </template>
+
+            <!-- BILLABLE SECTION TOTAL -->
+            <div class="data-row total-row ">
+
+                <div class="task-col slds-text-title_bold">
+                    Billable Total
+                </div>
+
+                <!-- Per-day totals -->
+                <template for:each={billableDailyTotals} for:item="total">
+                    <div key={total.day} class="hour-col slds-text-title_bold slds-p-left_medium">
+                        {total.total}
+                    </div>
+                </template>
+
+                <!-- Weekly total -->
+                <div class="add-col slds-text-title_bold">
+                    {billableSectionTotal}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= NON-BILLABLE SECTION ================= -->
+        <div class="timesheet-card">
+
+            <!-- Top Header -->
+            <div class="header-row">
+                <div class="headertask">Non-Billable Task Type</div>
+                <div class="headertask">Weekly Entry</div>
+            </div>
+
+            <!-- Days Header -->
+            <div class="days-row">
+                <div class="task-col"></div>
+
+                <template for:each={days} for:item="day">
+                    <div key={day.key} class="day-header">
+                        <div class="day">{day.label}</div>
+                        <div class="date">{day.date}</div>
+                    </div>
+                </template>
+
+                <div class="add-col">Non-Billable</div>
+            </div>
+
+            <!-- ================= UPDATE NON-BILLABLE ROWS ================= -->
+
+            <template for:each={updateNonBillableRows} for:item="row">
+                <div key={row.id} class="data-row update-row">
+
+                    <!-- Task Type display only -->
+                    <div class="task-col">
+                        {row.taskTypeName}
+                    </div>
+
+                    <!-- Hours -->
+                    <template for:each={row.hours} for:item="hour">
+                        <div key={hour.day} class="hour-col">
+                            <div class="hour-with-note">
+
+                                <lightning-input
+                                    type="number"
+                                    class="compact-field"
+                                    min="0"
+                                    variant="label-hidden"
+                                    value={hour.value}
+                                    data-id={row.id}
+                                    data-day={hour.day}
+                                    onchange={handleUpdateNonBillableHourChange}
+                                    disabled={isTimesheetSubmitted}>
+                                </lightning-input>
+
+                                <lightning-button-icon
+                                    icon-name="utility:note"
+                                    alternative-text="Add Note"
+                                    variant="bare"
+                                    data-id={row.id}
+                                    data-day={hour.day}
+                                    data-section="updateNonBillable"
+                                    onclick={openNoteModal}>
+                                </lightning-button-icon>
+
+                            </div>
+                        </div>
+                    </template>
+
+                    <div class="add-col"></div>
+
+                </div>
+            </template>
+
+            <!-- Non Billable Rows -->
+            <template for:each={nonBillableRows} for:item="row">
+                <div key={row.id} class="data-row">
+
+                    <!-- Task Type -->
+                    <div class="task-col">
+                        <lightning-combobox
+                            value={row.taskTypeId}
+                            options={nonBillableTaskTypeOptions}
+                            placeholder="Select Task Type"
+                            variant="label-hidden"
+                            data-id={row.id}
+                            onchange={handleNonBillableTaskTypeChange}>
+                        </lightning-combobox>
+                    </div>
+
+                    <!-- Hours -->
+                    <template for:each={row.hours} for:item="hour">
+                        <div key={hour.day} class="hour-col">
+                            <div class="hour-with-note">
+
+                                <lightning-input
+                                    type="number"
+                                    min="0"
+                                    variant="label-hidden"
+                                    value={hour.value}
+                                    data-id={row.id}
+                                    data-day={hour.day}
+                                    onchange={handleNonBillableHourChange}>
+                                </lightning-input>
+
+                                <lightning-button-icon
+                                    icon-name="utility:note"
+                                    alternative-text="Add Note"
+                                    variant="bare"
+                                    data-id={row.id}
+                                    data-day={hour.day}
+                                    data-section="nonBillable"
+                                    onclick={openNoteModal}>
+                                </lightning-button-icon>
+
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Add Button -->
+                    <div class="add-col">
+                        <lightning-button-icon
+                            icon-name="utility:add"
+                            alternative-text="Add Non Billable Row"
+                            variant="bare"
+                            onclick={addNonBillableRow}>
+                        </lightning-button-icon>
+                        <lightning-button-icon
+                            icon-name="utility:delete"
+                            alternative-text="Delete Row"
+                            variant="bare"
+                            data-id={row.id}
+                            data-section="nonBillable"
+                            onclick={handleDeleteRow}>
+                        </lightning-button-icon>
+                    </div>
+                </div>
+            </template> 
+
+            <!-- NON BILLABLE SECTION TOTAL -->
+            <div class="data-row total-row">
+
+                <div class="task-col slds-text-title_bold">
+                    Non-Billable Total
+                </div>
+
+                <template for:each={nonBillableDailyTotals} for:item="total">
+                    <div key={total.day} class="hour-col slds-text-title_bold slds-p-left_medium">
+                        {total.total}
+                    </div>
+                </template>
+
+                <div class="add-col slds-text-title_bold">
+                    {nonBillableSectionTotal}
+                </div>
+
+                        <!-- GRAND TOTAL ROW >
+        <div class="data-row total-row"->
+
+            < Label Column -->
+            <div class="task-col slds-text-title_bold  grandtotal">
+                Grand Total
+            </div>
+
+            <!-- Totals Per Day -->
+            <template for:each={dailyTotals} for:item="total">
+                <div key={total.day} class="hour-col slds-text-title_bold slds-p-left_medium grandtotal">
+                    {total.total}
+                </div>
+            </template>
+
+            <!-- Grand Total Column -->
+            <div class="add-col slds-text-title_bold grandtotal">
+                {grandTotal}
+            </div>
+
+        <!--/div-->
+
+            </div>            
+       
+
+
+        </div>
+       
+       <template if:true={hasExceededLimit}>
+            <div class="task-col slds-text-title_bold slds-text-color_error slds-m-top_small slds-align_absolute-center">
+                You can't enter more than 12 hours for a day.
+            </div>
+        </template>
+
+        <template if:true={hasExceededWeeklyLimit}>
+            <div class="task-col slds-text-title_bold slds-text-color_error slds-m-top_small slds-align_absolute-center">
+                Total weekly hours cannot exceed 60 hours.
+            </div>
+        </template>
+
+    <div class="slds-align_absolute-center">
+
+                        <div>
+                            <lightning-button
+                                label="Save Draft"
+                                variant="brand"
+                                onclick={handleDraft}
+                                disabled={isSaveDisabled}>
+                            </lightning-button>
+                        </div>
+
+                        <div class="slds-m-left_medium">
+                            <lightning-button
+                                label="Submit Timesheet"
+                                variant="success"
+                                onclick={handleSubmit}
+                                disabled={isSaveDisabled}>
+                            </lightning-button>
+                        </div>
+                </div>
+    </div>
+
+    <!-- Modal Window -->
+        <template if:true={showNoteModal}>
+        <section role="dialog" tabindex="-1"
+            class="slds-modal slds-fade-in-open">
+
+            <div class="slds-modal__container">
+
+                <!-- HEADER -->
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">Note</h2>
+                </header>
+
+                <!-- BODY -->
+                <div class="slds-modal__content slds-p-around_medium">
+
+                    <lightning-textarea
+                        label="Add Description for the Work Day."
+                        value={currentNote}
+                        onchange={handleNoteChange}>
+                    </lightning-textarea>
+
+                </div>
+
+                <!-- FOOTER -->
+                <footer class="slds-modal__footer ">
+                    <lightning-button
+                        label="Cancel"
+                        variant="destructive"
+                        onclick={closeNoteModal}
+                        class= "slds-m-right_medium">
+                    </lightning-button>
+                    <lightning-button
+                        variant="brand"
+                        label="Save"
+                        onclick={saveNote}>
+                    </lightning-button>
+                </footer>
+
+            </div>
+        </section>
+
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

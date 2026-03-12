@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Paid_amount_not_exceeded_Total_Amount</fullName>
+    <active>true</active>
+    <description>Amount Paid cannot exceed Total Amount.</description>
+    <errorConditionFormula>Amount_Paid__c  &gt;  Total_Amount__c</errorConditionFormula>
+    <errorMessage>Amount Paid cannot exceed Total Amount.</errorMessage>
+</ValidationRule>
