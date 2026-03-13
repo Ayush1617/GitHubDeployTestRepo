@@ -1,6 +1,23 @@
+/*
+#####################################################
+# @Created By (Date)   : Kshitiz (12 Mar, 2026)
+# @Description         : Apex Test Class for TimeEntrySaveHelper
+#                       - Validates creation of Time Entry records for a Timesheet.
+#                       - Covers JSON parsing, task type mapping, and insert logic.
+#                       - Verifies validation scenarios such as blank input,
+#                         null Timesheet Id, and submitted Timesheet restriction.
+# @Modifications Log   :
+# Ver    Date              Author                 Modification
+# 1.0    12 March, 2026    Kshitiz		          Initial Version
+#####################################################
+*/
 @IsTest
 public class TimeEntrySaveHelperTest {
 
+    /**
+     * @description : @testSetup method to create reusable test data
+     *                used across all test methods.
+     **/
     @TestSetup
     static void setupData() {
 
@@ -59,9 +76,10 @@ public class TimeEntrySaveHelperTest {
         insert taskType;
     }
 
-    /**
-     * Test saving time entries
-     */
+	/**
+     * @description : Tests successful creation of Time Entry records
+     *                when valid JSON input is provided.
+     **/
     @IsTest
     static void testSaveEntries(){
 
@@ -81,6 +99,8 @@ public class TimeEntrySaveHelperTest {
 
         String jsonInput = JSON.serialize(wrapperList);
 
+        User u = [SELECT Id FROM User WHERE Alias = 'tuser' LIMIT 1];
+       	System.runAs(u) {
         Test.startTest();
 
         TimeEntrySaveHelper.saveEntries(ts.Id, jsonInput, 'Draft');
@@ -95,15 +115,17 @@ public class TimeEntrySaveHelperTest {
         System.assertEquals(1, entries.size());
         System.assertEquals(8, entries[0].Hours__c);
     }
-
-    /**
-     * Test blank JSON input
-     */
+    }
+	/**
+     * @description : Tests behavior when blank JSON input is passed.
+     **/
     @IsTest
     static void testBlankEntries(){
 
         Timesheet__c ts = [SELECT Id FROM Timesheet__c LIMIT 1];
 
+        User u = [SELECT Id FROM User WHERE Alias = 'tuser' LIMIT 1];
+       	System.runAs(u) {
         Test.startTest();
 
         TimeEntrySaveHelper.saveEntries(ts.Id, '', 'Draft');
@@ -112,9 +134,11 @@ public class TimeEntrySaveHelperTest {
 
         System.assert(true, 'Blank entries should safely exit');
     }
-
+    }
     /**
-     * Test timesheet validation when submitted
+     * @description : Tests validation rule preventing changes to a
+     *                Submitted Timesheet when attempting to revert
+     *                status back to Draft.
      */
     @IsTest
     static void testSubmittedTimesheetValidation(){
@@ -128,8 +152,12 @@ public class TimeEntrySaveHelperTest {
 
         try {
 
+            User u = [SELECT Id FROM User WHERE Alias = 'tuser' LIMIT 1];
+       		System.runAs(u) {
+            Test.startTest();
             TimeEntrySaveHelper.saveEntries(ts.Id, '', 'Draft');
-
+            Test.stopTest();   
+            }
         } catch (AuraHandledException e) {
 
             exceptionThrown = true;
@@ -140,7 +168,7 @@ public class TimeEntrySaveHelperTest {
     }
 
     /**
-     * Test null timesheet validation
+     * @description : Tests validation when Timesheet Id is null.
      */
     @IsTest
     static void testNullTimesheetId(){
@@ -148,9 +176,10 @@ public class TimeEntrySaveHelperTest {
         Boolean exceptionThrown = false;
 
         try {
-
+			User u = [SELECT Id FROM User WHERE Alias = 'tuser' LIMIT 1];
+       		System.runAs(u) {
             TimeEntrySaveHelper.saveEntries(null, '', 'Draft');
-
+            }
         } catch (AuraHandledException e) {
 
             exceptionThrown = true;
@@ -159,7 +188,11 @@ public class TimeEntrySaveHelperTest {
         System.assert(exceptionThrown,
             'Exception should be thrown when timesheetId is null');
     }
-
+	
+    /**
+     * @description : Tests scenario where wrapper contains a null
+     *                Task Type Id.
+     **/
 	@IsTest
     static void testSaveEntriesWithInvalidTaskType(){
     
@@ -178,13 +211,14 @@ public class TimeEntrySaveHelperTest {
             new List<BillableNonBillableTaskTypeController.TimeEntryWrapper>{ w };
     
         String jsonInput = JSON.serialize(wrapperList);
-    
+    	User u = [SELECT Id FROM User WHERE Alias = 'tuser' LIMIT 1];
+       		System.runAs(u) {
         Test.startTest();
     
         TimeEntrySaveHelper.saveEntries(ts.Id, jsonInput, 'Draft');
     
         Test.stopTest();
-    
+            }
         // Since taskTypeId is null, no records should be inserted
         List<Time_Entry__c> entries =
             [SELECT Id FROM Time_Entry__c WHERE Timesheet__c = :ts.Id];

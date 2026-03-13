@@ -651,12 +651,36 @@
 	</types>
 	<types>
 		<members>*</members>
+		<name>CustomPageWebLink</name>
+	</types>
+	<types>
+    <members>*</members>
+    <name>ApexPage</name>
+</types>
+<types>
+    <members>*</members>
+    <name>Group</name>
+</types>
+	<types>
+		<members>*</members>
 		<name>CustomPermission</name>
 	</types>
 	<types>
 		<members>*</members>
 		<name>DuplicateRule</name>
 	</types>
+	<types>
+		<members>*</members>
+		<name>FlexiPage</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>HomePageLayout</name>
+	</types>
+	<types>
+    <members>*</members>
+    <name>StaticResource</name>
+</types>
 	<types>
 		<members>*</members>
 		<name>LightningComponentBundle</name>

@@ -1,0 +1,7 @@
+<apex:page controller="LetterPdfController" renderAs="pdf" showHeader="false">
+    <html>
+        <body>
+            <apex:outputText value="{!htmlContent}" escape="false"/>
+        </body>
+    </html>
+</apex:page>

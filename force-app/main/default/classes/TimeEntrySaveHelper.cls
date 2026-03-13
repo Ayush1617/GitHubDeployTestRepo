@@ -56,7 +56,7 @@ public without sharing class TimeEntrySaveHelper {
             SELECT Status__c
             FROM Timesheet__c
             WHERE Id = :timesheetId
-            WITH SYSTEM_MODE
+            WITH USER_MODE
             LIMIT 1
         ];
 
@@ -99,7 +99,7 @@ public without sharing class TimeEntrySaveHelper {
             SELECT Id, Billable_Non_Billable__c
             FROM Task_Type__c
             WHERE Id IN :taskTypeIds
-            WITH SYSTEM_MODE
+            WITH USER_MODE
         ]);
     }
 
@@ -117,7 +117,7 @@ public without sharing class TimeEntrySaveHelper {
             SELECT Project__c, Resource__c
             FROM Timesheet__c
             WHERE Id = :timesheetId
-            WITH SYSTEM_MODE
+            WITH USER_MODE
             LIMIT 1
         ];
 

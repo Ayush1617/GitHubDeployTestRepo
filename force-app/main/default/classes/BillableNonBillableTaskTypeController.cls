@@ -52,7 +52,7 @@ public without sharing class BillableNonBillableTaskTypeController {
                    Billing_rate_per_hour__c
             FROM Task_Type__c
             WHERE Task_Type_Project__c = :projectId
-            WITH SYSTEM_MODE
+            WITH USER_MODE
             ORDER BY CreatedDate
         ];
 
@@ -79,7 +79,7 @@ public without sharing class BillableNonBillableTaskTypeController {
             SELECT Status__c
             FROM Timesheet__c
             WHERE Id = :timesheetId
-            WITH SYSTEM_MODE
+            WITH USER_MODE
             LIMIT 1
         ];
 
@@ -147,7 +147,7 @@ public without sharing class BillableNonBillableTaskTypeController {
             SELECT Id, Status__c
             FROM Timesheet__c
             WHERE Id = :timesheetRecord.Id
-            WITH SYSTEM_MODE
+            WITH USER_MODE
             LIMIT 1
         ];
 

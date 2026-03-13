@@ -1,0 +1,30 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false">
+<html>
+<head>
+    <title>LinkedIn Connected</title>
+</head>
+<body>
+    <p style="font-family:sans-serif;text-align:center;margin-top:40px;">
+        Connecting your LinkedIn account...
+    </p>
+    <script>
+        (function() {
+            try {
+                // Send success message to the parent LWC window
+                if (window.opener) {
+                    window.opener.postMessage(
+                        { type: 'LINKEDIN_AUTH_SUCCESS' },
+                        window.location.origin  // same Salesforce origin — safe
+                    );
+                }
+            } catch(e) {
+                console.error('postMessage error:', e);
+            } finally {
+                // Close the popup after a short delay
+                setTimeout(function() { window.close(); }, 1500);
+            }
+        })();
+    </script>
+</body>
+</html>
+</apex:page>

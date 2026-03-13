@@ -1,0 +1,35 @@
+<apex:page controller="LinkedInAuthCallback" showHeader="false" sidebar="false" standardStylesheets="false">
+    <apex:pageMessages />
+    
+    <script>
+        window.onload = function() {
+            // Get URL parameters
+            var urlParams = new URLSearchParams(window.location.search);
+            var code = urlParams.get('code');
+            var state = urlParams.get('state');
+            var error = urlParams.get('error');
+            var errorDescription = urlParams.get('error_description');
+            
+            // Send message to parent window
+            var message = {
+                type: 'linkedin-auth',
+                code: code,
+                state: state,
+                error: error,
+                errorDescription: errorDescription
+            };
+            
+            if (window.opener) {
+                window.opener.postMessage(message, '*');
+                setTimeout(function() { window.close(); }, 1000);
+            } else {
+                document.body.innerHTML = '<h3>Authentication complete. You can close this window.</h3>';
+            }
+        };
+    </script>
+    
+    <div style="text-align: center; margin-top: 50px; font-family: Arial, sans-serif;">
+        <p>Processing LinkedIn authentication...</p>
+        <p style="color: #666; font-size: 14px;">You will be redirected shortly.</p>
+    </div>
+</apex:page>

@@ -55,7 +55,7 @@ public without sharing class TimeEntryUpdateHelper {
             SELECT Id, Project__c, Resource__c
             FROM Timesheet__c
             WHERE Id IN :timesheetIds
-            WITH SYSTEM_MODE
+            WITH USER_MODE
         ]);
     }
 

@@ -341,7 +341,7 @@ export default class billableNonBillableTaskType extends LightningElement {
 
         console.log('Timesheet Id:', this.timesheetId);
 
-        let payload = [];
+        const payload = [];
 
         const processRows = (rows) => {
 
@@ -627,7 +627,8 @@ export default class billableNonBillableTaskType extends LightningElement {
         return (
             this.hasExceededLimit ||
             this.hasExceededWeeklyLimit ||
-            this.isTimesheetSubmitted
+            this.isTimesheetSubmitted ||
+            this.hastotalzero
         );
     }
 
@@ -637,6 +638,10 @@ export default class billableNonBillableTaskType extends LightningElement {
 
     get hasExceededWeeklyLimit() {
         return this.grandTotal > 60;
+    }
+
+    get hastotalzero() {
+        return this.grandTotal < 1;
     }
 
     get isTimesheetSubmitted() {

@@ -1,6 +1,25 @@
+/*
+#####################################################################
+# @Created By (Date)   : Kshitiz (12 Mar, 2026)
+# @Description         : Apex Test Class for TimeEntryUpdateHelper
+#                       - Validates insert and update functionality
+#                         for Time Entry records.
+#                       - Ensures Project and Resource fields are
+#                         populated from the related Timesheet.
+#                       - Covers scenarios for inserting new entries,
+#                         updating existing entries, and handling
+#                         empty or null input safely.
+# @Modifications Log   :
+# Ver    Date              Author                 Modification
+# 1.0    12 March, 2026    Kshitiz                Initial Version
+###################################################################
+*/
 @IsTest
 public class TimeEntryUpdateHelperTest {
 
+    /**
+     * @description : Tests inserting new Time Entry records.
+     **/
     @TestSetup
     static void setupData() {
     
@@ -71,7 +90,7 @@ public class TimeEntryUpdateHelperTest {
     }
 
     /**
-     * Test inserting new Time Entry records
+     * @description : Tests inserting new Time Entry records.
      */
     @IsTest
     static void testInsertNewEntries(){
@@ -83,7 +102,9 @@ public class TimeEntryUpdateHelperTest {
             Hours__c = 6,
             Work_Date__c = Date.today()
         );
-
+        
+		User u = [SELECT Id FROM User WHERE Alias = 'tuser' LIMIT 1];
+       	System.runAs(u) {
         Test.startTest();
         TimeEntryUpdateHelper.updateEntries(
             new List<Time_Entry__c>{ newEntry }
@@ -104,9 +125,10 @@ public class TimeEntryUpdateHelperTest {
         System.assertNotEquals(null, results[0].Resource__c,
             'Resource should be populated');
     }
+    }
 
     /**
-     * Test updating existing Time Entry
+     * @description : Tests updating an existing Time Entry record.
      */
     @IsTest
     static void testUpdateExistingEntries(){
@@ -116,6 +138,8 @@ public class TimeEntryUpdateHelperTest {
 
         entry.Hours__c = 8;
 
+        User u = [SELECT Id FROM User WHERE Alias = 'tuser' LIMIT 1];
+       	System.runAs(u) {
         Test.startTest();
         TimeEntryUpdateHelper.updateEntries(
             new List<Time_Entry__c>{ entry }
@@ -128,13 +152,15 @@ public class TimeEntryUpdateHelperTest {
         System.assertEquals(8, updated.Hours__c,
             'Hours should be updated');
     }
-
+    }
     /**
-     * Test empty list handling
+     * @description : Tests behavior when an empty list is passed
      */
     @IsTest
     static void testEmptyInput(){
 
+        User u = [SELECT Id FROM User WHERE Alias = 'tuser' LIMIT 1];
+       	System.runAs(u) {
         Test.startTest();
         TimeEntryUpdateHelper.updateEntries(new List<Time_Entry__c>());
         Test.stopTest();
@@ -142,18 +168,22 @@ public class TimeEntryUpdateHelperTest {
         System.assert(true,
             'Method should safely exit with empty list');
     }
-
+    }
     /**
-     * Test null input handling
-     */
+      * @description : Tests behavior when a null list is passed
+ 	  * 		       to the updateEntries method.
+      */
     @IsTest
     static void testNullInput(){
 
+        User u = [SELECT Id FROM User WHERE Alias = 'tuser' LIMIT 1];
+       	System.runAs(u) {
         Test.startTest();
         TimeEntryUpdateHelper.updateEntries(null);
         Test.stopTest();
 
         System.assert(true,
             'Method should safely exit with null input');
+    }
     }
 }

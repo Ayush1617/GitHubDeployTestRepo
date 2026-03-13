@@ -1,0 +1,27 @@
+<apex:page showHeader="false" sidebar="false" applyHtmlTag="false">
+    
+    <div id="lightning"></div>
+
+    <!-- Use Custom Label instead of hardcoded URL -->
+    <script src="{!$Label.ClientFormOrgUrl}/lightning/lightning.out.js"></script>
+
+    <script>
+        var siteUrl = "{!$Label.ClientFormOrgUrl}";
+
+        $Lightning.use(
+            "c:formOutAppClient",
+            function() {
+                $Lightning.createComponent(
+                    "c:submittedCandidates",
+                    {},
+                    "lightning",
+                    function(cmp) {
+                        console.log("LWC loaded successfully");
+                    }
+                );
+            },
+            siteUrl
+        );
+    </script>
+
+</apex:page>

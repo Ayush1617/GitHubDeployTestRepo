@@ -1,0 +1,4 @@
+<apex:page showHeader="false" sidebar="false">
+    <h2>Page Not Found</h2>
+    Please use correct URL.
+</apex:page>

@@ -1,0 +1,29 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false"
+           applyBodyTag="false" docType="html-5.0">
+
+    <apex:includeLightning />
+
+    <html>
+    <head>
+        <title>Interview Availability</title>
+        <apex:slds />
+    </head>
+
+    <body>
+        <div id="lwcContainer"></div>
+
+        <script>
+            $Lightning.use("c:AvailabilityResponseWrapper", function () {
+                $Lightning.createComponent(
+                    "c:AvailabilityResponseWrapper",
+                    {},
+                    "lwcContainer",
+                    function (cmp) {
+                        console.log("LWC Loaded Successfully");
+                    }
+                );
+            });
+        </script>
+    </body>
+    </html>
+</apex:page>

@@ -1,0 +1,20 @@
+<apex:page showHeader="false" sidebar="false" applyHtmlTag="false">
+  <div id="lightning"></div>
+
+  <!-- Use the exact site URL so Lightning Out uses the site endpoint -->
+  <script src="https://staffing4-dev-ed.develop.my.salesforce-sites.com/lightning/lightning.out.js"></script>
+
+  <script>
+    // Use exact aura app name (without .app). This must match your app file name.
+    // Passing host (3rd param) can help ensure correct endpoint.
+    $Lightning.use(
+      "c:formOutApp",
+      function() {
+        $Lightning.createComponent("c:CandidateFormWrapper", {}, "lightning", function(cmp) {
+          console.log("LWC wrapper loaded via Lightning Out for Guest");
+        });
+      },
+      "https://staffing4-dev-ed.develop.my.salesforce-sites.com" // site host
+    );
+  </script>
+</apex:page>
